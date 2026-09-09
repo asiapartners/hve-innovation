@@ -1,28 +1,12 @@
----
-title: HVE Core
-description: Hypervelocity Innovation framework and HVE Core starter guide for research-to-implementation delivery with AI-assisted workflows
-author: Microsoft
-ms.date: 2026-09-08
-ms.topic: overview
-keywords:
-  - hypervelocity engineering
-  - hypervelocity innovation
-  - design thinking
-  - brd
-  - prd
-  - backlog planning
-  - github copilot
-  - ai workflows
-estimated_reading_time: 8
----
 
 ## Hypervelocity Innovation
+### From Innovation to Marketplace, Accelerated
 
 Hypervelocity Innovation is an end-to-end way of working that helps teams turn research and discovery into valuable solutions, Marketplace and Copilot Agentic IP monetization, and publication with speed, quality, and security.
 
-Innovation is the focus: design thinking helps teams understand people, frame meaningful problems, explore possibilities, and shape solutions with users. Hypervelocity Engineering(HVE) accelerates that work by connecting discovery to requirements, planning, implementation, and review without losing the evidence or intent along the way.
+Innovation is the focus. Design thinking helps teams understand people, frame meaningful problems, explore possibilities, and shape solutions with users. Hypervelocity Engineering(HVE) accelerates that work by connecting discovery to requirements, planning, implementation, and review without losing the evidence or intent along the way.
 
-Use this repository when you want to run that repeatable innovation cycle with product thinking, design thinking, engineering execution, and AI-assisted delivery.
+Use this repository when you want to run that repeatable innovation cycle with product thinking, design thinking, engineering execution, AI-assisted delivery, to monetizing your innovation on Microsoft Marketplace, or Copilot Agent Store.
 
 ## How HVE Accelerates Innovation
 
@@ -31,11 +15,11 @@ HVE is the acceleration layer inside Hypervelocity Innovation. It helps teams mo
 It connects:
 
 * Research-first decision quality
-* AI discovery and design thinking centered on real user needs
+* AI Discovery and Design Thinking centered on real user needs
 * Structured requirements (BRD and PRD)
 * Milestone planning and backlog creation
 * Iterative implementation and review loops
-* Publication readiness for reusable IP
+* Publication readiness for your solution
 
 HVE Core provides the tools, prompts, agents, and validation conventions to execute this innovation cycle consistently.
 
@@ -84,7 +68,7 @@ For teams adopting Hypervelocity Innovation, start with role clarity and fast fe
 
 Hypervelocity Innovation changes how teams make decisions, record context, and move from ideas to delivery. Treat adoption as a change-management effort, not only a tooling rollout.
 
-### Adoption considerations
+### HVE Adoption Considerations
 
 * **Visible sponsorship:** An accountable sponsor protects time, resolves priority conflicts, and accepts the first milestone so the workshop leads to delivery.
 * **Complete perspectives:** Include the business owner, subject matter expert, designer, and technical owner so the team can make well-informed decisions together.
@@ -93,7 +77,7 @@ Hypervelocity Innovation changes how teams make decisions, record context, and m
 * **Focused engineering involvement:** Keep the core workshop group small while bringing additional engineers and specialists into targeted reviews as the solution becomes clearer. Adding more engineers can reduce velocity when coordination, conflicting approaches, and communication gaps outweigh the work being delivered. Preserve momentum with clear ownership, small working groups, shared decisions, short feedback loops, and an agreed path for resolving conflicts.
 * **Owned follow-up:** Assign an owner and next review date to every unresolved assumption, decision, publication gate, and backlog item.
 
-### Recommended team
+### Recommended Team
 
 Start with **four to six core people** for the workshop and first solution scope. One person may cover more than one role in a smaller team, but each responsibility must still be explicit.
 
