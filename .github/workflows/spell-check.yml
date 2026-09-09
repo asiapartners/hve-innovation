@@ -1,0 +1,92 @@
+# Copyright (c) 2026 Microsoft Corporation. All rights reserved.
+# SPDX-License-Identifier: MIT
+name: Spell Check
+
+on:
+  workflow_call:
+    inputs:
+      soft-fail:
+        description: 'Whether to continue on spell check errors'
+        required: false
+        type: boolean
+        default: false
+
+# Minimal permissions
+permissions:
+  contents: read
+
+jobs:
+  spell-check:
+    name: Spell Check
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Setup Node.js
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: '24'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Create logs directory
+        run: mkdir -p logs
+
+      - name: Run spell check
+        id: spell-check
+        run: |
+          set +e  # Disable errexit to capture exit code
+          npm run spell-check > logs/spell-check-results.txt 2>&1
+          EXIT_CODE=$?
+          set -e  # Re-enable errexit
+          if [ "$EXIT_CODE" -ne 0 ]; then
+            echo "SPELL_CHECK_FAILED=true" >> "$GITHUB_ENV"
+          fi
+          cat logs/spell-check-results.txt
+          exit "$EXIT_CODE"
+        continue-on-error: true
+
+      - name: Create annotations
+        if: env.SPELL_CHECK_FAILED == 'true'
+        run: |
+          echo "::warning::Spell check found issues. Review the spell-check-results artifact for details."
+
+      - name: Upload spell check results
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: spell-check-results
+          path: logs/spell-check-results.txt
+          retention-days: 30
+
+      - name: Add job summary
+        if: always()
+        run: |
+          if [ "${{ env.SPELL_CHECK_FAILED }}" == "true" ]; then
+            {
+              echo "## Spell Check Results"
+              echo "❌ **Status**: Failed"
+              echo ""
+              echo "Spelling errors were detected. Please review the artifact for details."
+            } >> "$GITHUB_STEP_SUMMARY"
+          else
+            {
+              echo "## Spell Check Results"
+              echo "✅ **Status**: Passed"
+              echo ""
+              echo "No spelling errors detected."
+            } >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+      - name: Fail job if errors found
+        if: env.SPELL_CHECK_FAILED == 'true' && !inputs.soft-fail
+        run: |
+          echo "Spell check failed"
+          exit 1

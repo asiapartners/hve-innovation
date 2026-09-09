@@ -1,0 +1,229 @@
+---
+title: DT to RPI Integration
+description: How Design Thinking outputs feed into the RPI workflow
+sidebar_position: 14
+author: Microsoft
+ms.date: 2026-08-20
+ms.topic: how-to
+keywords:
+  - design thinking
+  - rpi
+  - integration
+  - handoff
+estimated_reading_time: 6
+---
+
+Design Thinking and RPI connect through structured handoff artifacts. When a DT session reaches a natural exit point, the DT Coach prepares an artifact containing validated findings, confidence markers, and stakeholder maps that the RPI phase skills consume as input.
+
+## Handoff Pipeline Overview
+
+```mermaid
+flowchart TD
+  accTitle: Design Thinking to RPI Handoff Pipeline
+  accDescr: Exit points from the problem, solution, and implementation spaces feed RPI research, planning, implementation, and review, with a return path for revising assumptions.
+    DT["DT Coach Session"]
+
+    subgraph problem["Problem Space"]
+        M13["Methods 1-3<br/>Scope · Research · Synthesis"]
+    end
+
+    subgraph solution["Solution Space"]
+        M46["Methods 4-6<br/>Brainstorm · Concepts · Low-Fidelity Prototypes"]
+    end
+
+    subgraph implementation["Implementation Space"]
+        M79["Methods 7-9<br/>High-Fidelity Prototypes · Testing · Iteration"]
+    end
+
+    DT --> M13 --> M46 --> M79
+
+    M13 -.->|"Exit 1 · problem statement complete"| RR["rpi-research"]
+    M46 -.->|"Exit 2 · concept validated"| RR
+    M79 -.->|"Exit 3 · implementation spec ready"| RR
+
+    RR --> RP["rpi-plan"] --> RI["rpi-implement"] --> RV["rpi-review"]
+    RR -.->|"return when DT assumptions need revision"| DT
+```
+
+Each exit point produces a handoff artifact with the current contract fields: `exit_point`, `dt_method`, `dt_space`, `handoff_target`, `date`, `artifacts`, `constraints`, and `assumptions`. The coach keeps the session state in `.copilot-tracking/dt/{project-slug}/`, and the handoff artifacts live alongside project artifacts in the same directory.
+
+```yaml
+exit_point: "implementation-spec-ready"
+dt_method: 9
+dt_space: "implementation"
+handoff_target: "rpi-research"
+date: "2026-06-26"
+
+artifacts:
+  - path: ".copilot-tracking/dt/{project-slug}/method-09-iteration-at-scale.md"
+    type: "iteration-summary"
+    confidence: validated
+
+constraints:
+  - description: "The rollout must fit existing deployment windows"
+    source: "stakeholder-review"
+    confidence: assumed
+
+assumptions:
+  - description: "Support staff can monitor the pilot environment"
+    confidence: unknown
+    impact: "high"
+```
+
+## Subagent Handoff Workflow
+
+When the DT Coach detects handoff readiness, it can dispatch assessment, compilation, and validation subagents to make the transition more reliable. The workflow checks artifact readiness, compiles the handoff payload into the current schema, and validates the generated RPI entry artifact before `rpi-research` consumes it. At Method 5b, the workflow can also generate image prompts that help turn concept artifacts into visual directions for downstream review.
+
+## Exit Points
+
+### Problem Statement Complete (Methods 1-3 to rpi-research)
+
+After completing Scope Conversations, Design Research, and Input Synthesis, the team has a validated problem statement backed by multi-source evidence. `rpi-research` uses this framing to:
+
+* Scope technical research around stakeholder-validated needs rather than assumed requirements
+* Treat `assumed` items as verification targets
+* Treat `unknown` items as primary research targets
+* Investigate from each stakeholder perspective identified in the handoff
+
+### Concept Validated (Methods 4-6 to rpi-research)
+
+After Brainstorming, User Concepts, and Low-Fidelity Prototypes, the team has a stakeholder-validated concept with known constraints. `rpi-research` receives these richer artifacts to:
+
+* Validate the narrowed solution directions through technical investigation
+* Resolve constraints marked `assumed` or `unknown` from low-fidelity prototype testing
+* Assess feasibility of tested concepts across stakeholder perspectives
+* Investigate integration and scaling concerns before planning begins
+
+#### Integrate AI Discovery Cards workshop results
+
+AI Discovery Cards workshop results enter HVE as Design Thinking evidence, not as
+implementation requirements. Add promising workshop ideas to the Method 4 idea
+inventory and trace each one to a validated need, stakeholder, outcome, and
+constraint. For agentic workflow ideas, capture the trigger, participants, bounded
+AI responsibilities, potential tools and information, human decision points,
+expected outcome, and unresolved assumptions.
+
+Carry selected themes through the remaining Solution Space methods:
+
+1. Use Method 5 to turn a selected theme into a User Concept and evaluate its
+  desirability, feasibility, and viability.
+2. Use Method 6 to prototype the workflow, including handoffs, exception paths,
+  and human oversight points.
+3. Mark claims as `validated`, `assumed`, `unknown`, or `conflicting` based on the
+  resulting evidence.
+4. At the Solution Space exit, include the Method 4 workshop notes and idea
+  inventory, Method 5 concepts, Method 6 prototype findings, constraints, and
+  technical unknowns in the handoff artifact.
+5. Route the handoff to `rpi-research`. Research determines whether the proposed
+  capabilities and agentic workflow are technically appropriate before
+  `rpi-plan` defines implementation work.
+
+This sequence keeps workshop inspiration connected to HVE while preventing an AI
+capability prompt from becoming an untested architecture decision.
+
+### Implementation Spec Ready (Methods 7-9 to rpi-research)
+
+After High-Fidelity Prototypes and User Testing, the team has functionally validated specifications. `rpi-research` receives the richest artifact set to:
+
+* Investigate production readiness, scaling gaps, and integration concerns
+* Verify items where testing evidence was limited or conflicting
+* Assess whether architecture decisions hold under production constraints
+* Narrow research scope significantly because extensive DT validation already occurred
+
+## Per-Phase Input Mapping
+
+Each RPI phase applies DT-specific adjustments when it receives the handoff evidence.
+
+### rpi-research
+
+| Standard Behavior               | DT-Informed Behavior                                 |
+|---------------------------------|------------------------------------------------------|
+| Technical feasibility focus     | Stakeholder impact and technical feasibility         |
+| Single-perspective analysis     | Multi-stakeholder analysis across roles and contexts |
+| Binary findings (works/doesn't) | Quality-marked findings (validated/assumed/unknown)  |
+| Forward-only to planner         | May return to DT coach when findings warrant it      |
+
+When research reveals that the DT problem statement needs revision, fundamental assumptions are invalidated, or unrepresented stakeholders emerge, the researcher recommends returning to DT coaching rather than proceeding to planning.
+
+Source: direct from DT handoff.
+
+### rpi-plan
+
+| Standard Behavior               | DT-Informed Behavior                                        |
+|---------------------------------|-------------------------------------------------------------|
+| Production-quality deliverables | Space-appropriate fidelity (rough/scrappy/functional)       |
+| Linear phase execution          | Iteration-aware phases with return paths to earlier methods |
+| Technical success criteria      | Stakeholder-segmented success criteria                      |
+| Forward-only validation         | Validation incorporating DT coach return triggers           |
+
+Plans include a DT Reconnection phase that assesses whether findings warrant returning to DT coaching before downstream implementation.
+
+Source: indirect, via the upstream `rpi-research` output.
+
+### rpi-implement
+
+| Standard Behavior            | DT-Informed Behavior                                        |
+|------------------------------|-------------------------------------------------------------|
+| Production-quality code      | Space-appropriate fidelity                                  |
+| Complete feature delivery    | Constraint-validated scope matching DT prototype specs      |
+| Technical correctness focus  | Stakeholder experience validation alongside correctness     |
+| Full polish and optimization | Anti-polish: functional core without premature optimization |
+
+The implementation phase enforces fidelity constraints from the originating DT space and references DT artifact paths in change evidence.
+
+Source: indirect, through the upstream `rpi-research` and `rpi-plan` artifacts.
+
+### rpi-review
+
+| Standard Behavior        | DT-Informed Behavior                              |
+|--------------------------|---------------------------------------------------|
+| Code correctness focus   | Coaching quality and method fidelity focus        |
+| Pass/fail assessment     | Space-appropriate fidelity assessment             |
+| Style guide conformance  | Think/Speak/Empower coaching identity conformance |
+| Single output evaluation | Multi-stakeholder coverage evaluation             |
+
+The review phase checks that all identified stakeholder groups are represented, confidence markers are applied correctly, and output fidelity matches the originating space.
+
+## Confidence Markers
+
+Every handoff artifact tags its contents with confidence markers that downstream agents use to calibrate their work:
+
+| Marker        | Meaning                                 | Downstream Treatment                         |
+|---------------|-----------------------------------------|----------------------------------------------|
+| `validated`   | Confirmed through multi-source evidence | Treat as reliable input                      |
+| `assumed`     | Believed true but not yet verified      | Include verification steps                   |
+| `unknown`     | Information gap requiring investigation | Primary research or resolution target        |
+| `conflicting` | Evidence points in multiple directions  | Must resolve before downstream work proceeds |
+
+## Iteration Support
+
+The DT-to-RPI handoff is not one-way. When `rpi-research` encounters issues that trace back to DT assumptions, it recommends returning to DT coaching:
+
+* `rpi-research` returns directly to DT Coach when the problem statement needs revision, unrepresented stakeholders emerge, or fundamental assumptions are invalidated.
+* `rpi-plan` and `rpi-implement` route DT-related evidence gaps back to `rpi-research`, which may recommend returning to DT.
+* `rpi-review` flags items that need DT method re-entry based on artifact quality criteria.
+
+> [!TIP]
+> Returning to DT from RPI is a sign of thoroughness, not failure. The integration is designed for non-linear iteration across both frameworks.
+
+## Shared Prompts
+
+Three prompts compile DT artifacts for the single RPI entry point at `rpi-research`:
+
+* `dt-handoff-problem-space.prompt.md`: Packages Problem Space artifacts (Methods 1-3) for `rpi-research`
+* `dt-handoff-solution-space.prompt.md`: Packages Solution Space artifacts (Methods 4-6) for `rpi-research`
+* `dt-handoff-implementation-space.prompt.md`: Packages Implementation Space artifacts (Methods 7-9) for `rpi-research`
+
+Each prompt collects the relevant method outputs, confidence markers, and open questions into a structured handoff that `rpi-research` consumes directly. Later exit prompts produce richer artifacts that narrow the Research phase scope.
+
+## Related Resources
+
+* [Tutorial: Handing Off from DT to RPI](tutorial-handoff-to-rpi.md): Step-by-step guide with practical examples at each exit point
+* [Design Thinking Guide](README.md): Overview of all nine methods and three spaces
+* [DT Coach Guide](dt-coach.md): How to use the DT Coach agent
+* [RPI Workflow](../rpi/README.md): Research, Plan, Implement, Review framework
+
+<!-- markdownlint-disable MD036 -->
+*🤖 Crafted with precision by ✨Copilot following brilliant human instruction,
+then carefully refined by our team of discerning human reviewers.*
+<!-- markdownlint-enable MD036 -->

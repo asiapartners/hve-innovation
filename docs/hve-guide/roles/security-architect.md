@@ -1,0 +1,156 @@
+---
+title: Security Architect Guide
+description: HVE Core support for security architects building security models, security plans, and compliance verification
+sidebar_position: 7
+author: Microsoft
+ms.date: 2026-08-04
+ms.topic: how-to
+keywords:
+  - security
+  - security model analysis
+  - risk assessment
+  - compliance
+estimated_reading_time: 10
+---
+
+This guide is for you if you perform security model analysis, build security plans, assess risks, define compliance requirements, or review system security posture. Security architects have focused but deep tooling, with 9 addressable assets centered on security planning and risk management.
+
+> [!CAUTION]
+> The security agents and prompts in HVE Core are **assistive tools only**.
+> They do not replace professional security tooling (SAST, DAST, SCA, penetration testing, compliance scanners) or qualified human review.
+> All AI-generated security plans, security models, risk registers, and incident response runbooks **must** be reviewed and validated by qualified security professionals before use.
+> AI outputs may contain inaccuracies, miss critical threats, or produce recommendations that are incomplete or inappropriate for your environment.
+> Never treat AI-generated security artifacts as authoritative without independent verification.
+
+## Capability Groups
+
+> [!TIP]
+> Install the [HVE Core extension](https://marketplace.visualstudio.com/items?itemName=ise-hve-essentials.hve-core) from the VS Code Marketplace for the complete active component set with zero configuration.
+>
+> For selective clone adoption, choose security planning, supply chain assessment, Responsible AI, risk, and research components that match your review scope. Capability groups help you discover related components; they are not independently installable products. See the [Installation Guide](../../getting-started/install.md).
+
+## What HVE Core Does for You
+
+1. Creates comprehensive security plans with security model analysis and mitigation strategies
+2. Generates and manages risk registers for component-level risk assessment
+3. Provides incident response runbook templates and playbooks
+4. Supports security architecture research through deep codebase analysis
+5. Reviews implementation against security requirements and best practices
+
+## Your Lifecycle Stages
+
+> [!NOTE]
+> Security architects primarily operate in these lifecycle stages:
+>
+> [Stage 2: Discovery](../lifecycle/discovery.md): Research security requirements, investigate threat landscape, gather evidence
+> [Stage 3: Product Definition](../lifecycle/product-definition.md): Define security models, security specifications, and compliance requirements
+> [Stage 7: Review](../lifecycle/review.md): Validate implementation against security requirements
+> [Stage 9: Operations](../lifecycle/operations.md): Monitor security posture, update security models, manage incident response
+
+## Stage Walkthrough
+
+1. Stage 2: Discovery. Use `/rpi-research` to investigate the threat landscape, existing security controls, and compliance requirements for your system.
+2. Stage 3: Product Definition. Run the **security-planner** agent to generate a security plan with security models, attack vectors, and mitigation strategies.
+3. Stage 3: Product Definition. Run the **sssc-planner** agent to assess supply chain security posture against OpenSSF standards.
+4. Stage 3: Product Definition. Run the **rai-planner** agent if the project includes AI/ML components.
+5. Stage 3: Product Definition. Use `/risk-register` to assess and document component-level risks with severity ratings, likelihood, and mitigation plans.
+6. Stage 7: Review. Use `/rpi-review` to validate implementation evidence against the approved security requirements and plan.
+7. Stage 9: Operations. Maintain incident response readiness with `/incident-response` and update security models as the system evolves.
+
+## Starter Prompts
+
+Select **security-planner** agent:
+
+```text
+Generate a security plan for our customer-facing REST API gateway. Cover
+OAuth 2.0 authentication with Azure AD B2C, PII data classification in
+user profiles, PCI DSS compliance for payment flows, and security model
+areas including injection attacks and broken access control.
+```
+
+```text
+/risk-register Assess and document risks for the payment processing
+module. Focus on PCI DSS compliance gaps, injection vulnerabilities
+in transaction inputs, and key management for encryption at rest.
+```
+
+```text
+/incident-response Create an incident response runbook for a data breach
+involving customer PII exposure through a misconfigured storage bucket.
+Include containment steps, GDPR notification timelines, forensic evidence
+preservation, and post-incident review process.
+```
+
+Select **sssc-planner** agent:
+
+```text
+Assess this repository's supply chain security posture
+```
+
+Select **rai-planner** agent:
+
+```text
+Assess responsible AI risks based on the security plan
+```
+
+Use `/rpi-research`:
+
+```text
+Research security patterns for GraphQL APIs, focusing on query depth
+limiting to prevent DoS, field-level authorization approaches, disabling
+introspection in production, and input validation for nested mutation
+arguments.
+```
+
+## Key Agents and Workflows
+
+| Agent or skill       | Purpose                                                    | Docs                       |
+|----------------------|------------------------------------------------------------|----------------------------|
+| **security-planner** | Security plan and security model generation                | Agent file                 |
+| **sssc-planner**     | Supply chain security assessment against OpenSSF standards | Agent file                 |
+| **rai-planner**      | Responsible AI risk assessment and RAI plan generation     | Agent file                 |
+| **rpi-research**     | Security-focused codebase and threat research              | [RPI workflow](../../rpi/) |
+| **rpi-review**       | Implementation review against approved security plans      | [RPI workflow](../../rpi/) |
+
+Prompts complement the agents for targeted security workflows:
+
+| Prompt            | Purpose                                     | Invoke               |
+|-------------------|---------------------------------------------|----------------------|
+| risk-register     | Component risk assessment and documentation | `/risk-register`     |
+| incident-response | Incident response runbook creation          | `/incident-response` |
+
+## Tips
+
+| Do                                                                      | Don't                                                               |
+|-------------------------------------------------------------------------|---------------------------------------------------------------------|
+| Start with the **security-planner** agent for comprehensive models      | Create ad-hoc security notes without structured security models     |
+| Use `/risk-register` for each significant component                     | Track risks informally or skip risk documentation                   |
+| Research the threat landscape before defining mitigations               | Assume security models from other projects directly apply           |
+| Update security models as the system architecture evolves               | Treat security plans as static, one-time documents                  |
+| Map security requirements to specific lifecycle stages                  | Isolate security from the broader product lifecycle                 |
+| Run **sssc-planner** after **security-planner** for pipeline assessment | Skip supply chain assessment for non-deployable documentation repos |
+| Use **rai-planner** for any project with AI/ML components               | Apply RAI assessment to purely non-AI systems                       |
+
+## Related Roles
+
+* Security Architect + TPM: Security requirements integrate into BRDs and PRDs. Security models inform product specifications and compliance gates. See the [TPM Guide](tpm.md).
+* Security Architect + Tech Lead: Security architecture decisions align with overall system design. Security models shape architectural choices. See the [Tech Lead Guide](tech-lead.md).
+* Security Architect + SRE: Operational security, incident response, and monitoring bridge security planning with production operations. See the [SRE / Operations Guide](sre-operations.md).
+
+## Next Steps
+
+> [!TIP]
+> Browse the complete HVE Core inventory: [HVE Core](../../plugins/hve-core)
+> Plan responsible AI assessments: [Responsible AI Planning](../../agents/rai-planning/)
+> Review the security model documentation: [Security Model](../../security/security-model.md)
+> See how security fits the project lifecycle: [AI-Assisted Project Lifecycle](../lifecycle/)
+
+---
+
+> [!IMPORTANT]
+> Security-specific tooling covers Stage 2, Stage 3, Stage 7, and Stage 9 only. Stages 4 through 6 and Stage 8 use the general-purpose RPI phase skills rather than dedicated security tooling. Specialized security coverage for decomposition, sprint planning, implementation, and delivery is a planned improvement.
+
+<!-- markdownlint-disable MD036 -->
+*🤖 Crafted with precision by ✨Copilot following brilliant human instruction,
+then carefully refined by our team of discerning human reviewers.*
+<!-- markdownlint-enable MD036 -->

@@ -1,0 +1,200 @@
+# Copyright (c) 2026 Microsoft Corporation. All rights reserved.
+# SPDX-License-Identifier: MIT
+#
+# copilot-setup-steps.yml
+# Pre-install tools and dependencies for GitHub Copilot Coding Agent
+# Reference: https://docs.github.com/en/copilot/how-tos/use-copilot-agents/coding-agent/customize-the-agent-environment
+
+name: "Copilot Setup Steps"
+
+# Copilot coding agent runs these steps internally before starting work.
+# Use workflow_dispatch to manually validate the setup when desired.
+on:
+  workflow_dispatch:
+
+# Minimal permissions
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  # Job MUST be named 'copilot-setup-steps' to be recognized by Copilot
+  copilot-setup-steps:
+    runs-on: ubuntu-latest
+
+    # Minimal permissions; Copilot receives its own token for operations
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Set up Node.js
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: "24"
+          cache: "npm"
+
+      # continue-on-error allows Copilot to start work even if dependencies fail,
+      # so it can fix package.json/package-lock.json issues itself
+      - name: Install JavaScript dependencies
+        continue-on-error: true
+        run: npm ci
+
+      - name: Set up Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: "3.11"
+
+      - name: Install actionlint
+        env:
+          ACTIONLINT_VERSION: '1.7.10'
+          ACTIONLINT_AMD64_SHA256: 'f4c76b71db5755a713e6055cbb0857ed07e103e028bda117817660ebadb4386f'
+          ACTIONLINT_ARM64_SHA256: 'cd3dfe5f66887ec6b987752d8d9614e59fd22f39415c5ad9f28374623f41773a'
+          GITHUB_RELEASES_URL: ${{ vars.HVE_GITHUB_RELEASES_URL || 'https://github.com' }}
+        run: |
+          ARCH=$(uname -m)
+          if [[ "${ARCH}" == "x86_64" ]]; then
+            ACTIONLINT_ARCH="amd64"
+            ACTIONLINT_SHA256="${ACTIONLINT_AMD64_SHA256}"
+          elif [[ "${ARCH}" == "aarch64" ]]; then
+            ACTIONLINT_ARCH="arm64"
+            ACTIONLINT_SHA256="${ACTIONLINT_ARM64_SHA256}"
+          else
+            echo "ERROR: Unsupported architecture for actionlint: ${ARCH}" >&2
+            exit 1
+          fi
+          curl -sSfL "${GITHUB_RELEASES_URL}/rhysd/actionlint/releases/download/v${ACTIONLINT_VERSION}/actionlint_${ACTIONLINT_VERSION}_linux_${ACTIONLINT_ARCH}.tar.gz" -o /tmp/actionlint.tar.gz
+          echo "${ACTIONLINT_SHA256}  /tmp/actionlint.tar.gz" | sha256sum -c -
+          tar -xzf /tmp/actionlint.tar.gz -C /tmp actionlint
+          sudo install /tmp/actionlint /usr/local/bin/actionlint
+          rm /tmp/actionlint.tar.gz /tmp/actionlint
+          actionlint --version
+
+      - name: Install PowerShell modules
+        shell: pwsh
+        env:
+          HVE_PSGALLERY_REPOSITORY: ${{ vars.HVE_PSGALLERY_REPOSITORY || '' }}
+          HVE_PSGALLERY_SOURCE_URL: ${{ vars.HVE_PSGALLERY_SOURCE_URL || '' }}
+        run: |
+          $repo = if ($env:HVE_PSGALLERY_REPOSITORY) { $env:HVE_PSGALLERY_REPOSITORY } else { 'PSGallery' }
+          if ($env:HVE_PSGALLERY_SOURCE_URL) {
+            Register-PSRepository -Name $repo -SourceLocation $env:HVE_PSGALLERY_SOURCE_URL -InstallationPolicy Trusted -ErrorAction SilentlyContinue
+          }
+          # CurrentUser scope: the coding-agent runner is not elevated, so
+          # AllUsers (/usr/local/share/powershell/Modules) fails with admin-rights errors.
+          & "$env:GITHUB_WORKSPACE/scripts/security/Install-PSModules.ps1" -Scope CurrentUser -Repository $repo
+
+      - name: Install uv package manager
+        env:
+          UV_VERSION: '0.10.8'
+          UV_X86_64_SHA256: 'f0c566b55683395a62fefb9261a060fa09824914b5682c3b9629fa154762ae2f'
+          UV_AARCH64_SHA256: '661860e954f87dcd823251191866af3486484d1a9df60eed56f4586ed7559e3d'
+          GITHUB_RELEASES_URL: ${{ vars.HVE_GITHUB_RELEASES_URL || 'https://github.com' }}
+        run: |
+          ARCH=$(uname -m)
+          if [[ "${ARCH}" == "x86_64" ]]; then
+            UV_ARCH="x86_64-unknown-linux-gnu"
+            UV_SHA256="${UV_X86_64_SHA256}"
+          elif [[ "${ARCH}" == "aarch64" ]]; then
+            UV_ARCH="aarch64-unknown-linux-gnu"
+            UV_SHA256="${UV_AARCH64_SHA256}"
+          else
+            echo "ERROR: Unsupported architecture for uv: ${ARCH}" >&2
+            exit 1
+          fi
+          curl -sSfL "${GITHUB_RELEASES_URL}/astral-sh/uv/releases/download/${UV_VERSION}/uv-${UV_ARCH}.tar.gz" -o /tmp/uv.tar.gz
+          echo "${UV_SHA256}  /tmp/uv.tar.gz" | sha256sum -c -
+          sudo tar -xzf /tmp/uv.tar.gz -C /usr/local/bin --strip-components=1 "uv-${UV_ARCH}/uv" "uv-${UV_ARCH}/uvx"
+          rm /tmp/uv.tar.gz
+          uv --version
+          uvx --version
+          echo "Syncing lint-eligible Python environments..."
+          source .devcontainer/scripts/on-create.sh
+          if ! sync_python_environments "${GITHUB_WORKSPACE}"; then
+            echo "::error::One or more Python environment installations failed"
+            exit 1
+          fi
+          echo "Syncing Python environment for moderation eval..."
+          if ! (cd scripts/evals/moderation && uv sync --locked); then
+            echo "::error::uv sync failed in scripts/evals/moderation"
+            exit 1
+          fi
+
+      - name: Install cosign
+        env:
+          COSIGN_VERSION: '3.0.5'
+          COSIGN_AMD64_SHA256: 'db15cc99e6e4837daabab023742aaddc3841ce57f193d11b7c3e06c8003642b2'
+          COSIGN_ARM64_SHA256: 'd098f3168ae4b3aa70b4ca78947329b953272b487727d1722cb3cb098a1a20ab'
+          GITHUB_RELEASES_URL: ${{ vars.HVE_GITHUB_RELEASES_URL || 'https://github.com' }}
+        run: |
+          ARCH=$(uname -m)
+          if [[ "${ARCH}" == "x86_64" ]]; then
+            COSIGN_ARCH="amd64"
+            COSIGN_SHA256="${COSIGN_AMD64_SHA256}"
+          elif [[ "${ARCH}" == "aarch64" ]]; then
+            COSIGN_ARCH="arm64"
+            COSIGN_SHA256="${COSIGN_ARM64_SHA256}"
+          else
+            echo "ERROR: Unsupported architecture for cosign: ${ARCH}" >&2
+            exit 1
+          fi
+          curl -sSfL "${GITHUB_RELEASES_URL}/sigstore/cosign/releases/download/v${COSIGN_VERSION}/cosign-linux-${COSIGN_ARCH}" -o /tmp/cosign
+          if ! echo "${COSIGN_SHA256}  /tmp/cosign" | sha256sum -c --quiet -; then
+            echo "ERROR: cosign checksum verification failed" >&2
+            exit 1
+          fi
+          sudo install /tmp/cosign /usr/local/bin/cosign
+          rm /tmp/cosign
+          cosign version
+
+      - name: Install OSV-Scanner
+        env:
+          OSV_SCANNER_VERSION: '2.3.8'
+          OSV_SCANNER_AMD64_SHA256: 'bc98e15319ed0d515e3f9235287ba53cdc5535d576d24fd573978ecfe9ab92dc'
+          OSV_SCANNER_ARM64_SHA256: '8158b18edd2d03b1a30d905ca91b032bc62262167be8f206c27114f08823e27c'
+          GITHUB_RELEASES_URL: ${{ vars.HVE_GITHUB_RELEASES_URL || 'https://github.com' }}
+        run: |
+          ARCH=$(uname -m)
+          if [[ "${ARCH}" == "x86_64" ]]; then
+            OSV_ARCH="amd64"
+            OSV_SHA256="${OSV_SCANNER_AMD64_SHA256}"
+          elif [[ "${ARCH}" == "aarch64" ]]; then
+            OSV_ARCH="arm64"
+            OSV_SHA256="${OSV_SCANNER_ARM64_SHA256}"
+          else
+            echo "ERROR: Unsupported architecture for osv-scanner: ${ARCH}" >&2
+            exit 1
+          fi
+          curl -sSfL "${GITHUB_RELEASES_URL}/google/osv-scanner/releases/download/v${OSV_SCANNER_VERSION}/osv-scanner_linux_${OSV_ARCH}" -o /tmp/osv-scanner
+          if ! echo "${OSV_SHA256}  /tmp/osv-scanner" | sha256sum -c --quiet -; then
+            echo "ERROR: osv-scanner checksum verification failed" >&2
+            exit 1
+          fi
+          sudo install /tmp/osv-scanner /usr/local/bin/osv-scanner
+          rm /tmp/osv-scanner
+          osv-scanner --version
+
+      - name: Verify tool availability
+        run: |
+          echo "=== Tool Versions ==="
+          node --version
+          npm --version
+          python3 --version
+          pwsh --version
+          shellcheck --version
+          actionlint --version
+          uv --version
+          uvx --version
+          cosign version
+          osv-scanner --version
+          echo ""
+          echo "=== npm Scripts Available ==="
+          npm run --list
+

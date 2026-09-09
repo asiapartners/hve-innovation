@@ -1,0 +1,247 @@
+# Copyright (c) 2026 Microsoft Corporation. All rights reserved.
+# SPDX-License-Identifier: MIT
+name: Pester Tests
+
+on:
+  workflow_call:
+    inputs:
+      soft-fail:
+        description: 'Whether to continue on test failures'
+        required: false
+        type: boolean
+        default: false
+      changed-files-only:
+        description: 'Only test changed PowerShell files'
+        required: false
+        type: boolean
+        default: true
+      code-coverage:
+        description: 'Enable code coverage reporting'
+        required: false
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+jobs:
+  pester:
+    name: PowerShell Tests
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write  # Required for Codecov OIDC when enable-code-coverage is true
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+
+      - name: Set up Node.js
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: "24"
+          cache: "npm"
+
+      - name: Install JavaScript dependencies
+        run: npm ci
+
+      - name: Setup PowerShell modules
+        uses: ./.github/actions/setup-ps-modules
+        with:
+          import: 'true'
+
+      - name: Get changed PowerShell files
+        id: changed-files
+        if: inputs.changed-files-only
+        shell: pwsh
+        run: |
+          & ./scripts/tests/Get-ChangedTestFiles.ps1 -BaseBranch '${{ github.base_ref }}'
+
+      - name: Run Pester Tests
+        id: pester
+        if: "!inputs.changed-files-only || env.HAS_CHANGES == 'true'"
+        shell: pwsh
+        run: |
+          $params = @{ CI = $true }
+
+          if ('${{ inputs.code-coverage }}' -eq 'true') {
+            $params['CodeCoverage'] = $true
+          }
+
+          # Use specific test paths if changed-files-only is enabled
+          if ('${{ inputs.changed-files-only }}' -eq 'true' -and $env:TEST_PATHS) {
+            $testPaths = $env:TEST_PATHS -split ';'
+            $params['TestPath'] = $testPaths
+          }
+
+          ./scripts/tests/Invoke-PesterTests.ps1 @params
+
+          # Read coverage from summary JSON for downstream steps
+          if ('${{ inputs.code-coverage }}' -eq 'true' -and (Test-Path 'logs/pester-summary.json')) {
+            $summary = Get-Content 'logs/pester-summary.json' | ConvertFrom-Json
+            if ($null -ne $summary.CoveragePercent) {
+              Write-Host "Code coverage: $($summary.CoveragePercent)%"
+              if ($env:GITHUB_OUTPUT) {
+                $outDir = Split-Path -Parent $env:GITHUB_OUTPUT
+                if ($outDir -and -not (Test-Path $outDir)) {
+                  New-Item -ItemType Directory -Path $outDir -Force | Out-Null
+                }
+                if (-not (Test-Path $env:GITHUB_OUTPUT)) {
+                  New-Item -ItemType File -Path $env:GITHUB_OUTPUT -Force | Out-Null
+                }
+                "coverage=$($summary.CoveragePercent)" | Out-File -FilePath $env:GITHUB_OUTPUT -Append -Encoding utf8
+                if ($null -ne $summary.CoverageTarget) {
+                  "coverage_target=$($summary.CoverageTarget)" | Out-File -FilePath $env:GITHUB_OUTPUT -Append -Encoding utf8
+                }
+              }
+            }
+          }
+        continue-on-error: ${{ inputs.soft-fail }}
+
+      - name: Upload test results
+        if: always() && (!inputs.changed-files-only || env.HAS_CHANGES == 'true')
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: pester-test-results
+          path: |
+            logs/pester-results.xml
+            logs/pester-summary.json
+            logs/pester-failures.json
+          retention-days: 30
+          if-no-files-found: ignore
+
+      - name: Upload Coverage Report
+        if: inputs.code-coverage && success() && (!inputs.changed-files-only || env.HAS_CHANGES == 'true')
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: coverage-report
+          path: logs/coverage.xml
+          retention-days: 30
+          if-no-files-found: warn
+
+      - name: Upload to Codecov
+        if: inputs.code-coverage && success() && (!inputs.changed-files-only || env.HAS_CHANGES == 'true')
+        uses: codecov/codecov-action@fb8b3582c8e4def4969c97caa2f19720cb33a72f # v7.0.0
+        with:
+          files: logs/coverage.xml
+          use_oidc: true
+          fail_ci_if_error: false
+          verbose: true
+          flags: pester
+          name: pester-coverage
+
+      - name: Coverage Threshold Check
+        if: inputs.code-coverage && success() && (!inputs.changed-files-only || env.HAS_CHANGES == 'true')
+        shell: pwsh
+        run: |
+          $softFail = '${{ inputs.soft-fail }}' -eq 'true'
+
+          function Stop-Coverage([string] $message) {
+            if ($softFail) {
+              Write-Warning "$message - soft-fail, not blocking"
+              exit 0
+            }
+            Write-Error $message
+            exit 1
+          }
+
+          # Read coverage data from the authoritative summary written by Invoke-PesterTests.ps1.
+          # The target originates in scripts/tests/pester.config.ps1 (single source of truth).
+          if (-not (Test-Path 'logs/pester-summary.json')) {
+            Stop-Coverage 'Coverage gating is enabled but logs/pester-summary.json was not produced'
+          }
+
+          $summary = Get-Content 'logs/pester-summary.json' | ConvertFrom-Json
+
+          if ($null -eq $summary.CoveragePercent) {
+            Stop-Coverage 'Coverage gating is enabled but no coverage percentage was recorded'
+          }
+          if ($null -eq $summary.CoverageTarget) {
+            Stop-Coverage 'Coverage gating is enabled but no coverage target was recorded'
+          }
+
+          $percentage = [double]$summary.CoveragePercent
+          $threshold = [double]$summary.CoverageTarget
+
+          Write-Host "Coverage: $percentage%"
+          Write-Host "Required threshold: $threshold%"
+
+          if ($percentage -lt $threshold) {
+            Stop-Coverage "Coverage $percentage% is below required threshold $threshold%"
+          }
+
+          Write-Host "Coverage meets or exceeds the required threshold" -ForegroundColor Green
+
+      - name: Check results
+        if: "!inputs.soft-fail && (!inputs.changed-files-only || env.HAS_CHANGES == 'true')"
+        shell: pwsh
+        run: |
+          if (Test-Path 'logs/pester-summary.json') {
+            $summary = Get-Content 'logs/pester-summary.json' | ConvertFrom-Json
+            if ($summary.FailedCount -gt 0) {
+              Write-Error "Pester tests failed: $($summary.FailedCount) failure(s)"
+              exit 1
+            }
+          }
+
+  pester-integration:
+    name: PowerShell Integration Tests
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+
+      - name: Set up Node.js
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: "24"
+          cache: "npm"
+
+      - name: Install JavaScript dependencies
+        run: npm ci
+
+      - name: Setup PowerShell modules
+        uses: ./.github/actions/setup-ps-modules
+        with:
+          import: 'true'
+
+      - name: Run Integration Tests
+        id: pester-integration
+        shell: pwsh
+        run: |
+          # Run the full Integration-tagged suite. Slow remains excluded; passing
+          # -ExcludeTag is required because it replaces (not appends to) the runner's
+          # default exclude list of @('Integration','Slow').
+          ./scripts/tests/Invoke-PesterTests.ps1 -CI -Tag Integration -ExcludeTag Slow
+        continue-on-error: ${{ inputs.soft-fail }}
+
+      - name: Upload integration test results
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: pester-integration-test-results
+          path: |
+            logs/pester-results.xml
+            logs/pester-summary.json
+            logs/pester-failures.json
+          retention-days: 30
+          if-no-files-found: ignore
+
+      - name: Check integration results
+        if: "!inputs.soft-fail"
+        shell: pwsh
+        run: |
+          if (Test-Path 'logs/pester-summary.json') {
+            $summary = Get-Content 'logs/pester-summary.json' | ConvertFrom-Json
+            if ($summary.FailedCount -gt 0) {
+              Write-Error "Pester integration tests failed: $($summary.FailedCount) failure(s)"
+              exit 1
+            }
+          }

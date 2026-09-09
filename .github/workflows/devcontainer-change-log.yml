@@ -1,0 +1,51 @@
+# Copyright (c) 2026 Microsoft Corporation. All rights reserved.
+# SPDX-License-Identifier: MIT
+name: "Devcontainer Change Log"
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+    paths:
+      - '.devcontainer/**'
+      - '.github/workflows/copilot-setup-steps.yml'
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  log-changes:
+    name: Log Infrastructure Changes
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+
+      - name: Write infrastructure change summary
+        shell: pwsh
+        run: |
+          $params = @{
+            EventName = '${{ github.event_name }}'
+          }
+          if ('${{ github.sha }}') {
+            $params['CommitSha'] = '${{ github.sha }}'
+          }
+          if ('${{ github.ref_name }}') {
+            $params['BranchName'] = '${{ github.ref_name }}'
+          }
+          if ('${{ github.event.before }}') {
+            $params['BeforeSha'] = '${{ github.event.before }}'
+          }
+          & scripts/devcontainer/Write-DevcontainerChangeLog.ps1 @params
+

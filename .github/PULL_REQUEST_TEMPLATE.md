@@ -1,0 +1,109 @@
+# Pull Request
+
+## Description
+<!-- Provide a clear description of the changes in this PR -->
+
+## Related Issue(s)
+<!-- Link to the issue(s) this PR addresses using "Fixes #123" or "Closes #123" -->
+
+## Type of Change
+
+Select all that apply:
+
+**Code & Documentation:**
+
+* [ ] Bug fix (non-breaking change fixing an issue)
+* [ ] New feature (non-breaking change adding functionality)
+* [ ] Breaking change (fix or feature causing existing functionality to change)
+* [ ] Documentation update
+
+**Infrastructure & Configuration:**
+
+* [ ] GitHub Actions workflow
+* [ ] Linting configuration (markdown, PowerShell, etc.)
+* [ ] Security configuration
+* [ ] DevContainer configuration
+* [ ] Dependency update
+
+**AI Artifacts:**
+
+* [ ] Reviewed contribution with `hve-builder` and addressed all actionable findings
+* [ ] Copilot instructions (`.github/instructions/*.instructions.md`)
+* [ ] Copilot prompt (`.github/prompts/*.prompt.md`)
+* [ ] Copilot agent (`.github/agents/*.agent.md`)
+* [ ] Copilot skill (`.github/skills/*/SKILL.md`)
+* [ ] Copilot hook (`.github/hooks/*/*.json`)
+* [ ] Eval spec added/updated for changed AI artifacts (`evals/`)
+
+> Note for AI Artifact Contributors:
+>
+> * Agents: Research, indexing/referencing other project (using standard VS Code GitHub Copilot/MCP tools), planning, and general implementation agents likely already exist. Review `.github/agents/` before creating new ones.
+> * Skills: Must include both bash and PowerShell scripts. See [Skills](../docs/contributing/skills.md).
+> * Model Versions: Contributions **MUST** target models listed in the model catalog (`scripts/linting/model-catalog.json`) whose provider appears in `providerAllowlist` and whose status is `ga` or `preview`. Run `npm run lint:models` to validate references.
+> * See [Agents Not Accepted](../docs/contributing/custom-agents.md#agents-not-accepted) and [Model Version Requirements](../docs/contributing/ai-artifacts-common.md#model-version-requirements).
+
+**Other:**
+
+* [ ] Script/automation (`.ps1`, `.sh`, `.py`)
+* [ ] Other (please describe):
+
+## Sample Prompts (for AI Artifact Contributions)
+
+<!-- If you checked any boxes under "AI Artifacts" above, provide a sample prompt showing how to use your contribution -->
+<!-- Delete this section if not applicable -->
+
+**User Request:**
+<!-- What natural language request would trigger this agent/prompt/instruction? -->
+
+**Execution Flow:**
+<!-- Step-by-step: what happens when invoked? Include tool usage, decision points -->
+
+**Output Artifacts:**
+<!-- What files/content are created? Show first 10-20 lines as preview -->
+
+**Success Indicators:**
+<!-- How does user know it worked correctly? What validation should they perform? -->
+
+For detailed contribution requirements, see:
+
+* Common Standards: [docs/contributing/ai-artifacts-common.md](../docs/contributing/ai-artifacts-common.md) - Shared standards for XML blocks, markdown quality, RFC 2119, validation, and testing
+* Agents: [docs/contributing/custom-agents.md](../docs/contributing/custom-agents.md) - Agent configurations with tools and behavior patterns
+* Prompts: [docs/contributing/prompts.md](../docs/contributing/prompts.md) - Workflow-specific guidance with template variables
+* Instructions: [docs/contributing/instructions.md](../docs/contributing/instructions.md) - Technology-specific standards with glob patterns
+* Skills: [docs/contributing/skills.md](../docs/contributing/skills.md) - Task execution utilities with cross-platform scripts
+
+## Testing
+<!-- Describe how you tested these changes -->
+
+## Checklist
+
+### Required Checks
+
+* [ ] Documentation is updated (if applicable)
+* [ ] Files follow existing naming conventions
+* [ ] Changes are backwards compatible (if applicable)
+* [ ] Tests added for new functionality (if applicable)
+
+### AI Artifact Contributions
+<!-- If contributing an agent, prompt, instruction, or skill, complete these checks -->
+* [ ] Used `hve-builder` review mode to review contribution
+* [ ] Addressed all actionable findings from the `hve-builder` review
+* [ ] Verified contribution follows common standards and type-specific requirements
+
+### Required Local Checks
+
+The following local-safe validation commands must pass before merging:
+
+* [ ] Local validation aggregate: `npm run validate:local`
+* [ ] Documentation validation (if docs changed): `npm run validate:docs`
+* [ ] Spell checking: `npm run spell-check`
+* [ ] Link validation: `npm run lint:md-links`
+
+## Security Considerations
+<!-- ⚠️ WARNING: Do not commit sensitive information such as API keys, passwords, or personal data -->
+* [ ] This PR does not contain any sensitive or NDA information
+* [ ] Any new dependencies have been reviewed for security issues
+* [ ] Security-related scripts follow the principle of least privilege
+
+## Additional Notes
+<!-- Any additional information that reviewers should know -->

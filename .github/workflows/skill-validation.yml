@@ -1,0 +1,64 @@
+# Copyright (c) 2026 Microsoft Corporation. All rights reserved.
+# SPDX-License-Identifier: MIT
+name: Skill Validation
+
+on:
+  workflow_call:
+    inputs:
+      soft-fail:
+        description: 'Whether to continue on validation failures'
+        required: false
+        type: boolean
+        default: false
+      changed-files-only:
+        description: 'Only validate skills with changed files'
+        required: false
+        type: boolean
+        default: true
+      base-branch:
+        description: 'Base branch or SHA for change detection (defaults to origin/main)'
+        required: false
+        type: string
+        default: ''
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: Validate Skill Structure
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+
+      - name: Run skill validation
+        shell: pwsh
+        env:
+          INPUT_CHANGED_FILES_ONLY: ${{ inputs.changed-files-only }}
+          INPUT_BASE_BRANCH: ${{ inputs.base-branch }}
+        run: |
+          $params = @{}
+          if ($env:INPUT_CHANGED_FILES_ONLY -eq 'true') {
+            $params['ChangedFilesOnly'] = $true
+            $baseBranch = $env:INPUT_BASE_BRANCH
+            if (-not [string]::IsNullOrEmpty($baseBranch)) {
+              $params['BaseBranch'] = $baseBranch
+            }
+          }
+          & './scripts/linting/Validate-SkillStructure.ps1' -WarningsAsErrors @params
+        continue-on-error: ${{ inputs.soft-fail }}
+
+      - name: Upload validation results
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: skill-validation-results
+          path: logs/skill-validation-results.json
+          retention-days: 30
+          if-no-files-found: ignore

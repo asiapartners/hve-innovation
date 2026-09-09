@@ -1,0 +1,33 @@
+{
+  "name": "hve-core",
+  "metadata": {
+    "description": "HVE Core",
+    "version": "3.2.2"
+  },
+  "owner": {
+    "name": "Microsoft"
+  },
+  "plugins": [
+    {
+      "name": "hve-core",
+      "source": ".",
+      "description": "Opinionated, rapidly evolving HVE Core agentic SDLC patterns and tools",
+      "version": "3.2.2",
+      "author": {
+        "name": "Microsoft",
+        "url": "https://www.microsoft.com"
+      },
+      "homepage": "https://github.com/microsoft/hve-core",
+      "repository": "https://github.com/microsoft/hve-core",
+      "license": "MIT",
+      "keywords": [
+        "hve",
+        "hve-core",
+        "agents",
+        "prompts",
+        "instructions",
+        "skills"
+      ]
+    }
+  ]
+}

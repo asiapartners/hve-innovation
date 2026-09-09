@@ -1,0 +1,278 @@
+---
+title: GitHub Copilot Instructions
+description: Repository-specific coding guidelines and conventions for GitHub Copilot
+author: HVE Core Team
+ms.date: 2026-07-16
+ms.topic: reference
+keywords:
+  - copilot
+  - instructions
+  - coding standards
+  - guidelines
+estimated_reading_time: 5
+---
+
+## GitHub Copilot Instructions
+
+Repository-specific guidelines that GitHub Copilot automatically applies when
+editing files. Instructions ensure consistent code style and conventions across
+the codebase.
+
+## How Instructions Work
+
+1. Instruction files declare which file patterns they apply to using `applyTo`
+   in frontmatter
+2. GitHub Copilot reads instructions when editing matching files
+3. Suggestions follow the documented standards automatically
+
+Custom agents and the `hve-builder` skill respect these instructions and can create new ones.
+See [Contributing Instructions](../../docs/contributing/instructions.md) for authoring guidance.
+
+## Available Instructions
+
+### Language and Technology
+
+| File                                                                                                                           | Applies To                                     | Purpose                                  |
+|--------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------|------------------------------------------|
+| [coding-standards/bash/bash.instructions.md](coding-standards/bash/bash.instructions.md)                                       | `**/*.sh`                                      | Bash script implementation standards     |
+| [coding-standards/bicep/bicep.instructions.md](coding-standards/bicep/bicep.instructions.md)                                   | `**/bicep/**`                                  | Bicep infrastructure as code patterns    |
+| [coding-standards/code-review/diff-computation.instructions.md](coding-standards/code-review/diff-computation.instructions.md) | Code review agents                             | Diff computation for code review         |
+| [coding-standards/code-review/review-artifacts.instructions.md](coding-standards/code-review/review-artifacts.instructions.md) | `**/.copilot-tracking/reviews/code-reviews/**` | Code review artifact persistence         |
+| [coding-standards/csharp/csharp.instructions.md](coding-standards/csharp/csharp.instructions.md)                               | `**/*.cs`                                      | C# implementation and coding conventions |
+| [coding-standards/csharp/csharp-tests.instructions.md](coding-standards/csharp/csharp-tests.instructions.md)                   | `**/*.cs`                                      | C# test code standards                   |
+| [coding-standards/powershell/powershell.instructions.md](coding-standards/powershell/powershell.instructions.md)               | `**/*.ps1, **/*.psm1, **/*.psd1`               | PowerShell scripting conventions         |
+| [coding-standards/powershell/pester.instructions.md](coding-standards/powershell/pester.instructions.md)                       | `**/*.Tests.ps1`                               | Pester testing conventions               |
+| [coding-standards/python-script.instructions.md](coding-standards/python-script.instructions.md)                               | `**/*.py`                                      | Python scripting implementation          |
+| [coding-standards/python-tests.instructions.md](coding-standards/python-tests.instructions.md)                                 | `**/*.py`                                      | Python test code standards               |
+| [coding-standards/rust/rust.instructions.md](coding-standards/rust/rust.instructions.md)                                       | `**/*.rs`                                      | Rust development conventions             |
+| [coding-standards/rust/rust-tests.instructions.md](coding-standards/rust/rust-tests.instructions.md)                           | `**/*.rs`                                      | Rust test code standards                 |
+| [coding-standards/terraform/terraform.instructions.md](coding-standards/terraform/terraform.instructions.md)                   | `**/*.tf, **/*.tfvars, **/terraform/**`        | Terraform infrastructure as code         |
+| [coding-standards/uv-projects.instructions.md](coding-standards/uv-projects.instructions.md)                                   | `**/*.py, **/*.ipynb`                          | Python virtual environments using uv     |
+
+### Documentation and Content
+
+| File                                                                             | Applies To                                                         | Purpose                               |
+|----------------------------------------------------------------------------------|--------------------------------------------------------------------|---------------------------------------|
+| [hve-core/markdown.instructions.md](hve-core/markdown.instructions.md)           | `**/*.md`                                                          | Markdown formatting standards         |
+| [hve-core/writing-style.instructions.md](hve-core/writing-style.instructions.md) | `**/*.md`                                                          | Voice, tone, and language conventions |
+| [hve-core/hve-builder.instructions.md](hve-core/hve-builder.instructions.md)     | `**/*.prompt.md, **/*.agent.md, **/*.instructions.md, **/SKILL.md` | HVE artifact authoring standards      |
+| [docusaurus-edits.instructions.md](docusaurus-edits.instructions.md)             | `docs/**`                                                          | Docusaurus documentation authoring    |
+
+### Git and Workflow
+
+| File                                                                               | Applies To                   | Purpose                              |
+|------------------------------------------------------------------------------------|------------------------------|--------------------------------------|
+| [hve-core/commit-message.instructions.md](hve-core/commit-message.instructions.md) | Commit actions               | Conventional commit message format   |
+| [hve-core/git-merge.instructions.md](hve-core/git-merge.instructions.md)           | Git operations               | Merge, rebase, and conflict handling |
+| [pull-request.instructions.md](pull-request.instructions.md)                       | `**/.copilot-tracking/pr/**` | HVE Core pull request conventions    |
+
+### Repository Workflow
+
+| File                                                                                     | Applies To                              | Purpose                                          |
+|------------------------------------------------------------------------------------------|-----------------------------------------|--------------------------------------------------|
+| [hve-core/copilot-tracking.instructions.md](hve-core/copilot-tracking.instructions.md)   | `.copilot-tracking/**`                  | Intermediate tracking artifact conventions       |
+| [hve-core/licensing-posture.instructions.md](hve-core/licensing-posture.instructions.md) | `**/skills/**, **/.copilot-tracking/**` | Licensing, reproduction, and attribution posture |
+| [skill-security-model.instructions.md](skill-security-model.instructions.md)             | `**/.github/skills/**/SECURITY.md`      | Per-skill STRIDE security model rules            |
+| [workflows.instructions.md](workflows.instructions.md)                                   | `**/.github/workflows/*.yml`            | GitHub Actions workflow conventions              |
+
+### GitHub Integration
+
+| File                                                                                                             | Applies To                                                                                                                                  | Purpose                              |
+|------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------|
+| [project-planning/community-interaction.instructions.md](project-planning/community-interaction.instructions.md) | `**/.github/agents/project-planning/backlog-manager.agent.md`, `**/.github/skills/project-planning/backlog-management/references/github.md` | GitHub-facing communication patterns |
+
+### Planning and Governance Agents
+
+The instructions below are scoped to specific planning agents and their `.copilot-tracking/` working directories rather than to general source edits.
+
+#### Accessibility
+
+| File                                                                                                                       | Applies To                                                                  | Purpose                                     |
+|----------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------|---------------------------------------------|
+| [accessibility/accessibility-identity.instructions.md](accessibility/accessibility-identity.instructions.md)               | `**/.copilot-tracking/accessibility/**`                                     | Accessibility Planner identity and workflow |
+| [accessibility/accessibility-license-posture.instructions.md](accessibility/accessibility-license-posture.instructions.md) | `**/.github/skills/accessibility/**, **/.copilot-tracking/accessibility/**` | Accessibility licensing overlay             |
+
+#### Privacy
+
+| File                                                                                 | Applies To                              | Purpose                               |
+|--------------------------------------------------------------------------------------|-----------------------------------------|---------------------------------------|
+| [privacy/privacy-identity.instructions.md](privacy/privacy-identity.instructions.md) | `**/.copilot-tracking/privacy-plans/**` | Privacy Planner identity and workflow |
+
+#### Responsible AI
+
+| File                                                                                                 | Applies To                                              | Purpose                           |
+|------------------------------------------------------------------------------------------------------|---------------------------------------------------------|-----------------------------------|
+| [rai-planning/rai-identity.instructions.md](rai-planning/rai-identity.instructions.md)               | `**/.copilot-tracking/rai-plans/**`                     | RAI Planner identity and workflow |
+| [rai-planning/rai-license-posture.instructions.md](rai-planning/rai-license-posture.instructions.md) | `**/skills/rai**/**, **/.copilot-tracking/rai-plans/**` | RAI licensing overlay             |
+
+#### Project Planning (ADRs)
+
+| File                                                                                                   | Applies To                                                    | Purpose                                    |
+|--------------------------------------------------------------------------------------------------------|---------------------------------------------------------------|--------------------------------------------|
+| [project-planning/adr-identity.instructions.md](project-planning/adr-identity.instructions.md)         | `**/.copilot-tracking/adr-plans/**, **/docs/planning/adrs/**` | ADR Creator identity and state machine     |
+| [project-planning/adr-standards.instructions.md](project-planning/adr-standards.instructions.md)       | `**/.copilot-tracking/adr-plans/**, **/docs/planning/adrs/**` | Embedded ADR standards (MADR, Y-Statement) |
+| [project-planning/adr-byo-template.instructions.md](project-planning/adr-byo-template.instructions.md) | `**/.copilot-tracking/adr-plans/**, **/docs/planning/adrs/**` | BYO ADR template contract                  |
+| [project-planning/adr-handoff.instructions.md](project-planning/adr-handoff.instructions.md)           | `**/.copilot-tracking/adr-plans/**, **/docs/planning/adrs/**` | ADR Govern-phase handoff protocol          |
+
+#### Security
+
+| File                                                                                     | Applies To                                                 | Purpose                                |
+|------------------------------------------------------------------------------------------|------------------------------------------------------------|----------------------------------------|
+| [security/identity.instructions.md](security/identity.instructions.md)                   | `**/.copilot-tracking/security-plans/**`                   | Security Planner identity and workflow |
+| [security/standards-mapping.instructions.md](security/standards-mapping.instructions.md) | `**/.copilot-tracking/security-plans/**`                   | OWASP and NIST standards references    |
+| [security/sssc-planner.instructions.md](security/sssc-planner.instructions.md)           | `**/.copilot-tracking/sssc-plans/**`                       | SSSC Planner identity and workflow     |
+| [security/vex-standards.instructions.md](security/vex-standards.instructions.md)         | `**/security/vex/**, **/.copilot-tracking/security/vex/**` | OpenVEX document standards             |
+| [security/vex-generation.instructions.md](security/vex-generation.instructions.md)       | Security reviewer agents                                   | VEX generation rules                   |
+
+#### Shared Planner Scaffolds
+
+| File                                                                                                   | Applies To                                                         | Purpose                                           |
+|--------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------|---------------------------------------------------|
+| [shared/hve-core-location.instructions.md](shared/hve-core-location.instructions.md)                   | `**`                                                               | Fallback location guidance for hve-core artifacts |
+| [shared/content-policy-citation.instructions.md](shared/content-policy-citation.instructions.md)       | `**/*.agent.md, **/*.prompt.md, **/*.instructions.md, **/SKILL.md` | Content-policy and terms-of-service guardrails    |
+| [shared/coaching-patterns.instructions.md](shared/coaching-patterns.instructions.md)                   | Planning agents                                                    | Exploration-first coaching patterns               |
+| [shared/planner-identity-base.instructions.md](shared/planner-identity-base.instructions.md)           | Planning agents                                                    | Shared planner identity scaffold                  |
+| [shared/disclaimer-language.instructions.md](shared/disclaimer-language.instructions.md)               | Planning and review agents                                         | Professional-review disclaimer language           |
+| [shared/telemetry-overlay.instructions.md](shared/telemetry-overlay.instructions.md)                   | Planning and review agents                                         | Telemetry vocabulary overlay                      |
+| [shared/untrusted-content-boundary.instructions.md](shared/untrusted-content-boundary.instructions.md) | Planning and DT/UX agents                                          | Untrusted-content boundary rules                  |
+
+#### Experimental
+
+| File                                                                                                 | Applies To                    | Purpose                                       |
+|------------------------------------------------------------------------------------------------------|-------------------------------|-----------------------------------------------|
+| [experimental/experiment-designer.instructions.md](experimental/experiment-designer.instructions.md) | `**/.copilot-tracking/mve/**` | MVE experiment designer conventions           |
+| [experimental/graphify.instructions.md](experimental/graphify.instructions.md)                       | `**/graphify-out/**`          | Graphify knowledge-graph evidence conventions |
+| [experimental/pptx.instructions.md](experimental/pptx.instructions.md)                               | `**/.copilot-tracking/ppt/**` | PowerPoint builder conventions                |
+
+The `experimental/mural/` directory holds the Mural workflow instruction set (bootstrap, seeding, writeback, and log-hygiene rules) scoped to the DT, RAI, and UX/UI agents; see [experimental/mural/mural-bootstrap.instructions.md](experimental/mural/mural-bootstrap.instructions.md) as the entry point.
+
+### GitLab Workflow Entry Points
+
+This README indexes instruction files. GitLab delivery support is currently discoverable through the local skill and provider-aware project-planning agents.
+
+* Use [../skills/project-planning/gitlab/SKILL.md](../skills/project-planning/gitlab/SKILL.md) when delivery context lives in GitLab and you need merge request, pipeline, or job operations.
+* Keep GitLab delivery workflows distinct from backlog planning unless GitLab is also the system of record for work tracking.
+
+## XML-Style Blocks
+
+Instructions use XML-style comment blocks for structured content:
+
+* **Purpose**: Enables automated extraction, better navigation, and consistency
+* **Format**: Kebab-case tags in HTML comments on their own lines
+* **Examples**: `<!-- <example-bash> -->`, `<!-- <schema-config> -->`
+* **Nesting**: Allowed with distinct tag names
+* **Closing**: Always required with matching tag names
+
+````markdown
+<!-- <example-terraform> -->
+```terraform
+resource "azurerm_resource_group" "example" {
+  name     = "example-rg"
+  location = "eastus"
+}
+```
+<!-- </example-terraform> -->
+````
+
+## Creating New Instructions
+
+Activate the `hve-builder` skill:
+
+1. Open Copilot Chat and ask to create or improve an instruction artifact
+2. Provide context (files, folders, or requirements)
+3. HVE Builder resolves the mode, write boundary, and applicable conventions
+4. HVE Builder uses one behavior gate with route-specific execution: Major mutations and behavior-bearing review targets execute testing, while eligible no-runtime review targets and Minor or Medium mutations are satisfied-and-skipped
+5. Known target files and caller-supplied canonical references remain bounded lifecycle reads; open-ended exploration and decision-critical research activate `rpi-research`
+6. The retained `prompt-builder`, `prompt-analyze`, and `prompt-refactor` skills remain compatibility aliases
+7. The final response reports each gate and an overall Pass, Revise, Deferred, or Blocked outcome
+
+For manual creation, see [Contributing Instructions](../../docs/contributing/instructions.md).
+
+## Directory Structure
+
+```text
+.github/instructions/
+├── accessibility/                    # Accessibility planning
+│   ├── accessibility-identity.instructions.md
+│   └── accessibility-license-posture.instructions.md
+├── coding-standards/                 # Language and technology conventions
+│   ├── bash/
+│   │   └── bash.instructions.md
+│   ├── bicep/
+│   │   └── bicep.instructions.md
+│   ├── code-review/
+│   │   ├── diff-computation.instructions.md
+│   │   └── review-artifacts.instructions.md
+│   ├── csharp/
+│   │   ├── csharp.instructions.md
+│   │   └── csharp-tests.instructions.md
+│   ├── powershell/
+│   │   ├── pester.instructions.md
+│   │   └── powershell.instructions.md
+│   ├── rust/
+│   │   ├── rust.instructions.md
+│   │   └── rust-tests.instructions.md
+│   ├── terraform/
+│   │   └── terraform.instructions.md
+│   ├── python-script.instructions.md
+│   ├── python-tests.instructions.md
+│   └── uv-projects.instructions.md
+├── experimental/                     # Experimental workflows
+│   ├── mural/
+│   │   ├── destinations/
+│   │   ├── mural-bootstrap.instructions.md
+│   │   ├── mural-destinations.instructions.md
+│   │   ├── mural-human-record.instructions.md
+│   │   ├── mural-log-hygiene.instructions.md
+│   │   ├── mural-seeding-patterns.instructions.md
+│   │   ├── mural-writeback-hygiene.instructions.md
+│   │   └── mural-writing-style.instructions.md
+│   ├── experiment-designer.instructions.md
+│   ├── graphify.instructions.md
+│   └── pptx.instructions.md
+├── hve-core/                         # HVE Core workflow
+│   ├── commit-message.instructions.md
+│   ├── copilot-tracking.instructions.md
+│   ├── git-merge.instructions.md
+│   ├── licensing-posture.instructions.md
+│   ├── markdown.instructions.md
+│   ├── hve-builder.instructions.md
+│   └── writing-style.instructions.md
+├── privacy/                          # Privacy planning
+│   └── privacy-identity.instructions.md
+├── project-planning/                 # Project planning and ADRs
+│   ├── adr-byo-template.instructions.md
+│   ├── adr-handoff.instructions.md
+│   ├── adr-identity.instructions.md
+│   ├── adr-standards.instructions.md
+│   └── community-interaction.instructions.md
+├── rai-planning/                     # Responsible AI planning
+│   ├── rai-identity.instructions.md
+│   └── rai-license-posture.instructions.md
+├── security/                         # Security planning
+│   ├── identity.instructions.md
+│   ├── sssc-planner.instructions.md
+│   ├── standards-mapping.instructions.md
+│   ├── vex-generation.instructions.md
+│   └── vex-standards.instructions.md
+├── shared/                           # Shared across packages
+│   ├── coaching-patterns.instructions.md
+│   ├── content-policy-citation.instructions.md
+│   ├── disclaimer-language.instructions.md
+│   ├── hve-core-location.instructions.md
+│   ├── planner-identity-base.instructions.md
+│   ├── telemetry-overlay.instructions.md
+│   └── untrusted-content-boundary.instructions.md
+├── docusaurus-edits.instructions.md
+├── pull-request.instructions.md
+├── skill-security-model.instructions.md
+├── workflows.instructions.md
+└── README.md
+```
+
+---
+
+<!-- markdownlint-disable MD036 -->
+*🤖 Crafted with precision by ✨Copilot following brilliant human instruction,
+then carefully refined by our team of discerning human reviewers.*
+<!-- markdownlint-enable MD036 -->

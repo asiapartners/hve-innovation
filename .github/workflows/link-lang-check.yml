@@ -1,0 +1,86 @@
+# Copyright (c) 2026 Microsoft Corporation. All rights reserved.
+# SPDX-License-Identifier: MIT
+name: Link Language Check
+
+on:
+  workflow_call:
+    inputs:
+      soft-fail:
+        description: 'Whether to continue on language path violations'
+        required: false
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+jobs:
+  link-lang-check:
+    name: Check for Language Paths in URLs
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Create logs directory
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force -Path logs | Out-Null
+
+      - name: Run Link Language Check
+        shell: pwsh
+        run: |
+          & scripts/linting/Invoke-LinkLanguageCheck.ps1 -ExcludePaths 'scripts/tests/**'
+        continue-on-error: true
+
+      - name: Upload results
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: link-lang-check-results
+          path: logs/link-lang-check-results.json
+          retention-days: 30
+
+      - name: Check results and fail if needed
+        if: ${{ !inputs.soft-fail }}
+        shell: pwsh
+        run: |
+          if ($env:LINK_LANG_FAILED -eq 'true') {
+            $resultsPath = 'logs/link-lang-check-results.json'
+
+            if (Test-Path -LiteralPath $resultsPath) {
+              try {
+                $results = Get-Content -LiteralPath $resultsPath -Raw | ConvertFrom-Json
+                $totalIssues = [int]($results.summary.total_issues)
+                $filesAffected = [int]($results.summary.files_affected)
+
+                if ($results.issues -and $results.issues.Count -gt 0) {
+                  if ($totalIssues -le 0) {
+                    $totalIssues = [int]$results.issues.Count
+                  }
+
+                  if ($filesAffected -le 0) {
+                    $filesAffected = [int](($results.issues | Select-Object -ExpandProperty file -Unique).Count)
+                  }
+
+                  Write-Host "❌ Link language check failed with $totalIssues issue(s) in $filesAffected file(s)."
+
+                  foreach ($issue in $results.issues) {
+                    Write-Host "  ⚠️ $($issue.file):$($issue.line_number) - $($issue.original_url)"
+                  }
+                } else {
+                  Write-Host 'Link language check failed and no issue entries were found in logs/link-lang-check-results.json.'
+                }
+              } catch {
+                Write-Host 'Link language check failed and logs/link-lang-check-results.json could not be parsed.'
+              }
+            } else {
+              Write-Host 'Link language check failed and logs/link-lang-check-results.json was not found.'
+            }
+
+            exit 1
+          }
