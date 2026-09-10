@@ -4,9 +4,11 @@
 
 Hypervelocity Innovation is an end-to-end way of working that helps teams turn research and discovery into valuable solutions, Marketplace and Copilot Agentic IP monetization, and publication with speed, quality, and security.
 
-Innovation is the focus. Design thinking helps teams understand people, frame meaningful problems, explore possibilities, and shape solutions with users. Hypervelocity Engineering(HVE) accelerates that work by connecting discovery to requirements, planning, implementation, and review without losing the evidence or intent along the way.
+Design Thinking enables innovation by uncovering real human needs, reframing meaningful problems, and creating space to explore possibilities beyond familiar answers. By shaping and testing solutions with users, it turns insight into outcomes that are desirable, feasible, and valuable. Hypervelocity Engineering(HVE) accelerates that work by connecting discovery to requirements, planning, implementation, and review without losing the evidence or intent along the way.
 
 Use this repository when you want to run that repeatable innovation cycle with product thinking, design thinking, engineering execution, AI-assisted delivery, to monetizing your innovation on Microsoft Marketplace, or Copilot Agent Store.
+
+<img width="500" alt="image" src="https://github.com/user-attachments/assets/b3827389-459e-477b-a6bc-15cf6d7053d0" />
 
 ## How HVE Accelerates Innovation
 
@@ -114,6 +116,23 @@ The framework supports teams that want to monetize and publish reusable IP and c
 ## Responsible AI
 
 Microsoft encourages customers to review its Responsible AI Standard when developing AI-enabled systems to ensure ethical, safe, and inclusive AI practices. Learn more at [Microsoft's Responsible AI](https://www.microsoft.com/ai/responsible-ai).
+
+> [!CAUTION]
+> HVE Core is a highly opinionated, rapidly evolving agentic SDLC framework. It is best treated as a source of patterns and learning rather than a stable platform, foundation, or production dependency.
+> Workflows, interfaces, architecture, and recommended practices may change substantially, including in ways that are not backward compatible, as the technology landscape evolves. Evaluate all materials for your own requirements and risk tolerance.
+> The HVE Builder skill (use with `/hve-builder`) and GitHub Copilot can help you adapt or copy relevant patterns into an agentic SDLC that you own and maintain independently.
+> To build an independent implementation, start with [Forking and Extending HVE Core](docs/customization/forking.md) and review the [HVE Core documentation](docs/README.md) before adopting any component.
+
+## Legal
+
+This project is licensed under the [MIT License](./LICENSE).
+
+## Trademark Notice
+
+> This project may contain trademarks or logos for projects, products, or services. Authorized use of Microsoft
+> trademarks or logos is subject to and must follow Microsoft's Trademark & Brand Guidelines. Use of Microsoft trademarks or logos in
+> modified versions of this project must not cause confusion or imply Microsoft sponsorship. Any use of third-party trademarks or
+> logos are subject to those third-party's policies.
 
 ---
 
