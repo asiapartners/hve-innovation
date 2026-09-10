@@ -87,7 +87,7 @@ to `hve-builder`; they are not independent agents or lifecycle owners.
 
 | Agent                                  | Purpose                                                                                                  | Key Constraint                                                                 |
 |----------------------------------------|----------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------|
-| **Microsoft Marketplace Coach**        | Coaches Azure Marketplace offer selection, publication planning, pricing, Partner Center, and co-sell    | Looks up volatile Marketplace facts before asserting them; planning-only      |
+| **Microsoft Marketplace Coach**        | Coaches Microsoft Marketplace offer selection, publication planning, pricing, Partner Center, and co-sell    | Looks up volatile Marketplace facts before asserting them; planning-only      |
 | **Copilot Agent Store Coach**          | Coaches Microsoft 365 Copilot Agent Store fit, packaging, submission, monetization, and governance      | Looks up volatile Agent Store facts before asserting them; planning-only      |
 
 ## Agent Details

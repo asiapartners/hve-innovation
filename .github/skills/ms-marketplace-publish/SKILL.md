@@ -1,11 +1,11 @@
 ---
 name: Microsoft Marketplace Publishing
-description: Comprehensive reference for publishing solutions on Azure Marketplace, achieving IP Co-sell eligibility, pricing strategies, monetization, and Partner Center configuration
+description: Comprehensive reference for publishing solutions on Microsoft Marketplace, achieving IP Co-sell eligibility, pricing strategies, monetization, and Partner Center configuration
 authors:
   - Microsoft
 ms.date: 2026-08-30
 keywords:
-  - Azure Marketplace
+  - Microsoft Marketplace
   - SaaS
   - Managed Applications
   - Container Apps
@@ -48,14 +48,14 @@ This skill provides comprehensive guidance on:
 
 ### Choosing Your Offer Type
 
-The Azure Marketplace supports six primary offer types for software solutions:
+The Microsoft Marketplace supports six primary offer types for software solutions:
 
 #### **1. SaaS Offer (Cloud-Only Service)**
 
 **What it is:**
 - A software-as-a-service solution running in your cloud (or Microsoft-managed)
 - Customers access via web browser or API integration
-- Billed through Azure Marketplace or directly
+- Billed through Microsoft Marketplace or directly
 
 **Best for:**
 - Productivity tools, analytics, monitoring, security
@@ -101,7 +101,7 @@ The Azure Marketplace supports six primary offer types for software solutions:
 #### **3. Container App**
 
 **What it is:**
-- A Docker container image published to Azure Marketplace
+- A Docker container image published to Microsoft Marketplace
 - Customers deploy to Azure Container Instances or their own AKS/Kubernetes
 - Lightweight and portable
 
@@ -218,7 +218,7 @@ Do you have software to sell?
 
 **What it is:**
 - Customer brings existing enterprise license
-- No per-unit charge through Azure Marketplace
+- No per-unit charge through Microsoft Marketplace
 - Marketplace fee: **0%**
 
 **When to use:**
@@ -343,7 +343,7 @@ Do you have software to sell?
 | Co-sell Qualified | Negotiable     | 10-20%          | 80-90%      | Higher margin possible |
 
 **Payment & Payout:**
-- Customers pay Azure Marketplace → Microsoft holds for 30 days → You receive via bank transfer
+- Customers pay Microsoft Marketplace → Microsoft holds for 30 days → You receive via bank transfer
 - Payout occurs monthly (typically by the 25th)
 - Tax withholding may apply (varies by jurisdiction)
 
@@ -418,7 +418,7 @@ Metered billing allows you to charge for consumption beyond the subscription bas
 import requests
 import json
 
-# Emit usage to Azure Marketplace Metering Service
+# Emit usage to Microsoft Marketplace Metering Service
 def report_usage(subscription_id, meter_name, quantity):
     url = "https://marketplaceapi.microsoft.com/api/usageEvent"
     headers = {
@@ -681,7 +681,7 @@ To receive revenue, set up payout details:
    - Validate purchase and billing flow
    - Verify customer experience
 3. **Review** — Microsoft certification team validates (3-5 business days)
-4. **Live** → Published on Azure Marketplace
+4. **Live** → Published on Microsoft Marketplace
 
 ---
 
@@ -805,7 +805,7 @@ Your solution must meet **all** of these:
 #### **1. IP Co-Sell Qualified Status**
 
 **Requirement:**
-- Solution must be a **transactable Azure Marketplace offer**
+- Solution must be a **transactable Microsoft Marketplace offer**
   - SaaS with recurring billing
   - Managed Application
   - Azure VM
@@ -985,7 +985,7 @@ Once approved, your offer receives:
 ```
 
 This appears on:
-- Azure Marketplace listing
+- Microsoft Marketplace listing
 - Your company profile
 - Partner locator search results
 - Microsoft sales tools and customer portals
@@ -1016,7 +1016,7 @@ This appears on:
 **You are responsible for:**
 
 1. **Sales tax / VAT**
-   - Collected by Azure Marketplace on behalf of Microsoft
+   - Collected by Microsoft Marketplace on behalf of Microsoft
    - Automatically calculated and remitted to tax authorities
    - You don't need to collect; Microsoft handles it
 
@@ -1043,7 +1043,7 @@ This appears on:
 **Marketplace Payment Flow:**
 
 ```
-Customer → Azure Marketplace Billing
+Customer → Microsoft Marketplace Billing
          ↓
          (Collects payment + tax; 30-day hold)
          ↓
@@ -1204,7 +1204,7 @@ Partner Center provides insights:
 
 ### Microsoft Official Docs
 
-- [Azure Marketplace Overview](https://learn.microsoft.com/en-us/azure/marketplace/overview)
+- [Microsoft Marketplace Overview](https://learn.microsoft.com/en-us/azure/marketplace/overview)
 - [Publisher Guide](https://learn.microsoft.com/en-us/azure/marketplace/publisher-guide)
 - [Partner Center Help](https://learn.microsoft.com/en-us/partner-center/)
 - [Co-Sell Program Guide](https://learn.microsoft.com/en-us/partner-center/co-sell-requirements)
@@ -1212,14 +1212,14 @@ Partner Center provides insights:
 
 ### Third-Party Resources
 
-- [Azure Marketplace Pricing Calculator](https://calculator.azure.com/)
+- [Microsoft Marketplace Pricing Calculator](https://calculator.azure.com/)
 - [Stripe Marketplace Documentation](https://stripe.com/docs/connect)
 - [ServiceTitan Marketplace Guide](https://partners.azuremarketplace.microsoftonline.com/)
 
 ### Support
 
 - [Microsoft Partner Support](https://partner.microsoft.com/support)
-- [Azure Marketplace Contact Form](https://learn.microsoft.com/en-us/azure/marketplace/support)
+- [Microsoft Marketplace Contact Form](https://learn.microsoft.com/en-us/azure/marketplace/support)
 - Community forums and user groups
 
 ---
