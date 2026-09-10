@@ -83,6 +83,13 @@ to `hve-builder`; they are not independent agents or lifecycle owners.
 | **backlog-manager**    | Unified backlog and work management for Azure DevOps, GitHub, and Jira, plus ADO PR/build/sprint    | Uses per-platform MCP tools and the Jira CLI; per-platform preflight |
 | **functional-planner** | Analyzes PRDs and plans Azure DevOps or Jira work-item hierarchies with selectable framework lenses | Planning-only; never mutates a tracker                               |
 
+### Marketplace Coaching Agents
+
+| Agent                                  | Purpose                                                                                                  | Key Constraint                                                                 |
+|----------------------------------------|----------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------|
+| **Microsoft Marketplace Coach**        | Coaches Azure Marketplace offer selection, publication planning, pricing, Partner Center, and co-sell    | Looks up volatile Marketplace facts before asserting them; planning-only      |
+| **Copilot Agent Store Coach**          | Coaches Microsoft 365 Copilot Agent Store fit, packaging, submission, monetization, and governance      | Looks up volatile Agent Store facts before asserting them; planning-only      |
+
 ## Agent Details
 
 ### RPI Agent

@@ -59,6 +59,8 @@
     "agents/project-planning/subagents/prd-quality-reviewer.agent.md",
     "agents/project-planning/system-architecture-reviewer.agent.md",
     "agents/project-planning/ux-ui-designer.agent.md",
+    "agents/marketplace/copilot-agent-store-coach.agent.md",
+    "agents/marketplace/ms-marketplace-coach.agent.md",
     "agents/rai-planning/rai-planner.agent.md",
     "agents/rai-planning/rai-reviewer.agent.md",
     "agents/rai-planning/subagents/rai-skill-assessor.agent.md",

@@ -1,15 +1,13 @@
 ---
 name: Copilot Agent Store Coach
 description: Interactive coach guiding developers, Partner Center admins, and Microsoft 365 admins through publishing a Copilot agent to the Microsoft 365 Copilot Agent Store, wiring it to an Azure-backed SaaS, Managed App, Container App, or VM offer, monetizing it, and preparing it for Agent 365 governance
-model: auto
+user-invocable: true
 tools:
   - read
   - search
   - web
   - agent
   - 'microsoft-docs/*'
-authors:
-  - Microsoft
 ms.date: 2026-08-30
 keywords:
   - Copilot Agent Store

@@ -76,7 +76,7 @@ docs/
 > Microsoft 365 agent tool, package it, validate it, and follow the applicable
 > organizational catalog or Partner Center publishing route.
 
-## Audience And Roles
+## Audience and Roles
 
 Form multidisciplinary teams of four to six people.
 
@@ -107,10 +107,12 @@ Do not use production customer data during the workshop. Use synthetic or public
 
 ## Participant Flow
 
-1. Complete [shared setup](partner-workshop-setup.md).
-2. Choose a section in the [role guide](partner-workshop-role-tracks.md).
-3. Complete the [cross-role solution guide](partner-workshop-solution.md).
-4. Complete the [publication guide](partner-workshop-publishing.md) during the workshop and finish it after the session.
+1. Review the [workshop overview](partner-workshop.md), choose a scenario, and confirm the workshop outcomes.
+2. Complete [shared setup](partner-workshop-setup.md) and create the shared session context.
+3. Complete the [role guide](partner-workshop-role-tracks.md), including architecture design.
+4. Complete the [cross-role solution guide](partner-workshop-solution.md) to integrate and validate the role outputs.
+5. Complete the [publication guide](partner-workshop-publishing.md) and record the follow-up work needed for Marketplace and Agent Store readiness.
+6. Complete the [implementation handoff](partner-workshop-implementation.md) for approved engineering and commercialization follow-up.
 
 ## Completion Standard
 

@@ -49,8 +49,8 @@ Before you begin either option, complete these steps:
 3. Confirm GitHub Copilot and GitHub Copilot Chat are enabled in the Codespace.
 4. Open the Extensions view from the Activity Bar.
 5. Search for **HVE Core All**, confirm the publisher is `ISE-HVE-ESSENTIALS`, and install it in the Codespace.
-6. Open the terminal in Codespaces and clone the workshop repository at [https://github.com/asiapartners/hypervelocity-innovation](https://github.com/asiapartners/hypervelocity-innovation) and open it in your chosen environment.
-7. Create a branch for workshop activities before you start editing files. Use a name such as `workshop/<team-name>`.
+6. Open the terminal in Codespaces and clone the workshop repository at [https://github.com/asiapartners/hve-innovation](https://github.com/asiapartners/hve-innovation) and open it in your chosen environment.
+7. Tech lead could create a branch for workshop activities before you start editing files. Use a name such as `workshop/<team-name>`.
 8. Reload the window if VS Code asks you to do so.
 
 ## Option B: Local VS Code On Windows Or macOS
@@ -59,11 +59,11 @@ Before you begin either option, complete these steps:
 2. Open VS Code, open the Extensions view, and install **GitHub Copilot** and **GitHub Copilot Chat**.
 3. Sign in with your GitHub account that has Copilot access.
 4. Install [HVE Core All](https://marketplace.visualstudio.com/items?itemName=ise-hve-essentials.hve-core-all).
-5. Open the Command Palette, run **Git: Clone** on [https://github.com/asiapartners/hypervelocity-innovation](https://github.com/asiapartners/hypervelocity-innovation), and open it.
+5. Open the Command Palette, run **Git: Clone** on [https://github.com/asiapartners/hve-innovation](https://github.com/asiapartners/hve-innovation), and open it.
 6. Select **Open** when cloning finishes, and select **Trust** only when you recognize the repository and facilitator.
-7. Create a branch for workshop activities before you start editing files. Use a name such as `workshop/<team-name>`.
+7. Tech lead could create a branch for workshop activities before you start editing files. Use a name such as `workshop/<team-name>`.
 
-If you have Foundry local models available in your environment, you may select them for local inference. Otherwise, select `MAI-Code-1-Flash` in GitHub Copilot Chat for a more cost-effective option. How to setup local models [https://devblogs.microsoft.com/foundry/ai-assisted-development-powered-by-local-models/](https://devblogs.microsoft.com/foundry/ai-assisted-development-powered-by-local-models/).
+If you have Foundry local models available in your environment, you may select them for local inference. Otherwise, select `MAI-Code-1-Flash` in GitHub Copilot Chat for a more cost-effective option. How to setup local models using Microsoft Foundry Toolkit [https://devblogs.microsoft.com/foundry/ai-assisted-development-powered-by-local-models/](https://devblogs.microsoft.com/foundry/ai-assisted-development-powered-by-local-models/).
 
 On macOS, use the same menus and buttons. Keyboard shortcuts that use `Ctrl` on Windows often use `Command` on macOS, so this workshop favors menu navigation.
 
@@ -75,7 +75,7 @@ Complete these steps in either environment:
 2. Open the agent picker in the Chat view.
 3. Confirm that agents such as **RPI Agent**, **BRD Builder**, **UX UI Designer**, and **System Architecture Reviewer** are visible.
 4. Type `/` in Chat.
-5. Confirm that RPI prompts appear.
+5. Confirm that RPI prompts appear. Select **RPI Agent**.
 6. Enter this prompt:
 
 ```text
@@ -95,6 +95,10 @@ If the expected agents are missing:
 Ask the technical lead to complete these manual steps:
 
 * Confirm that the team is working on its workshop branch.
+* Prepare the team member roles, known facts, constraints, and approved source material for the first role exercise.
+* Before any later agent acts, provide the session-context artifact path and ask the agent to read the topic from it. Do not repeat or redefine the topic in downstream prompts.
+* For workshop case, place synthetic or public source material in a manually managed `.copilot-tracking/research/workshop-input/` folder. Keep policies, SOPs, diagrams, and supporting files there by file type.
+* For an actual production case, keep sensitive evidence in its approved source system or secure evidence workspace. Use a trusted path or controlled link for research instead of copying files into the repository.
 * Set the session topic, then create a session-context artifact under `.copilot-tracking/research/` before selecting an agent. Treat that artifact as the source of truth for the topic, evidence location, and production output roots.
 
 Use this prompt to create the shared session context:
@@ -117,8 +121,8 @@ Select the /RPI Agent. Create the session context only.
 
 Session name: relationship-manager-fsi
 Topic: Relationship Manager Intelligence Assistant for FSI
-Evidence location: docs/getting-started/samples/FSI/
-Date: 2026-09-07
+Evidence location: ./copilot-tracking/research/workshop-input
+Date: 2026-09-09
 ```
 
 * Prepare the team member roles, known facts, constraints, and approved source material for the first role exercise.
