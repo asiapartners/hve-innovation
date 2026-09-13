@@ -1,56 +1,46 @@
 ---
 name: ai-discovery-cards
-description: AI Discovery Cards workshop guidance for Design Thinking for AI Agents ideation after problem framing.
+description: Workshop guidance for using Microsoft AI Discovery Cards to ideate AI agents after problem framing.
 user-invocable: false
 metadata:
   authors: "microsoft/hve-core"
-  last_updated: "2026-08-11"
+  last_updated: "2026-09-11"
 ---
 
-# AI Discovery Cards
+# Microsoft AI Discovery Cards
 
 ## Goal
 
-Broaden solution exploration with AI Discovery Cards while preserving human-led
+Broaden solution exploration with Microsoft AI Discovery Cards while preserving human-led
 problem framing and Design Thinking method boundaries.
 
-## Use the catalog
+## When to Use
 
-Read [card-catalog.md](references/card-catalog.md) when a team or learner needs
-AI-specific prompts during brainstorming, concept development, or a related
-practice exercise. Select a small, varied set of cards whose capabilities connect
-to the validated problem, stakeholder needs, or How Might We question.
+Guide the facilitator to use AI Discovery Cards during the **Solution Space (Ideation phase)** after problem framing is established.
 
-For each selected card:
+Introduce the cards when the participants:
+* Have completed problem framing (validated persona, user needs, insights, and How Might We questions) and are ready to explore solution possibilities.
+* Needs AI-specific inspiration or prompts to spark agentic and AI solution ideas without jumping prematurely into technical architecture or implementation.
+* Wants to broaden brainstorming during concept development, prototyping ideation, or a workshop practice exercise.
 
-1. Name its card ID, title, and category.
-2. Explain the connection to the current problem evidence.
-3. Turn the capability into an open ideation prompt.
-4. Invite the humans involved to adapt, combine, reject, or replace it.
+Invite participants to explore the cards, and apply them to their problem statement and selected user journey.
 
 ## Success criteria
 
-* AI Discovery Cards expand the range of ideas instead of selecting a solution.
-* Every capability explored traces to a validated need, constraint, or learning
-  goal.
-* The team retains authorship and decides which directions continue.
-* AI capabilities are presented as prompts, not product claims.
-* Agentic ideas identify human decision points and unresolved
-  assumptions before technical planning.
+* Solution exploration is broadened without prematurely locking into a single solution.
+* Every explored AI capability is linked directly to validated user needs, constraints, or learning goals.
+* Participants retain ownership of decisions and determine which creative directions to pursue.
+* AI capabilities serve as ideation aid rather than fixed feature claims or product commitments.
+* Agentic concepts explicitly map human-in-the-loop decision points and underlying assumptions before technical planning.
 
 ## Constraints
 
-* Use AI Discovery Cards after problem framing. Do not use them to manufacture a
-  need for AI.
-* During divergent brainstorming, defer feasibility, desirability, viability, and
-  responsible AI evaluation until the applicable convergence or concept phase.
-* Do not imply that AI Discovery Cards prove AI is suitable, accurate, safe, or
-  available.
-* Do not treat a sequence of AI capabilities as proof that an autonomous or
-  multi-agent workflow is needed.
-* Use the AI Discovery Cards Workshop Facilitation Guide as the authoritative
-  source for workshop details and AI capabilities.
-* Do not reproduce or infer card content when the facilitation guide is unavailable.
+* Introduce AI Discovery Cards only after establishing problem framing; never use them to fabricate an artificial need for AI.
+* Postpone evaluations of feasibility, desirability, viability, and Responsible AI during divergent brainstorming until the formal convergence or concept phase.
+* Avoid framing AI Discovery Cards as evidence that an AI capability is feasible, accurate, safe, or currently available.
+* Do not interpret a combination of AI capabilities as evidence that an autonomous or multi-agent architecture is necessary.
+* Treat the AI Discovery Cards Workshop Facilitation Guide as the official, authoritative source for card content and capabilities.
+* Never fabricate or extrapolate card content if the facilitation guide is unavailable.
 
 ## Stop rules
 

@@ -3,7 +3,7 @@ title: Partner Workshop Role Guide
 description: Structured role-based guide for the HVE partner workshop
 sidebar_position: 9
 author: Microsoft
-ms.date: 2026-09-09
+ms.date: 2026-09-13
 ms.topic: tutorial
 keywords:
   - Project Manager
@@ -89,16 +89,49 @@ Keep your outputs clear enough to support packaging, discovery, and review in bo
 
 Capture the business truth before anyone designs or builds anything.
 
-### Steps
-
-1. Read the session-context artifact before selecting an agent. Treat its topic, session name, evidence root, and production output roots as authoritative shared context. Do not redefine the topic in downstream prompts.
+### Create Context
 1. For your selected use case, gather available evidence such as policy documents, SOPs, process diagrams, notes, document references, PDFs, screenshots, and images.
 1. For workshop case, keep synthetic or public source files in a manually managed `./copilot-tracking/research/workshop-input/` folder, organized by type such as `policies/`, `sops/`, and `process-diagrams/`. Keep original diagram files beside rendered images.
 1. For an actual production case, do not copy customer, regulated, confidential, or production evidence into the repository. Keep it in an approved system such as a governed SharePoint or OneDrive library, Azure Blob Storage or ADLS with controlled access, an approved document-management system, or a secure data room. Confirm classification, retention, and access permissions, then provide `/rpi-research` with a trusted readable path or controlled links.
+
+### Marketplace Lean Canvas as workshop input
+
+Use this lean canvas as the SME's quick workshop input before the PM, design, and technical tracks begin. The purpose is to capture the business reality in a compact, shared format that the rest of the team can review and refine.
+
+Keep each item evidence-based. Where data is unknown, write `Unknown` and note the source or decision needed. Do not invent customer segments, pricing, or metrics.
+
+| Business problem or pain | Target customer or user | Unique value proposition |
+|---|---|---|
+| What problem is expensive, risky, slow, or frustrating today? What is the cost of doing nothing? | Who is affected? Who pays? Who is the primary decision maker? | What makes this offering meaningfully better, faster, safer, or cheaper? |
+
+| Solution or core offering | Distribution or channels | Revenue model or value capture |
+|---|---|---|
+| What is the offering, workflow, or service that addresses the problem? What is the minimum viable version? | How do customers discover, buy, and receive the offering? What channels and partners matter? | What are the revenue streams, pricing model, and commercial assumptions? |
+
+| Cost structure | Key metrics and success measures | Competitive advantage or unfair edge |
+|---|---|---|
+| What are the major cost drivers, dependencies, and operational constraints? | What metrics will prove value: adoption, speed, quality, cost reduction, risk reduction, throughput, or retention? | What gives this initiative a durable advantage: policy fit, workflow depth, data access, trust, low friction, or domain expertise? |
+
+#### SME & Product Manager prompt to fill the canvas
+
+```text
+/rpi-research session-context=.copilot-tracking/research/[date]/[session-name]-session-context.md. Read the topic and evidence root from the session context. Use the business evidence, policies, process notes, and user-impact notes in the research artifact. Draft a concise lean canvas for an [FSI relationship manager assistant]. Capture the problem, target customer segments, value proposition, core offering, channels, revenue model, costs, success metrics, and unique advantage. Separate facts from assumptions and flag each unknown item for follow-up. Keep the wording grounded in evidence, not marketing language. Save the output under ./copilot-tracking/research/workshop-input/leancanvas.md
+```
+#### Output checklist
+
+1. Problem statement with affected users and impact.
+2. Target customer or user segment and decision-maker.
+3. Value proposition grounded in business evidence.
+4. Minimum viable offering or workflow.
+5. Known revenue, cost, and operational assumptions.
+6. Success metrics and business evidence needed to validate them.
+7. Risks, dependencies, and unknowns the next roles must resolve.
+
+### Start Research
 1. Run `/rpi-research` on the scenario and available evidence:
 
    ```text
-   /rpi-research session-context=.copilot-tracking/research/[date]/[session-name]-session-context.md. Read the topic and evidence root from the session context. Research the supplied scenario, policies, process notes, and supporting materials. Identify evidence-backed business facts, affected users, business rules, constraints, known failure cases, AI guardrails, open questions, and credible alternatives or counter-evidence. Save the dated primary research artifact under `.copilot-tracking/research/`. Keep the scope to context discovery.
+   /rpi-research session-context=.copilot-tracking/research/[date]/[session-name]-session-context.md. Read the topic and evidence root from the session context and the workshop-input. Research the supplied scenario, policies, process notes, and supporting materials. Identify evidence-backed business facts, affected users, business rules, constraints, known failure cases, AI guardrails, open questions, and credible alternatives or counter-evidence. Save the dated primary research artifact under `.copilot-tracking/research/`. Keep the scope to context discovery.
    ```
 
    For a production case using a locally synced, access-controlled OneDrive folder, provide the trusted evidence root explicitly:
@@ -257,10 +290,10 @@ Turn business context and user experience into requirements, priorities, and a b
 ### Steps
 
 1. Review the context pack in `.copilot-tracking/research/`, `.copilot-tracking/prd-sessions/`, `.copilot-tracking/brd-sessions/`, and `.copilot-tracking/dt/`. Align them to business outcomes, measurable success metrics, functional and non-functional requirements, user stories, acceptance criteria, out-of-scope items, and open assumptions.
-2. Run `/rpi-plan` to turn the requirements and context into an implementation plan with phases and phase details. For example:
+2. Select **RPI Agent** and run `/rpi-plan` to turn the requirements and context into an implementation plan with phases and phase details. For example:
 
    ```text
-   /rpi-plan Read `.copilot-tracking/research/2026-09-07/relationship-manager-fsi-session-context.md`, `.copilot-tracking/brd-sessions/relationship-manager-fsi-brd.md`, and `.copilot-tracking/dt/relationship-manager-fsi/experience-draft.md`. Create a lightweight implementation plan for the first MVP of the Relationship Manager Intelligence Assistant for FSI. Include phase objectives, deliverables, requirements, dependencies, risks, and acceptance criteria. Plan for one evidence-backed relationship-manager job with grounded responses, source citations, permission-aware retrieval, clear uncertainty, human escalation, and confirmation before external actions. Align the plan to Microsoft Marketplace and Microsoft 365 Copilot Agent Store readiness, but keep publication claims provisional until current Microsoft guidance, Partner Center state, and tenant feasibility are verified. Do not implement or publish anything.
+   /rpi-plan Read `.copilot-tracking/research/, `.copilot-tracking/brd-sessions/` and `.copilot-tracking/dt/`. Create a lightweight implementation plan for the first MVP of the [Relationship Manager Assistant for FSI]. Include phase objectives, deliverables, requirements, dependencies, risks, and acceptance criteria. Plan for one evidence-backed job with grounded responses, source citations, permission-aware retrieval, clear uncertainty, human escalation, and confirmation before external actions. Align the plan to Microsoft Marketplace and Microsoft 365 Copilot Agent Store readiness, but keep publication claims provisional until current Microsoft guidance, Partner Center state, and tenant feasibility are verified. Do not implement or publish anything.
    ```
 
    This writes to `.copilot-tracking/plans/` and creates a durable record that links to your requirements and design context.
@@ -269,13 +302,13 @@ Turn business context and user experience into requirements, priorities, and a b
 4. Create a backlog outline only if it helps the team move from requirements to implementation. If needed, use a lightweight hierarchy such as epic, feature, story, and task for the first MVP.
 5. Prioritize the first MVP with simple labels such as P0, P1, and P2 only if the team needs a sequencing signal. Keep this lightweight and outcome-focused rather than turning it into a rigid Agile process.
 6. Prepare the requirements and backlog artifacts for publication readiness in Microsoft Marketplace and Microsoft 365 Copilot Agent Store.
-   Select the context, requirements, experience and prompt Functional Planner:
+   Select the context, requirements, experience and prompt **Functional Planner**:
 
 ```text
-"Review the requirements under `.copilot-tracking/prd-sessions/`, the context pack under `.copilot-tracking/research/`, and the experience draft under `.copilot-tracking/dt/`. Create or refine a more implementation-ready first-slice backlog plan under `.copilot-tracking/github-issues/` with clear epics, features, stories, and tasks. Then prioritize the first slice with simple labels such as P0, P1, and P2 only if they help sequence the work. Also assess publication readiness for Microsoft Marketplace and Microsoft 365 Copilot Agent Store. Keep the output concise, outcome-focused, and useful for backlog refinement."
+"Use the functional-planner skill and review the requirements under `.copilot-tracking/prd-sessions/`, the context under `.copilot-tracking/research/`, and the experience draft under `.copilot-tracking/dt/`. Create or refine a more implementation-ready MVP backlog plan under `.copilot-tracking/github-issues/` with clear epics, features, stories, and tasks. Then prioritize the MVP with simple labels such as P0, P1, and P2 only if they help sequence the work. Also assess publication readiness for Microsoft Marketplace and Microsoft 365 Copilot Agent Store. Keep the output concise, outcome-focused, and useful for backlog refinement."
 ```
 
-1. If you are targeting GitHub Issues, ask Backlog Manager to coordinate the workflow and have GitHub Backlog Executor create the first parent issue and child issues for the initial MVP. The Backlog Manager should also ensure the resulting issue links and summary are recorded under `.copilot-tracking/github-issues/` for traceability.
+1. If you are targeting GitHub Issues, ask Backlog Manager to coordinate the workflow and have GitHub Backlog Executor create the first parent issue and child issues for the initial MVP. The **Backlog Manager** should also ensure the resulting issue links and summary are recorded under `.copilot-tracking/github-issues/` for traceability.
 
    Enable writing of GitHub issues:
 
