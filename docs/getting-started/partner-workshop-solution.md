@@ -80,7 +80,7 @@ artifact during solution review.
 2. Add columns for target system, owner, state, and external ID.
 3. Assign a post-workshop owner to import or create each approved item.
 
-## Engineer: Review the architecture
+### Engineer: Review the architecture
 
 1. Open the architecture notes and diagram under `.copilot-tracking/details/` in Markdown Preview.
 2. Follow the primary user request from Microsoft 365 Copilot to the Azure API, retrieval layer, model, and response path.
@@ -95,7 +95,7 @@ artifact during solution review.
 
 ## Ten-minute team discussion
 
-1. The PM presents the outcome, requirements, and first release slice.
+1. The PM presents the outcome, requirements, and first release scope.
 2. The SME presents key constraints and unresolved domain questions.
 3. The designer presents the primary journey and human review points.
 4. The technical lead presents the architecture view and publication routes.

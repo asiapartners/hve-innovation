@@ -104,7 +104,7 @@ Record confirmed decisions, owners, evidence, and next actions in the canonical
 Marketplace plan under .copilot-tracking/details/.
 ```
 
-### Microsoft 365 agent track
+### Microsoft 365 Copilot Agent track
 
 Select **Copilot Agent Store Coach** and provide the current agent state in one prompt:
 

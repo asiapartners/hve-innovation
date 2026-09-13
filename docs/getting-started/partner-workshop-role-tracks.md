@@ -62,7 +62,7 @@ This sequence helps each role build on the previous one without waiting for perf
 Use the HVE agents as lightweight helpers for your role. Start with your own draft, then ask an agent to refine or structure it.
 
 * **BRD Builder** or **PRD Builder** for first-draft requirements and a simple structure for business outcomes, scope, and acceptance criteria. In this workshop, the Project Management role should typically own the BRD/PRD draft, while the Subject Matter Expert provides the business context, evidence, and constraints that inform it.
-* **`RPI Agent** for gathering, testing, and synthesizing evidence before the SME creates the shared context pack.
+* **RPI Agent** for gathering, testing, and synthesizing evidence before the SME creates the shared context pack.
 * **Functional Planner** for turning a draft requirement into a lightweight epic, feature, story, and task hierarchy when the team needs a delivery handoff.
 * **UX UI Designer** for user journeys, pain points, wireframe outline, and experience artifacts.
 * **Design Thinking Coach** for facilitation and discovery.
@@ -77,11 +77,10 @@ Use the HVE agents as lightweight helpers for your role. Start with your own dra
 
 ### Getting Started Guide
 
-:::tip
-Across all roles, design for publication of your solution to Microsoft Marketplace and Microsoft 365 Copilot Agent Store. Publishing solutions to the Microsoft Marketplace is one of the fastest ways to scale reach, simplify customer procurement, earn rewards, incentives and GTM benefits, and create recurring revenue opportunities.
-
-Keep your outputs clear enough to support packaging, discovery, and review in both destinations.
-:::
+> [!TIP]
+> Across all roles, design for publication of your solution to Microsoft Marketplace and Microsoft 365 Copilot Agent Store. Publishing solutions to the Microsoft Marketplace is one of the fastest ways to scale reach, simplify customer procurement, earn rewards, incentives and GTM benefits, and create recurring revenue opportunities.
+>
+> Keep your outputs clear enough to support packaging, discovery, and review in both destinations.
 
 ## Subject Matter Expert track
 
@@ -94,7 +93,7 @@ Capture the business truth before anyone designs or builds anything.
 1. For workshop case, keep synthetic or public source files in a manually managed `./copilot-tracking/research/workshop-input/` folder, organized by type such as `policies/`, `sops/`, and `process-diagrams/`. Keep original diagram files beside rendered images.
 1. For an actual production case, do not copy customer, regulated, confidential, or production evidence into the repository. Keep it in an approved system such as a governed SharePoint or OneDrive library, Azure Blob Storage or ADLS with controlled access, an approved document-management system, or a secure data room. Confirm classification, retention, and access permissions, then provide `/rpi-research` with a trusted readable path or controlled links.
 
-### Marketplace Lean Canvas as workshop input
+### Marketplace Lean Canvas as Workshop Input
 
 Use this lean canvas as the SME's quick workshop input before the PM, design, and technical tracks begin. The purpose is to capture the business reality in a compact, shared format that the rest of the team can review and refine.
 
@@ -351,12 +350,12 @@ Frame the solution approach, architecture, and publication considerations aligne
 
    * Note deployment, security, and operational considerations.
    * Review the draft for well-architected design and Cloud Adoption Framework guidance.
-   * Capture the publication requirements for Microsoft Marketplace and Microsoft 365 Copilot Agent Store readiness, including packaging, discoverability, supportability, and integration expectations.
-   * Create a simple Mermaid architecture diagram for the proposed solution.
+   * Capture the publication requirements for Microsoft Marketplace and Microsoft 365 Copilot Agent Store readiness, including packaging, discoverability, supportability, and integration expectations.   
 
    ```text
    "Review the implementation plan at `.copilot-tracking/plans/`, the requirements under `.copilot-tracking/prd-sessions/`, and the experience draft under `.copilot-tracking/dt/`. Create architecture notes under `.copilot-tracking/details/` covering a simple solution approach for each phase, major tradeoffs, cloud architecture, well-architected concerns, publication requirements, Microsoft IQ, and a Mermaid architecture diagram. Link the architecture notes back to the phases in the implementation plan."
    ```
+   * Create a simple Mermaid architecture diagram by selecting **Arch Diagram Builder**.
 
 4. Use **Security Planner** to review readiness and surface follow-up work aligned to each phase.
 
@@ -368,8 +367,9 @@ Frame the solution approach, architecture, and publication considerations aligne
 6. (Optional) Instead of GitHub Copilot, use **Microsoft 365 Copilot** to create an image. In M365 Copilot, attach the implementation plan, and create an architecture image from the mermaid diagram for this solution using Azure and Copilot-style icons to represent core services, data sources, user experience layers, and integrations for the first MVP.
 
    ```text
-   "Create an architecture image from the Mermaid diagram for this solution using Azure and Copilot-style icons to represent core services, data sources, user experience layers, and integrations for the first MVP. Save or reference the reviewed image under `.copilot-tracking/details/` and show how it supports the phased implementation plan at `.copilot-tracking/plans/`."
+   "Create an architecture image from the Mermaid diagram for this solution using Azure and Copilot-style icons to represent core services, data sources, user experience layers, and integrations for the first MVP. "   
    ```
+   Save or reference the reviewed image under `.copilot-tracking/details/`.
 
 7. Capture only the publication assumptions needed for the solution review in the architecture notes and link them to the implementation plan.
 
@@ -378,6 +378,8 @@ Frame the solution approach, architecture, and publication considerations aligne
    * Summarize the API, identity, permission, and data contract between the two products.
    * Record architecture constraints that affect solution, including data residency, tenant isolation, customer-controlled infrastructure, and least-privilege access.
    * List unresolved publication assumptions with an owner. Do not resolve commercial or submission details during the role exercise.
+
+   Select **RPI Agent**,
 
    ```text
    "Review the implementation plan at `.copilot-tracking/plans/`, the requirements under `.copilot-tracking/prd-sessions/`, the experience draft under `.copilot-tracking/dt/`, and the architecture notes under `.copilot-tracking/details/`. Update the architecture notes with only the publication assumptions needed for the solution review. Record preferred Marketplace model and the Microsoft 365 agent as a potential companion experience. Define the product boundaries and summarize the API, identity, permission, and data contract between them. Capture only architecture constraints, assumptions, unresolved decisions, and owners needed for solution integration. Link these inputs to the implementation plan. Defer the Marketplace implementation plan, offer validation, pricing, monetization, Partner Center configuration, package preparation, certification, and rollout planning to the Partner Workshop Publishing Follow-Up."

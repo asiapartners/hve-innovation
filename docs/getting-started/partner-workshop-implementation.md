@@ -31,10 +31,9 @@ the result against the original evidence.
 
 ## From Workshop to Solution Implementation
 
-The simplest setup is to install the HVE Core VS Code extension for the target project repository for implementation. It provides the
+The simplest setup is to install the HVE Core VS Code extension for the target project repository for implementation. It manages the HVE agents.
 RPI Agent and the `/rpi`, `/rpi-research`, `/rpi-plan`, `/rpi-implement`, and
-`/rpi-review` commands without requiring the team to copy HVE agent files into
-every project. In addition copy .copilot-tracking to your target project repository to preserve context, and .github files from this repo for Microsoft Partner specific custom agents and skills.
+`/rpi-review`. In addition copy .copilot-tracking to your target project repository to preserve context, and .github files from this repo for Microsoft Partner specific custom agents and skills.
 
 Follow [Installing HVE Core](install.md) to choose one of these options:
 
@@ -99,7 +98,7 @@ Use this path when the workshop output will become a new application or service.
 Use this prompt:
 
 ```text
-/rpi-implement Use the approved implementation plan at [plan path] and implement
+/rpi-implement Use the approved implementation plan and implement
 only the first approved P0 task in this new repository. Create the minimum
 project structure required by the plan, follow the repository instructions, and
 use the planned acceptance criteria and existing validation commands. Record
@@ -162,7 +161,7 @@ Do not replace working architecture merely because the workshop proposed a
 different pattern. Record material differences and return to `/rpi-plan` when
 they change scope, requirements, or dependencies.
 
-## Step 4: Implement One Task
+## Step 2: Implement One Task
 
 During implementation:
 
@@ -180,7 +179,7 @@ The implementation phase may make local engineering decisions supported by the
 plan and repository. It must not invent missing business rules, permissions,
 success targets, or publication claims.
 
-## Step 5: Review the Result
+## Step 3: Review the Result
 
 Run `/rpi-review` after the implementation and its validations are complete.
 
@@ -216,7 +215,7 @@ If review finds a blocking defect, return to `/rpi-implement` with the specific
 finding. Run `/rpi-review` again only after the fixes and relevant validations
 are complete.
 
-## Step 6: Close the Milestone
+## Step 4: Close the Milestone
 
 When review passes:
 
@@ -229,7 +228,7 @@ When review passes:
 
 Do not mark a human-review checkbox complete on behalf of a reviewer.
 
-## Step 7: Reassess Publication Readiness
+## Step 5: Reassess Publication Readiness
 
 Marketplace and Agent Store readiness are separate from MVP completion.
 
