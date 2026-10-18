@@ -1,0 +1,132 @@
+---
+title: "Tutorial: Handing Off from DT to RPI"
+description: Step-by-step tutorial for performing Design Thinking to RPI handoffs at each exit point
+sidebar_position: 15
+author: Microsoft
+ms.date: 2026-10-02
+ms.topic: tutorial
+keywords:
+  - design thinking
+  - rpi
+  - handoff
+  - tutorial
+  - integration
+estimated_reading_time: 10
+---
+
+## Prerequisites
+
+Before starting a handoff, ensure you have:
+
+* A DT Coach session with a project slug, such as `factory-floor-maintenance`
+* Completed Methods 7-9 for the Implementation Spec Ready exit
+* A coaching state file at `.copilot-tracking/dt/{project-slug}/coaching-state.md`
+* A project folder at `.copilot-tracking/dt/{project-slug}/`
+* Familiarity with [RPI workflow basics](../rpi/README.md)
+
+> [!NOTE]
+> This tutorial continues the manufacturing scenario from [Using DT Methods Together](using-together.md). The team discovered that the plant manager's "quality dashboard" request actually reflects a knowledge-loss problem across shifts.
+
+## Implementation Spec Ready Handoff
+
+The DT-to-RPI handoff can occur at three exit points: Problem Statement Complete (Methods 1-3), Concept Validated (Methods 4-6), and Implementation Spec Ready (Methods 7-9).
+Every exit enters the RPI pipeline through `rpi-research`, and later exits seed the Research phase with progressively richer context.
+This tutorial walks through the Implementation Spec Ready exit, which hands off the richest artifact set after Methods 7-9 are complete. The same steps apply to the earlier exits with leaner artifacts.
+
+### What the Handoff Includes
+
+The handoff artifact carries the richer DT evidence you gathered through the Implementation Space:
+
+* Architecture decisions and technical trade-offs
+* High-fidelity prototype outcomes and test evidence
+* Stakeholder and constraint context from earlier methods
+* Confidence markers for each artifact, constraint, and assumption
+
+When you review the handoff before activating `rpi-research`, pay attention to items marked `assumed`, `unknown`, or `conflicting`. Those items become research targets for the incoming RPI work.
+
+### Step 1: Confirm Readiness with DT Coach
+
+After completing Method 9, ask the coach to assess readiness, or select the **🎯 Method Next** handoff:
+
+```text
+We've finished Method 9. Assess where we are and recommend the next step.
+```
+
+The coach reviews the completed Implementation Space work and confirms that the handoff is ready for `rpi-research`.
+
+### Step 2: Generate the Handoff Artifact
+
+In the same DT Coach session, ask the coach to package the Implementation Space for RPI:
+
+```text
+Prepare the Implementation Space handoff to RPI for project
+factory-floor-maintenance.
+```
+
+The coach follows the Implementation Space exit procedure from the `dt-rpi-integration` skill. Your request counts as the explicit handoff choice. The coach compiles the available DT artifacts, applies the current handoff contract, and produces two files:
+
+* `.copilot-tracking/dt/{project-slug}/handoff-summary-implementation-space.md`: The structured handoff metadata with the exit tier and confidence markers
+* `.copilot-tracking/research/{project-slug}-research-topic.md`: A self-contained document for `rpi-research`
+
+### Step 3: Review the Artifact
+
+Open `.copilot-tracking/research/factory-floor-maintenance-research-topic.md` and verify that it includes:
+
+* A clear problem framing and implementation context
+* Stakeholder context, constraints, and assumptions with confidence markers
+* Evidence from High-Fidelity Prototypes, User Testing, and Iteration at Scale
+* Clear investigation targets for items marked `assumed`, `unknown`, or `conflicting`
+
+### Step 4: Hand Off to rpi-research
+
+Clear your chat context, open the generated handoff file in your editor, and
+invoke the Research phase skill:
+
+```text
+/clear
+/rpi-research Research implementation options for the voice-guided
+repair system based on the DT handoff artifact that is open in the
+editor at .copilot-tracking/research/factory-floor-maintenance-research-topic.md
+```
+
+`rpi-research` uses the handoff to:
+
+* Scope technical research around the validated implementation context
+* Treat `assumed` items as verification targets
+* Treat `unknown` items as primary research targets
+* Pass the DT-informed findings into the standard RPI pipeline
+
+### Step 5: Continue Through RPI
+
+After research completes, continue with the standard RPI phases:
+
+```text
+/clear → /rpi-plan → /clear → /rpi-implement → /clear → /rpi-review
+```
+
+The research artifact carries the validated DT context into planning and implementation rather than recreating it from scratch.
+
+## When RPI Returns to DT
+
+The handoff is not one-way. `rpi-research` can recommend returning to DT coaching when research reveals issues that trace back to DT assumptions. When that happens, open a new DT Coach session, restate the finding that invalidated the assumption, and resume from the earlier method that needs revision.
+
+## Quick Reference
+
+| Action                              | Command or Step                                                                    |
+|-------------------------------------|------------------------------------------------------------------------------------|
+| Check readiness                     | Select **🎯 Method Next** or ask DT Coach for the next step                        |
+| Generate the implementation handoff | Ask DT Coach to prepare the Implementation Space handoff to RPI                    |
+| Switch to RPI                       | `/clear`, open the handoff artifact, then invoke `/rpi-research`                   |
+| Return to DT from RPI               | Start a new `@dt-coach` session and describe the finding that triggered the return |
+
+## Related Resources
+
+* [DT to RPI Integration](dt-rpi-integration.md): Reference for the handoff contract, per-phase mappings, and confidence markers
+* [Using DT Methods Together](using-together.md): End-to-end walkthrough of all nine DT methods
+* [RPI Workflow](../rpi/README.md): Research, Plan, Implement, Review framework
+* [DT Coach Guide](dt-coach.md): How to use the DT Coach agent
+
+<!-- markdownlint-disable MD036 -->
+*🤖 Crafted with precision by ✨Copilot following brilliant human instruction,
+then carefully refined by our team of discerning human reviewers.*
+<!-- markdownlint-enable MD036 -->
