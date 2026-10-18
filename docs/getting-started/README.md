@@ -1,9 +1,13 @@
 ---
-title: Get Started with the HVE Partner Workshop
-description: Start with the HVE partner workshop, then use the supporting setup, workflow, and role references
+title: Getting Started with HVE Core
+description: Quick setup guide for using HVE Core Copilot customizations in your projects
 sidebar_position: 1
+sidebar_label: Overview
+sidebar_custom_props:
+  accessibleName: "Overview: Getting Started with HVE Core"
+pagination_label: Getting Started with HVE Core
 author: Microsoft
-ms.date: 2026-08-19
+ms.date: 2026-10-07
 ms.topic: tutorial
 keywords:
   - github copilot
@@ -13,73 +17,55 @@ keywords:
 estimated_reading_time: 5
 ---
 
-Start with the [HVE partner workshop](partner-workshop.md). It gives partners new to HVE a shared setup path, role-based exercises, an integrated solution, and publication follow-up.
+You've installed HVE Core. What now?
 
-## Workshop Goals
+The honest answer: you can start using agents immediately, and some of them
+will produce good results right away. But the real power of HVE Core is a
+methodology called RPI (Research, Plan, Implement, Review) that changes how you
+collaborate with AI. Instead of asking AI to "write the code," you ask it to
+research first, plan second, implement third, and review last. The constraint
+changes everything.
 
-During the workshop, project and product managers, subject matter experts, designers, and technical participants work from one scenario to produce:
+This guide walks you through four steps, each building on the last:
 
-* Grounded business, user, domain, design, and technical context
-* User and solution requirements with testable acceptance criteria
-* Prioritized GitHub backlog draft
-* Reviewed Azure architecture diagram
-* Follow-up plans for an Azure Managed Application offer and Microsoft 365 Copilot Agent Store publication
+| Step                                                      | What You Do                                             | Time    |
+|-----------------------------------------------------------|---------------------------------------------------------|---------|
+| [First Interaction](first-interaction.md)                 | Talk to an agent, see it respond                        | 1 min   |
+| [First Research](first-research.md)                       | Use /rpi-research on your own codebase                  | 5 min   |
+| [First Full Workflow](first-workflow.md)                  | Run a complete Research, Plan, Implement cycle          | 15 min  |
+| [Growing with HVE](../hve-guide/roles/new-contributor.md) | Progress through four milestones toward independent use | Ongoing |
 
-## Workshop Prerequisites
+> [!TIP]
+> Already comfortable with AI-assisted development? Skip to
+> [First Full Workflow](first-workflow.md) or select
+> [RPI Agent](https://github.com/microsoft/hve-core/blob/main/.github/CUSTOM-AGENTS.md#rpi-agent)
+> for a coordinated lifecycle, or use `/rpi-research`, `/rpi-plan`,
+> `/rpi-implement`, and `/rpi-review` for direct phase work.
 
-Before joining the workshop, each participant should have the following:
+Need installation help? See the [Installation Guide](install.md) for all
+methods, or install the
+[VS Code extension](https://marketplace.visualstudio.com/items?itemName=ise-hve-essentials.hve-core)
+for the quickest path.
 
-* Mandatory: Product managers should pick a real customer scenario and log the customer opportunity in Partner Center, including the Partner Center referral ID for tracking and follow-up
-* Product managers should bring a complete Marketplace Lean Canvas worksheet for the scenario they are shaping
-* Product managers should have access to Microsoft Partner Center publisher settings or the appropriate publisher account needed for commercial publishing and validation
-* Optional: Designers should have completed the AI Discovery Cards workshop with end users and be ready to share the prioritized use case with proposed Agentic AI capabilities
-* Basic understanding that customer, production, or confidential data should not be entered into prompts or files during the workshop
-* Laptop or desktop computer with a stable internet connection
-* GitHub account that can access the workshop repository and has GitHub Copilot access enabled
-* GitHub Copilot and GitHub Copilot Chat available in the environment, with the organization permitting the feature for users
-* Access to Visual Studio Code, or the ability to use GitHub Codespaces in the browser
-* Git installed locally if using a local VS Code setup
-* Permission to install or use the Visual Studio Code extension for HVE Core All, or a facilitator-provided Codespace setup
-* Shared GitHub repo and workspace folder such as `workshop-output` for the reviewed deliverables from each role track
-* Technical participants should have a working understanding of Frontier Transformation, Microsoft IQ, Azure Databases, Fabric, Security, and GitHub Copilot
-* Optional: Azure access or architecture context if the team plans to validate architecture decisions or deployment details during the later stages
-
-## Workshop Agenda
-
-| Step | Activity                                                                                    | Time   |
-|------|---------------------------------------------------------------------------------------------|--------|
-| 1    | [Workshop Overview](partner-workshop.md)                                                    | 30 min |
-| 2    | [Set up Codespaces or local VS Code](partner-workshop-setup.md)                             | 30 min |
-| 3    | [Plan, Envision, Experience, Architecture Design, Backlog](partner-workshop-role-tracks.md) | 90 min |
-| 4    | [Validation & Solution](partner-workshop-solution.md)                                       | 30 min |
-| 5    | [Microsoft Marketplace and Copilot Agent Store readiness](partner-workshop-publishing.md)   | 60 min |
-| 6    | [Handoff to Implementation & Commercialization](partner-workshop-implementation.md)         | 30 min |
-
-> [!NOTE]
-> The workshop creates reviewed drafts and publication plans. Azure deployment,
-> certification, tenant approval, and production implementation and publication continue after
-> the session.
-
-## Not sure which bundle of agents you need?
-
-Visual Studio Marketplace packages are curated bundles of HVE capabilities that you can install into Copilot or VS Code so you get the right set of agents, prompts, instructions, and skills for your workflow. Browse the available [Visual Studio Marketplace Packages](packages.md) to compare curated HVE capabilities.
-
-## Supporting References
-
-Use the remaining Getting Started material as reference after the workshop.
-
-| Reference                                                 | Use It To                                             |
-|-----------------------------------------------------------|-------------------------------------------------------|
-| [Installation Guide](install.md)                          | Compare installation methods and resolve setup issues |
-| [VS Marketplace Packages](packages.md)                    | Choose a focused collection or HVE Core All           |
-| [First Interaction](first-interaction.md)                 | Practice a one-minute agent interaction               |
-| [First Research](first-research.md)                       | Learn the research phase on an existing codebase      |
-| [First Full Workflow](first-workflow.md)                  | Run Research, Plan, Implement, and Review             |
-| [Growing with HVE](../hve-guide/roles/new-contributor.md) | Progress toward independent HVE use                   |
-| [Role Guides](../hve-guide/roles/)                        | Continue with role-specific workflows                 |
-| [RPI Workflow](../rpi/)                                   | Understand HVE's core delivery methodology            |
+Review [HVE Core Identity and Channels](packages.md) to choose a source channel or selective clone adoption.
 
 ## Troubleshooting
+
+### Installation Issues
+
+#### Agent not available
+
+* Ensure GitHub Copilot extension is installed and active
+* Reload VS Code window: `Ctrl+Shift+P` → "Developer: Reload Window"
+* Check that hve-core is accessible (cloned or configured correctly)
+
+#### Copilot not discovering customizations
+
+* For Multi-Root: Ensure you opened the `.code-workspace` file, not just the folder
+* Verify `chat.agentFilesLocations` points to the correct path
+* Check the window title shows the workspace name
+
+#### Git or clone errors
 
 * Verify Git is installed: run `git --version` in terminal
 * Check network connectivity to github.com
@@ -87,7 +73,7 @@ Use the remaining Getting Started material as reference after the workshop.
 
 ## Optional Scripts
 
-Copy the scripts you need to your project's `scripts/` directory and adjust paths, variables, or commands to fit your environment.
+HVE Core includes utility scripts you may want to copy into your project:
 
 | Script                                             | Purpose                                            |
 |----------------------------------------------------|----------------------------------------------------|
@@ -97,18 +83,25 @@ Copy the scripts you need to your project's `scripts/` directory and adjust path
 
 Copy the scripts you need to your project's `scripts/` directory and adjust paths as needed.
 
-## Design Thinking and Discovery
+## Next Steps
+
+* Start the journey: [Your First Interaction](first-interaction.md)
+* Learn the [RPI Workflow](../rpi/) for complex tasks
+* Browse [available agents](https://github.com/microsoft/hve-core/blob/main/.github/CUSTOM-AGENTS.md) for the full catalog
+
+## Design Thinking Path
 
 For projects requiring user-centered requirements discovery before implementation:
 
-* [Design Thinking Guide](../design-thinking/): Start with the DT overview
-* [Using the DT Coach](../design-thinking/dt-coach.md): Learn to use the DT Coach agent
+* [Design Thinking Guide](../design-thinking/README.md): Start here for DT overview
+* [Using the DT Coach](../design-thinking/dt-coach.md): Learn to use the dt-coach agent
 * [DT to RPI Integration](../design-thinking/dt-rpi-integration.md): Transition from DT to implementation
 
 ## See Also
 
-* [Available agents](https://github.com/microsoft/hve-core/blob/main/.github/CUSTOM-AGENTS.md)
-* [MCP Configuration](mcp-configuration.md)
+* [Installation Guide](install.md) - Full decision matrix for all installation methods
+* [MCP Configuration](mcp-configuration.md) - Configure Model Context Protocol servers
+* [Role Guides](../hve-guide/roles/) - Find your role-specific guide
 
 ---
 

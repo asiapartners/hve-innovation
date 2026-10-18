@@ -1,9 +1,9 @@
 ---
-name: Copilot Agent Store Publishing
+name: copilot-agent-store-publish
 description: Comprehensive reference for publishing Copilot agents to the Microsoft 365 Copilot Agent Store, binding them to Azure-backed SaaS, Managed App, Container App, or VM offers, monetizing through Partner Center, and preparing for Agent 365 governance
 authors:
   - Microsoft
-ms.date: 2026-08-30
+ms.date: 2026-10-18
 keywords:
   - Copilot Agent Store
   - Microsoft 365 Copilot

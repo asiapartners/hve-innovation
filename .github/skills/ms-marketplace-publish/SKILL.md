@@ -1,9 +1,9 @@
 ---
-name: Microsoft Marketplace Publishing
+name: ms-marketplace-publish
 description: Comprehensive reference for publishing solutions on Microsoft Marketplace, achieving IP Co-sell eligibility, pricing strategies, monetization, and Partner Center configuration
 authors:
   - Microsoft
-ms.date: 2026-08-30
+ms.date: 2026-10-18
 keywords:
   - Microsoft Marketplace
   - SaaS
@@ -1239,4 +1239,3 @@ Partner Center provides insights:
 ---
 
 *This skill is maintained by Microsoft and the community. Last updated: 2026-08-30.*
-

@@ -1,0 +1,90 @@
+---
+title: "Stage 3: Product Definition"
+description: Transform business requirements into product specifications and architecture decisions
+sidebar_position: 4
+author: Microsoft
+ms.date: 2026-10-03
+ms.topic: how-to
+keywords:
+  - ai-assisted project lifecycle
+  - product definition
+  - PRD
+  - ADR
+  - architecture
+estimated_reading_time: 6
+---
+
+## Overview
+
+Product Definition transforms Discovery outputs into actionable specifications. This stage focuses on creating product requirements documents, formalizing architecture decisions, and validating that product direction aligns with business needs.
+
+## When You Enter This Stage
+
+You enter Product Definition after completing [Stage 2: Discovery](discovery.md) with a finalized BRD.
+
+> [!NOTE]
+> Prerequisites: BRD complete and available at `docs/project-planning/`. Architecture options explored during Discovery.
+
+## Available Tools
+
+| Tool                  | Type  | How to Invoke                           | Purpose                                         |
+|-----------------------|-------|-----------------------------------------|-------------------------------------------------|
+| prd-builder           | Agent | Select **prd-builder** agent            | Create product requirements documents from BRDs |
+| requirements-author   | Skill | Use the **requirements-author** skill   | Author BRD and PRD requirements documents       |
+| adr-creation          | Agent | Select **adr-creation** agent           | Document architecture decisions formally        |
+| architecture-diagrams | Skill | Use the **architecture-diagrams** skill | Generate ASCII architecture diagrams for PRDs   |
+| security-planner      | Agent | Select **security-planner** agent       | Validate security requirements in product specs |
+| sssc-planner          | Agent | Select **sssc-planner** agent           | Validate supply chain security in product specs |
+| rai-planner           | Agent | Select **rai-planner** agent            | Validate RAI requirements in product specs      |
+
+## Design Thinking for Product Concepts
+
+Teams that used **dt-coach** during Discovery can carry Design Thinking outputs into Product Definition. Methods 4-5 (Brainstorming and User Concepts) produce validated solution concepts with Desirability/Feasibility/Viability analysis that strengthen PRD requirements. The **dt-coach** agent helps refine concepts before formal PRD creation, ensuring product definitions reflect user-validated insights. See the [Design Thinking documentation](../../design-thinking/README.md) for method details.
+
+## Role-Specific Guidance
+
+TPMs own Product Definition, translating BRDs into PRDs with clear acceptance criteria. Tech Leads contribute architecture decisions and validate technical feasibility of proposed requirements.
+
+* [TPM Guide](../roles/tpm.md)
+* [Tech Lead Guide](../roles/tech-lead.md)
+* [UX Designer Guide](../roles/ux-designer.md)
+
+## Starter Prompts
+
+Select **prd-builder** agent:
+
+```text
+Create a PRD from the BRD at docs/project-planning/fleet-management-v1.md. Define
+the vehicle tracking dashboard requirements with acceptance criteria for
+real-time GPS updates, geofence alerting, and non-functional requirements
+for sub-500ms map tile rendering at 10,000 concurrent sessions.
+```
+
+For explicit proposal-response work, name the approved PRD and let PRD Builder contribute product evidence from it, then draft in the same session once business and product claims are assembled. Structural readiness is advisory and never grants approval or release authority. See the [proposal response workflow](../../agents/project-planning/brd-prd-builders#proposal-response-workflow).
+
+Select **adr-creation** agent:
+
+```text
+Document the architecture decision for choosing PostgreSQL over CosmosDB
+for the order management service. Include decision drivers around query
+complexity and transaction support, alternatives considered, and the
+migration path from the existing MongoDB deployment.
+```
+
+Use the **architecture-diagrams** skill:
+
+```text
+Generate an ASCII architecture diagram for the event-driven order
+processing pipeline. Show the message flow from API gateway through the
+event bus to worker services, including the dead-letter queue and
+monitoring integration. Use ASCII block diagram syntax.
+```
+
+## Stage Outputs and Next Stage
+
+Product Definition produces PRDs, ADRs, and architecture diagrams. Transition to [Stage 4: Decomposition](decomposition.md) when PRDs and ADRs are finalized.
+
+<!-- markdownlint-disable MD036 -->
+*🤖 Crafted with precision by ✨Copilot following brilliant human instruction,
+then carefully refined by our team of discerning human reviewers.*
+<!-- markdownlint-enable MD036 -->
