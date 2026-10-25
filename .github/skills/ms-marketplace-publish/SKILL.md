@@ -388,7 +388,7 @@ Apply [certification policy 100.4](https://learn.microsoft.com/en-us/legal/marke
 
 ### Shared solution monetization plan
 
-Read existing BRD, PRD, architecture and publication plans before requesting inputs. Honor an explicit destination; otherwise resume the shared plan linked from either publishing handoff or found in the solution's tracking files. If absent, create `.\.copilot-tracking\details\{{YYYY-MM-DD}}\solution-monetization-plan.md` under the customer workspace using today's date. Preserve confirmed decisions and flag conflicts; maintain no competing role price lists.
+Read existing BRD, PRD, architecture and publication plans before requesting inputs. Honor an explicit destination; otherwise resume the shared plan linked from either publishing handoff or found in the solution's tracking files. If absent, create `.copilot-tracking/details/{{YYYY-MM-DD}}/solution-monetization-plan.md` under the customer workspace using today's date. Preserve confirmed decisions and flag conflicts; maintain no competing role price lists.
 
 Use `copilot-agent-store-publish` for companion routes, licensing, entitlements and incremental costs. Distinguish purchases made once from separate Microsoft, Azure and third-party charges. Both modes below retain the common pricing, cost, evidence and approval requirements.
 
