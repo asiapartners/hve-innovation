@@ -3,7 +3,7 @@ title: Partner Workshop Setup
 description: Shared Codespaces and local VS Code setup instructions for the HVE partner workshop
 sidebar_position: 8
 author: Microsoft
-ms.date: 2026-09-07
+ms.date: 2026-10-25
 ms.topic: tutorial
 keywords:
   - GitHub Codespaces
@@ -79,7 +79,9 @@ Complete these steps in either environment:
 6. Enter this prompt:
 
 ```text
-Review the repository and identify the most relevant HVE Core assets for a partner workshop scenario. Summarize the likely workflow, likely agents, and any prerequisites before the team begins the role exercises.
+Review the repository and identify the most relevant HVE Core assets for a
+partner workshop scenario. Summarize the likely workflow, likely agents, and
+any prerequisites before the team begins the role exercises.
 ```
 
 If the expected agents are missing:
@@ -104,14 +106,21 @@ Ask the technical lead to complete these manual steps:
 Use this prompt to create the shared session context:
 
 ```text
-Select the /RPI Agent. Create a session-context artifact before starting research or drafting requirements.
+Select the /RPI Agent. Create a session-context artifact before starting
+research or drafting requirements.
 
 Session name: [short name for this workshop]
 Topic: [topic or use case]
 Evidence location: [approved path, controlled link, or source system]
 Date: [YYYY-MM-DD]
 
-Create the artifact at `.copilot-tracking/research/[YYYY-MM-DD]/[session-name]-session-context.md`. Record the session name, topic, evidence location, date, evidence boundary, and production output roots. Make this artifact the required context for every later agent. Mark it as draft for human review. Do not start research, create a BRD or PRD, create backlog items, or copy sensitive evidence into the repository.
+Create the artifact at
+`.copilot-tracking/research/[YYYY-MM-DD]/[session-name]-session-context.md`.
+Record the session name, topic, evidence location, date, evidence boundary,
+and production output roots. Make this artifact the required context for
+every later agent. Mark it as draft for human review. Do not start research,
+create a BRD or PRD, create backlog items, or copy sensitive evidence into
+the repository.
 ```
 
 Example:

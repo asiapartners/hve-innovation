@@ -3,7 +3,7 @@ title: HVE Partner Workshop
 description: Workshop for partners to create requirements, context, a backlog, Azure architecture, and publication plans with HVE Core
 sidebar_position: 7
 author: Microsoft
-ms.date: 2026-09-07
+ms.date: 2026-10-25
 ms.topic: tutorial
 keywords:
   - partner workshop
@@ -49,7 +49,8 @@ The team should leave with these artifacts in production locations:
 |-- brd-sessions/             [BRD drafts and session state]
 |-- prd-sessions/             requirements.md
 |-- plans/                    [implementation plan and phase details]
-|-- details/                  [phase-specific architecture and publication notes]
+|-- details/                  [phase-specific architecture and publication
+                               notes]
 |-- dt/                       [design thinking outputs]
 `-- github-issues/            [backlog plan]
 docs/

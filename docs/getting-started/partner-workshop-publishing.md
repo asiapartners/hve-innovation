@@ -1,9 +1,9 @@
 ---
 title: Partner Workshop Publishing Follow-Up
-description: Frame publication readiness for Azure Application and Microsoft 365 Copilot Agent Store as a workshop handoff
+description: Frame publication readiness and product pricing for Microsoft Marketplace and Microsoft 365 Copilot Agent Store
 sidebar_position: 11
 author: Microsoft
-ms.date: 2026-09-10
+ms.date: 2026-10-25
 ms.topic: how-to
 keywords:
   - Azure Applications
@@ -11,7 +11,9 @@ keywords:
   - Partner Center
   - Microsoft 365 Copilot
   - Agent Store
-estimated_reading_time: 12
+  - monetization
+  - product pricing
+estimated_reading_time: 16
 ---
 
 ## Workshop Agenda
@@ -36,6 +38,7 @@ Capture the minimum work needed to make the solution reviewable and eligible for
 By the end of the session, the team should be able to answer:
 
 * Which publication path is being targeted first?
+* What public price, private-offer price, and cost assumptions support a profitable product?
 * What needs to be owned by engineering, product, security, or operations?
 * What remains unresolved before a real submission can happen?
 
@@ -45,7 +48,7 @@ Before building the offer package, capture the commercial and go-to-market conte
 
 1. Define the product brand, messaging, and primary value proposition for both the Azure offer and the Microsoft 365 agent experience.
 2. Confirm the initial geographic coverage, target customer segment, and any launch limitations such as language or regional compliance constraints.
-3. Define the monetization model, billing approach, and taxation expectations early so the offer plan and support model are aligned.
+3. Complete the [product manager monetization plan](#product-manager-monetization-plan) with both publishing tracks so pricing, billing, costs, and taxation assumptions are aligned.
 4. Capture a simple Lean Business Canvas summary with customer segments, problem, solution, channels, revenue, cost, partners, and differentiators.
 5. For Azure IP Co-sell on Marketplace, complete a Partner Center Admin checklist that covers publisher setup, legal entity and tax readiness, offer metadata, support contacts, pricing plan, and technical package validation.
 6. For a Copilot Agent Store add-on, verify the supported agent type, packaging path, tenant admin approvals, consent boundaries, and whether the agent should be listed as a standalone offer or an add-on to the Azure offer.
@@ -91,15 +94,20 @@ Marketplace programs, offer types, fee percentages, and the Copilot publishing m
 Select **Microsoft Marketplace Coach** and provide the current product state in one prompt:
 
 ```text
-Read available BRD, PRD, architecture, and Marketplace planning artifacts in .copilot-tracking/ folder. We are building product for customers and need to reach Azure IP Co-sell eligibility in 2 weeks.
+Read available BRD, PRD, architecture, and Marketplace planning artifacts in
+.copilot-tracking/ folder. We are building product for customers and need to
+reach Azure IP Co-sell eligibility in 2 weeks.
 
 Recommend:
 1. SaaS, Managed Application, or Azure Container
 2. The deployment and publisher-access model
-3. The pricing and transaction approach
+3. The pricing and transaction approach, using the shared product manager
+   monetization plan: fixed, hybrid, or consumption; separate public and
+   private prices; SMC/SMB self-service checkout; costs, profit, fees, and tax
 4. The shortest credible readiness path
 
-State the trade-offs and blockers, then ask me to confirm all decisions together.
+State the trade-offs and blockers, then ask me to confirm all decisions
+together.
 Record confirmed decisions, owners, evidence, and next actions in the canonical
 Marketplace plan under .copilot-tracking/details/.
 ```
@@ -109,16 +117,21 @@ Marketplace plan under .copilot-tracking/details/.
 Select **Copilot Agent Store Coach** and provide the current agent state in one prompt:
 
 ```text
-Read our available BRD, PRD, architecture, and Marketplace planning artifacts in .copilot-tracking/ folder.
-We are building copilot agent experience for customers and need to reach publication in 2 weeks.
+Read our available BRD, PRD, architecture, and Marketplace planning artifacts in
+.copilot-tracking/ folder.
+We are building copilot agent experience for customers and need to reach
+publication in 2 weeks.
 
 Recommend:
 1. Declarative agent, custom engine agent, or another supported agent type
 2. The backend binding and authentication model
-3. The licensing, entitlement, and tenant rollout approach
+3. The licensing, entitlement, and tenant rollout approach, reconciled with the
+   shared monetization plan and Marketplace pricing so agent and backend
+   charges are clear and included usage is not billed twice
 4. The shortest credible validation and submission path
 
-State the trade-offs and blockers, then ask me to confirm all decisions together.
+State the trade-offs and blockers, then ask me to confirm all decisions
+together.
 Record confirmed decisions, owners, evidence, and next actions in the canonical
 agent-store plan under .copilot-tracking/details/.
 ```
@@ -126,6 +139,39 @@ agent-store plan under .copilot-tracking/details/.
 > [!IMPORTANT]
 > Neither coach provides tax, legal, or financial advice. They explain what Microsoft documents and stop where the answer depends on your entity, jurisdiction, or contracts. Route those questions to a qualified professional and record the referral as a workshop action item.
 
+## Product Manager Monetization Plan
+
+The Product Manager owns pricing with finance, engineering, partner sales, and both publishing-track owners. The Marketplace skill supplies the reusable cost checklist, pricing comparisons, private-service scope, and approval checks.
+
+Use this prompt to prepare an MVP pricing recommendation: one launch package, a proposed price range using available market references, public versus private prices, and fixed-package versus per-user billing with monthly and annual terms.
+
+Complete this step before configuring a Marketplace offer so the Product Manager can review what customers buy, what they pay separately, and whether the proposed price is supported by costs and market evidence. Missing costs, licensing requirements and approvals remain visible; the result is a recommendation for review, not an approved price list.
+
+Select **Microsoft Marketplace Coach** and paste:
+
+```text
+Use ms-marketplace-publish's MVP commercialization decision mode to create or
+update our shared solution monetization plan from the BRD, PRD, architecture and
+publication decisions. Keep it concise for Product Manager review and link it
+from the Marketplace handoff. Planning only; do not publish.
+```
+
+### Reconcile Agent Monetization
+
+Reconciling agent monetization means checking the companion agent's charges, licensing and paid-access rules against the backend price plan. The objective is one consistent customer package: explain whether companion access is included or separately charged, what customers must purchase separately, and how backend entitlement is verified.
+
+Use this step to prevent double billing for backend usage or included support and conflicting prices across the two publishing tracks. The prompt updates the existing shared plan and identifies unresolved costs, licensing decisions and approvals; it does not create another price list or approve prices for sale.
+
+Select **Copilot Agent Store Coach** and paste:
+
+```text
+Use copilot-agent-store-publish's monetization reconciliation workflow to update
+our existing shared solution monetization plan. Present the agent/backend charge
+breakdown and approval gaps for review, and link it from the Agent Store
+handoff. Planning only; do not publish.
+```
+
+After reconciliation, Product Manager can review the shared plan at `.\.copilot-tracking\details\YYYY-MM-DD\solution-monetization-plan.md`. Use the existing plan's date folder, or the actual saved path reported by the coach if different, and include that path in the review request. Review the package, public/private prices, separate customer charges and unresolved approval gaps before authorizing commercial implementation.
 
 ## Publication Readiness Reference
 
@@ -142,7 +188,7 @@ Here are reference guides that would support your Marketplace FastTrack Coaching
 5. Register required resource providers.
 6. Choose the Managed Application permission scenario.
 7. Apply least privilege to publisher identities and customer operations.
-8. Decide whether metered billing is required.
+8. Confirm the shared monetization worksheet, public and private pricing, and whether metered billing is required.
 
 ### Phase 2: Build and validate the package
 
@@ -190,6 +236,7 @@ Here are reference guides that would support your Marketplace FastTrack Coaching
 ### Phase 1: Offer commercialization
 
 1. Choose **Microsoft 365 Agents Toolkit** for a packaged declarative or custom engine agent that can target Microsoft Marketplace.
+2. Reconcile the shared monetization worksheet with the Marketplace track, including paid backend access, separate license prerequisites, and public or private purchase paths.
 
 > [!NOTE]
 > Verify the current [Microsoft 365 Copilot publishing matrix](https://learn.microsoft.com/microsoft-365-copilot/extensibility/publish) before implementation because support varies by agent type and route.

@@ -3,7 +3,7 @@ title: Partner Workshop Role Guide
 description: Structured role-based guide for the HVE partner workshop
 sidebar_position: 9
 author: Microsoft
-ms.date: 2026-09-13
+ms.date: 2026-10-25
 ms.topic: tutorial
 keywords:
   - Project Manager
@@ -114,7 +114,18 @@ Keep each item evidence-based. Where data is unknown, write `Unknown` and note t
 #### SME & Product Manager prompt to fill the canvas
 
 ```text
-/rpi-research session-context=.copilot-tracking/research/[date]/[session-name]-session-context.md. Read the topic and evidence root from the session context. Use the business evidence, policies, process notes, and user-impact notes in the research artifact. Draft a concise lean canvas for an [FSI relationship manager assistant]. Capture the problem, target customer segments, value proposition, core offering, channels, revenue model, costs, success metrics, and unique advantage. Separate facts from assumptions and flag each unknown item for follow-up. Keep the wording grounded in evidence, not marketing language. Save the output under ./copilot-tracking/research/workshop-input/leancanvas.md
+/rpi-research
+session-context=.copilot-tracking/research/[date]/[session-name]-session-context.md.
+Read the topic and evidence root from the session context. Use the business
+evidence, policies, process notes, and user-impact notes in the research
+artifact.
+Draft a concise lean canvas for an [FSI relationship manager assistant]. Capture
+the problem, target customer segments, value proposition, core offering,
+channels,
+revenue model, costs, success metrics, and unique advantage. Separate facts from
+assumptions and flag each unknown item for follow-up. Keep the wording grounded
+in evidence, not marketing language. Save the output under
+./copilot-tracking/research/workshop-input/leancanvas.md
 ```
 #### Output checklist
 
@@ -130,13 +141,34 @@ Keep each item evidence-based. Where data is unknown, write `Unknown` and note t
 1. Run `/rpi-research` on the scenario and available evidence:
 
    ```text
-   /rpi-research session-context=.copilot-tracking/research/[date]/[session-name]-session-context.md. Read the topic and evidence root from the session context and the workshop-input. Research the supplied scenario, policies, process notes, and supporting materials. Identify evidence-backed business facts, affected users, business rules, constraints, known failure cases, AI guardrails, open questions, and credible alternatives or counter-evidence. Save the dated primary research artifact under `.copilot-tracking/research/`. Keep the scope to context discovery.
+   /rpi-research
+   session-context=.copilot-tracking/research/[date]/[session-name]-session-context.md.
+   Read the topic and evidence root from the session context and the
+   workshop-input. Research the supplied scenario, policies, process notes, and
+   supporting materials. Identify evidence-backed business facts, affected
+   users,
+   business rules, constraints, known failure cases, AI guardrails, open
+   questions,
+   and credible alternatives or counter-evidence. Save the dated primary
+   research
+   artifact under `.copilot-tracking/research/`. Keep the scope to context
+   discovery.
    ```
 
    For a production case using a locally synced, access-controlled OneDrive folder, provide the trusted evidence root explicitly:
 
    ```text
-   /rpi-research session-context=.copilot-tracking/research/[date]/[session-name]-session-context.md. Read the topic and OneDrive evidence root from the session context. Research the policies, SOPs, process diagrams, notes, PDFs, and screenshots in that folder. Identify evidence-backed business facts, affected users, business rules, constraints, known failure cases, AI guardrails, open questions, and credible alternatives or counter-evidence. Save the dated primary research artifact under `.copilot-tracking/research/`. Do not copy source files into the repository; cite the source filename and controlled location in the research artifact.
+   /rpi-research
+   session-context=.copilot-tracking/research/[date]/[session-name]-session-context.md.
+   Read the topic and OneDrive evidence root from the session context. Research
+   the policies, SOPs, process diagrams, notes, PDFs, and screenshots in that
+   folder. Identify evidence-backed business facts, affected users, business
+   rules, constraints, known failure cases, AI guardrails, open questions, and
+   credible alternatives or counter-evidence. Save the dated primary research
+   artifact under `.copilot-tracking/research/`. Do not copy source files into
+   the
+   repository; cite the source filename and controlled location in the research
+   artifact.
    ```
 
    Use a OneDrive folder that is governed by the organization's permissions, retention, and classification policies. Do not use a public sharing link or a personal OneDrive folder for production evidence.
@@ -149,13 +181,38 @@ Keep each item evidence-based. Where data is unknown, write `Unknown` and note t
    Use **BRD Builder** when the team needs to establish the business case, stakeholders, outcomes, constraints, and decision context:
 
    ```text
-   Select the /BRD Builder agent. Session context: .copilot-tracking/research/[date]/[session-name]-session-context.md. Read the topic from the session context, then use its evidence references and research artifact. Draft a concise business requirements outline covering the business problem, affected stakeholders, measurable business outcomes, scope, non-goals, business rules, constraints, risks, assumptions, dependencies, and unresolved questions. Save the BRD draft and its session state under `.copilot-tracking/brd-sessions/`. Separate evidence-backed facts from assumptions and proposed decisions. Do not invent customer facts, policy requirements, metrics, or implementation commitments. Mark the document as a draft for human review and include testable acceptance criteria where they clarify the business outcome.
+   Select the /BRD Builder agent. Session context:
+   .copilot-tracking/research/[date]/[session-name]-session-context.md.
+   Read the topic from the session context, then use its evidence references and
+   research artifact. Draft a concise business requirements outline covering the
+   business problem, affected stakeholders, measurable business outcomes, scope,
+   non-goals, business rules, constraints, risks, assumptions, dependencies, and
+   unresolved questions. Save the BRD draft and its session state under
+   `.copilot-tracking/brd-sessions/`. Separate evidence-backed facts from
+   assumptions and proposed decisions. Do not invent customer facts, policy
+   requirements, metrics, or implementation commitments. Mark the document as a
+   draft for human review and include testable acceptance criteria where they
+   clarify the business outcome.
    ```
 
    Use **PRD Builder** when the team needs product behavior, user needs, functional requirements, non-functional requirements, and acceptance criteria:
 
    ```text
-   Select the /PRD Builder agent. Session context: .copilot-tracking/research/[date]/[session-name]-session-context.md. Read the topic from the session context, then use its research artifact and business requirements references. Draft a concise product requirements outline covering target users, jobs to be done, user journeys, in-scope and out-of-scope behavior, functional requirements, non-functional requirements, data and AI guardrails, known failure cases, accessibility needs, success metrics, dependencies, and testable acceptance criteria. Save the PRD draft and its session state under `.copilot-tracking/prd-sessions/`. Preserve citations or references to the supporting evidence. Separate facts from assumptions, decisions, and open questions. Do not invent customer data, policy requirements, or unsupported technical details. Mark the document as a draft for human review.
+   Select the /PRD Builder agent. Session context:
+   .copilot-tracking/research/[date]/[session-name]-session-context.md.
+   Read the topic from the session context, then use its research artifact and
+   business requirements references. Draft a concise product requirements
+   outline
+   covering target users, jobs to be done, user journeys, in-scope and
+   out-of-scope
+   behavior, functional requirements, non-functional requirements, data and AI
+   guardrails, known failure cases, accessibility needs, success metrics,
+   dependencies, and testable acceptance criteria. Save the PRD draft and its
+   session state under `.copilot-tracking/prd-sessions/`. Preserve citations or
+   references to the supporting evidence. Separate facts from assumptions,
+   decisions, and open questions. Do not invent customer data, policy
+   requirements, or unsupported technical details. Mark the document as a draft
+   for human review.
    ```
 
    For production evidence, provide the approved source path or controlled link as context. Do not paste or copy sensitive source content into the repository unless the approved environment permits it.
@@ -209,33 +266,43 @@ understanding of the problem.
    Select the context pack under `.copilot-tracking/research/` and use this prompt in GitHub Copilot Chat:
 
 ```text
-"Turn these notes into a simple user journey, experience outline, and key pain points for this scenario. Save the reviewed experience draft under `.copilot-tracking/dt/`."
+"Turn these notes into a simple user journey, experience outline, and key pain
+points for this scenario. Save the reviewed experience draft under
+`.copilot-tracking/dt/`."
 ```
 
 10. If the team needs a guided conversation, ask **Design Thinking Coach** to help frame the opportunity and challenge assumptions.
 
 ```text
-"Coach me through a short design thinking session for this scenario. Help me frame the problem, identify user needs, and define a focused opportunity area for the solution."
+"Coach me through a short design thinking session for this scenario. Help me
+frame the problem, identify user needs, and define a focused opportunity area
+for the solution."
 ```
 
 11. If the team needs learning support or a clearer next step, ask **Design Thinking Learning Tutor** to explain the method and help transform notes into a simple design artifact.
 
 ```text
-"Act as a Design Thinking Learning Tutor. Explain the next design thinking step for this scenario and help me turn my notes into an insight, opportunity statement, or user journey outline."
+"Act as a Design Thinking Learning Tutor. Explain the next design thinking step
+for this scenario and help me turn my notes into an insight, opportunity
+statement, or user journey outline."
 ```
 
 12. Use **Accessibility Planner** and **Accessibility Reviewer** to surface accessibility requirements and review the draft for gaps.
    Select the experience draft under `.copilot-tracking/dt/` and prompt Accessibility Planner:
 
 ```text
-"Review the experience draft under `.copilot-tracking/dt/` and identify accessibility requirements, user needs, follow-up questions for implementation, and updates to the draft."
+"Review the experience draft under `.copilot-tracking/dt/` and identify
+accessibility requirements, user needs, follow-up questions for implementation,
+and updates to the draft."
 ```
 
 13. Use **RAI Planner** and **RAI Reviewer** to capture responsible AI requirements, guardrails, and review findings.
    Select the experience draft under `.copilot-tracking/dt/` and use the **RAI Planner** prompt:
 
 ```text
-"Review the experience draft under `.copilot-tracking/dt/` and identify responsible AI requirements, potential harms, mitigation ideas, and updates to the draft."
+"Review the experience draft under `.copilot-tracking/dt/` and identify
+responsible AI requirements, potential harms, mitigation ideas, and updates to
+the draft."
 ```
 
 14. If your team uses Figma, include links or references to Figma files, wireframes, and design artifacts in the experience draft. Use Figma outputs as evidence for user flows, screens, and design decisions, and note how those artifacts support the workshop handoff.
@@ -269,7 +336,10 @@ The Figma MCP server does not require a local installation. A Figma account with
    Select the experience draft under `.copilot-tracking/dt/` and prompt UX UI Designer:
 
 ```text
-"How would end users benefit from Microsoft 365 Copilot integrated to this scenario? What research would I need to run to validate it? Update the experience draft under `.copilot-tracking/dt/`."
+"How would end users benefit from Microsoft 365 Copilot integrated to this
+scenario? What research would I need to run to validate it? Update the
+experience
+draft under `.copilot-tracking/dt/`."
 ```
 
 22. Note how the experience should be packaged, discoverable, and reviewable for Microsoft Marketplace and Microsoft 365 Copilot Agent Store.
@@ -292,7 +362,19 @@ Turn business context and user experience into requirements, priorities, and a b
 2. Select **RPI Agent** and run `/rpi-plan` to turn the requirements and context into an implementation plan with phases and phase details. For example:
 
    ```text
-   /rpi-plan Read `.copilot-tracking/research/, `.copilot-tracking/brd-sessions/` and `.copilot-tracking/dt/`. Create a lightweight implementation plan for the first MVP of the [Relationship Manager Assistant for FSI]. Include phase objectives, deliverables, requirements, dependencies, risks, and acceptance criteria. Plan for one evidence-backed job with grounded responses, source citations, permission-aware retrieval, clear uncertainty, human escalation, and confirmation before external actions. Align the plan to Microsoft Marketplace and Microsoft 365 Copilot Agent Store readiness, but keep publication claims provisional until current Microsoft guidance, Partner Center state, and tenant feasibility are verified. Do not implement or publish anything.
+   /rpi-plan Read `.copilot-tracking/research/,
+   `.copilot-tracking/brd-sessions/` and `.copilot-tracking/dt/`. Create a
+   lightweight implementation plan for the first MVP of the [Relationship
+   Manager
+   Assistant for FSI]. Include phase objectives, deliverables, requirements,
+   dependencies, risks, and acceptance criteria. Plan for one evidence-backed
+   job
+   with grounded responses, source citations, permission-aware retrieval, clear
+   uncertainty, human escalation, and confirmation before external actions.
+   Align the plan to Microsoft Marketplace and Microsoft 365 Copilot Agent Store
+   readiness, but keep publication claims provisional until current Microsoft
+   guidance, Partner Center state, and tenant feasibility are verified. Do not
+   implement or publish anything.
    ```
 
    This writes to `.copilot-tracking/plans/` and creates a durable record that links to your requirements and design context.
@@ -304,7 +386,18 @@ Turn business context and user experience into requirements, priorities, and a b
    Select the context, requirements, experience and prompt **Functional Planner**:
 
 ```text
-"Use the functional-planner skill and review the requirements under `.copilot-tracking/prd-sessions/`, the context under `.copilot-tracking/research/`, and the experience draft under `.copilot-tracking/dt/`. Create or refine a more implementation-ready MVP backlog plan under `.copilot-tracking/github-issues/` with clear epics, features, stories, and tasks. Then prioritize the MVP with simple labels such as P0, P1, and P2 only if they help sequence the work. Also assess publication readiness for Microsoft Marketplace and Microsoft 365 Copilot Agent Store. Keep the output concise, outcome-focused, and useful for backlog refinement."
+"Use the functional-planner skill and review the requirements under
+`.copilot-tracking/prd-sessions/`, the context under
+`.copilot-tracking/research/`, and the experience draft under
+`.copilot-tracking/dt/`. Create or refine a more implementation-ready MVP
+backlog
+plan under `.copilot-tracking/github-issues/` with clear epics, features,
+stories,
+and tasks. Then prioritize the MVP with simple labels such as P0, P1, and P2
+only
+if they help sequence the work. Also assess publication readiness for Microsoft
+Marketplace and Microsoft 365 Copilot Agent Store. Keep the output concise,
+outcome-focused, and useful for backlog refinement."
 ```
 
 1. If you are targeting GitHub Issues, ask Backlog Manager to coordinate the workflow and have GitHub Backlog Executor create the first parent issue and child issues for the initial MVP. The **Backlog Manager** should also ensure the resulting issue links and summary are recorded under `.copilot-tracking/github-issues/` for traceability.
@@ -326,7 +419,14 @@ Turn business context and user experience into requirements, priorities, and a b
    Prompt:
 
 ```text
-"Review the approved requirements under `.copilot-tracking/prd-sessions/` and the backlog outline under `.copilot-tracking/github-issues/`. Confirm the target GitHub repository, create the first parent issue and child issues for this initial MVP, and record the issue links and summary under `.copilot-tracking/github-issues/` for traceability. Use labels such as P0, P1, P2, epic, feature, story, and task only if they help the workflow. Update the backlog plan and create the backlog in GitHub Issues."
+"Review the approved requirements under `.copilot-tracking/prd-sessions/` and
+the
+backlog outline under `.copilot-tracking/github-issues/`. Confirm the target
+GitHub repository, create the first parent issue and child issues for this
+initial MVP, and record the issue links and summary under
+`.copilot-tracking/github-issues/` for traceability. Use labels such as P0, P1,
+P2, epic, feature, story, and task only if they help the workflow. Update the
+backlog plan and create the backlog in GitHub Issues."
 ```
 
 1. Review the issue list for traceability from business outcome to requirement to backlog item, then save the final backlog summary and issue links under `.copilot-tracking/github-issues/`.
@@ -353,21 +453,34 @@ Frame the solution approach, architecture, and publication considerations aligne
    * Capture the publication requirements for Microsoft Marketplace and Microsoft 365 Copilot Agent Store readiness, including packaging, discoverability, supportability, and integration expectations.   
 
    ```text
-   "Review the implementation plan at `.copilot-tracking/plans/`, the requirements under `.copilot-tracking/prd-sessions/`, and the experience draft under `.copilot-tracking/dt/`. Create architecture notes under `.copilot-tracking/details/` covering a simple solution approach for each phase, major tradeoffs, cloud architecture, well-architected concerns, publication requirements, Microsoft IQ, and a Mermaid architecture diagram. Link the architecture notes back to the phases in the implementation plan."
+   "Review the implementation plan at `.copilot-tracking/plans/`, the
+   requirements
+   under `.copilot-tracking/prd-sessions/`, and the experience draft under
+   `.copilot-tracking/dt/`. Create architecture notes under
+   `.copilot-tracking/details/` covering a simple solution approach for each
+   phase, major tradeoffs, cloud architecture, well-architected concerns,
+   publication requirements, Microsoft IQ, and a Mermaid architecture diagram.
+   Link the architecture notes back to the phases in the implementation plan."
    ```
    * Create a simple Mermaid architecture diagram by selecting **Arch Diagram Builder**.
 
 4. Use **Security Planner** to review readiness and surface follow-up work aligned to each phase.
 
    ```text
-   "Review this solution draft for security risks, deployment considerations, and follow-up actions needed for each phase in the implementation plan. Link any security-related work back to the appropriate phase."
+   "Review this solution draft for security risks, deployment considerations,
+   and
+   follow-up actions needed for each phase in the implementation plan. Link any
+   security-related work back to the appropriate phase."
    ```
 
 5. Review the mermaid diagram and use natural language to refine it.
 6. (Optional) Instead of GitHub Copilot, use **Microsoft 365 Copilot** to create an image. In M365 Copilot, attach the implementation plan, and create an architecture image from the mermaid diagram for this solution using Azure and Copilot-style icons to represent core services, data sources, user experience layers, and integrations for the first MVP.
 
    ```text
-   "Create an architecture image from the Mermaid diagram for this solution using Azure and Copilot-style icons to represent core services, data sources, user experience layers, and integrations for the first MVP. "   
+   "Create an architecture image from the Mermaid diagram for this solution
+   using
+   Azure and Copilot-style icons to represent core services, data sources, user
+   experience layers, and integrations for the first MVP. "
    ```
    Save or reference the reviewed image under `.copilot-tracking/details/`.
 
@@ -382,7 +495,21 @@ Frame the solution approach, architecture, and publication considerations aligne
    Select **RPI Agent**,
 
    ```text
-   "Review the implementation plan at `.copilot-tracking/plans/`, the requirements under `.copilot-tracking/prd-sessions/`, the experience draft under `.copilot-tracking/dt/`, and the architecture notes under `.copilot-tracking/details/`. Update the architecture notes with only the publication assumptions needed for the solution review. Record preferred Marketplace model and the Microsoft 365 agent as a potential companion experience. Define the product boundaries and summarize the API, identity, permission, and data contract between them. Capture only architecture constraints, assumptions, unresolved decisions, and owners needed for solution integration. Link these inputs to the implementation plan. Defer the Marketplace implementation plan, offer validation, pricing, monetization, Partner Center configuration, package preparation, certification, and rollout planning to the Partner Workshop Publishing Follow-Up."
+   "Review the implementation plan at `.copilot-tracking/plans/`, the
+   requirements
+   under `.copilot-tracking/prd-sessions/`, the experience draft under
+   `.copilot-tracking/dt/`, and the architecture notes under
+   `.copilot-tracking/details/`. Update the architecture notes with only the
+   publication assumptions needed for the solution review. Record preferred
+   Marketplace model and the Microsoft 365 agent as a potential companion
+   experience. Define the product boundaries and summarize the API, identity,
+   permission, and data contract between them. Capture only architecture
+   constraints, assumptions, unresolved decisions, and owners needed for
+   solution
+   integration. Link these inputs to the implementation plan. Defer the
+   Marketplace implementation plan, offer validation, pricing, monetization,
+   Partner Center configuration, package preparation, certification, and rollout
+   planning to the Partner Workshop Publishing Follow-Up."
    ```
 
    Complete the detailed readiness assessment during the [Partner Workshop Publishing Follow-Up](partner-workshop-publishing).
