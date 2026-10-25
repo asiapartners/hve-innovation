@@ -2,7 +2,7 @@
 title: Implement and review workshop outcomes
 description: Move completed workshop artifacts into a working repository, implement the first approved slice, and review the result with HVE Core
 author: Microsoft
-ms.date: 2026-09-13
+ms.date: 2026-10-25
 ms.topic: tutorial
 keywords:
   - workshop
@@ -73,6 +73,8 @@ Use this path when the workshop output will become a new application or service.
      * `.copilot-tracking/github-issues/prds/**/issues-plan.md` and `handoff.md`
      * `.copilot-tracking/details/{{YYYY-MM-DD}}/*-implementation-plan.md`
        (Marketplace and Agent Store readiness, if applicable)
+     * `.copilot-tracking/details/{{YYYY-MM-DD}}/solution-monetization-plan.md`
+       (the shared commercial record, including pending decisions and approval status, if applicable)
 
    * Do not copy `.copilot-tracking/sandbox/`, `.copilot-tracking/challenges/`, or any
      unreviewed working files; only reviewed, approved artifacts belong in the
@@ -101,9 +103,11 @@ Use this prompt:
 /rpi-implement Use the approved implementation plan and implement
 only the first approved P0 task in this new repository. Create the minimum
 project structure required by the plan, follow the repository instructions, and
-use the planned acceptance criteria and existing validation commands. Record
-implementation evidence under .copilot-tracking/changes/. Do not implement
-deferred work or publication activities.
+use the planned acceptance criteria and existing validation commands. Respect
+approved commercial decisions in the linked shared solution monetization plan
+where relevant to this task; do not implement proposed terms as approved rules.
+Record implementation evidence under .copilot-tracking/changes/. Do not
+implement deferred work or publication activities.
 ```
 
 The first implementation should produce a runnable, testable scope of work. It should not scaffold the entire future architecture.
@@ -127,6 +131,8 @@ Use this path when the workshop adds a capability to an existing product.
      * `.copilot-tracking/github-issues/prds/**/issues-plan.md` and `handoff.md`
      * `.copilot-tracking/details/{{YYYY-MM-DD}}/*-implementation-plan.md`
        (Marketplace and Agent Store readiness, if applicable)
+     * `.copilot-tracking/details/{{YYYY-MM-DD}}/solution-monetization-plan.md`
+       (the shared commercial record, including pending decisions and approval status, if applicable)
 
    * Do not copy `.copilot-tracking/sandbox/`, `.copilot-tracking/challenges/`, or any
      unreviewed working files; only reviewed, approved artifacts belong in the
@@ -152,9 +158,12 @@ Use this prompt:
 /rpi-implement Use the approved implementation plan and implement
 only the first approved P0 task in this repository. Reuse existing components,
 follow current code and test conventions, and limit changes to the planned
-behavior. Run the smallest existing validation commands that cover the change
-and record implementation evidence under .copilot-tracking/changes/.Do not implement
-deferred work or publication activities.
+behavior. Respect approved commercial decisions in the linked shared solution
+monetization plan where relevant to this task; do not implement proposed terms
+as approved rules. Run the smallest existing validation commands that cover the
+change and record implementation evidence under
+.copilot-tracking/changes/.Do not implement deferred work or publication
+activities.
 ```
 
 Do not replace working architecture merely because the workshop proposed a
@@ -173,7 +182,9 @@ During implementation:
 6. Record deviations, discoveries, and validation results in the implementation
    changes record.
 7. Stop and return to planning if a discovery changes scope, architecture,
-   security, privacy, responsible AI, or user behavior.
+   security, privacy, responsible AI, user behavior, pricing, licensing or
+   paid-access rules. Route commercial changes to the Product Manager and update
+   the shared monetization plan before implementing dependent behavior.
 
 The implementation phase may make local engineering decisions supported by the
 plan and repository. It must not invent missing business rules, permissions,
@@ -190,14 +201,16 @@ Use this prompt:
 
 * the approved implementation plan
 * the PRD and its acceptance criteria
+* the shared solution monetization plan's approved commercial decisions,
+  where package limits, paid access or billing are in scope
 * the implementation changes record
 * the repository's existing conventions and validation results
 
 Confirm whether the first milestone delivers the intended user outcome. Identify
 functional gaps, regressions, security or privacy concerns, accessibility gaps,
-unsupported deviations, and follow-up work. Do not treat Marketplace, Agent Store,
-or production readiness as complete without their separate evidence and human
-approval.
+unsupported deviations, and follow-up work. Do not treat Marketplace, Agent
+Store, or production readiness as complete without their separate evidence and
+human approval.
 ```
 
 The review should answer:
@@ -208,6 +221,9 @@ The review should answer:
   correctly?
 * Do tests and validation results support the completion claim?
 * Did implementation deviate from the plan?
+* Where commercial behavior is in scope, does it match approved package,
+  entitlement and billing decisions without charging twice for included usage
+  or support?
 * Which findings block completion?
 * Which items belong in a later milestone?
 
@@ -240,19 +256,25 @@ After the MVP review:
 3. Verify Partner Center and tenant state in their authoritative systems.
 4. Complete package, identity, routing, lifecycle, security, privacy,
    accessibility, support, and removal tests.
-5. Keep publisher-controlled readiness separate from certification,
+5. Reconcile measured delivery costs, package limits, entitlements and separate
+   customer charges in the shared solution monetization plan. Obtain Product
+   Manager, finance and other required reviews before approving prices or
+   configuring commercial terms; retain unresolved decisions as open.
+6. Keep publisher-controlled readiness separate from certification,
    publication, and co-sell status.
-6. Submit or publish only after accountable owners approve the relevant gates.
+7. Submit or publish only after accountable owners approve the relevant gates.
 
 Use this prompt to reassess readiness against the validated MVP:
 
 ```text
 Review the Marketplace and Agent Store readiness artifacts under
 .copilot-tracking/details/ against the implemented and reviewed MVP evidence
-under .copilot-tracking/changes/. Identify which readiness gates (Product,
-Technical, Partner Center, Governance, Companion Agent) are still open, verify
-current Microsoft guidance for anything version-sensitive, and list the
-accountable owner and next action for each open gate. Do not mark any gate
+under .copilot-tracking/changes/. Include the shared solution monetization plan
+linked from those artifacts; reconcile commercial findings there rather than
+creating another price list. Identify which readiness gates (Product,
+Technical, Commercial, Partner Center, Governance, Companion Agent) are still
+open, verify current Microsoft guidance for anything version-sensitive, and list
+the accountable owner and next action for each open gate. Do not mark any gate
 ready without supporting evidence, and do not submit or publish anything.
 ```
 
@@ -265,8 +287,8 @@ Upon completing the MVP implementation, testing, and readiness validation, the t
 
 * The MVP is fully implemented, tested, and validated against PRD acceptance criteria.
 * Implementation changes and review evidence are documented to satisfy quality and governance gates.
-* Partner Center configuration, technical offer details, and pricing models are verified.
-* The solution is submitted, certified, and published on Microsoft Marketplace for commercialization.
+* Partner Center configuration and technical offer details are verified; the shared solution monetization plan records current costs, package and entitlement decisions, proposed or approved prices, and remaining commercial approval gaps.
+* The solution advances to submission only after commercial and publishing gates are approved; certification and publication remain subject to external review and approval.
 * Follow-up work items are identified for post-launch iterations and co-sell enablement.
 
 The workshop artifacts provide the initial evidence trail, while the implementation repository and Partner Center drive ongoing engineering and commercialization.

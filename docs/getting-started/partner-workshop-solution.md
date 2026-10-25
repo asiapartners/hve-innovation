@@ -3,7 +3,7 @@ title: Partner Workshop solution
 description: Integrate role outputs into a shared solution pack, backlog, architecture view, and publication-readiness plan
 sidebar_position: 10
 author: Microsoft
-ms.date: 2026-09-08
+ms.date: 2026-10-25
 ms.topic: tutorial
 keywords:
   - workshop solution
@@ -49,7 +49,15 @@ Create one shared solution draft that connects business context, requirements, e
 Select **RPI-Plan** and enter this prompt:
 
 ```text
-"Review the production artifact set under `.copilot-tracking/research/`, `.copilot-tracking/prd-sessions/`, `.copilot-tracking/dt/`, `.copilot-tracking/plans/`, `.copilot-tracking/details/`, and `.copilot-tracking/github-issues/` as one solution pack. Build a traceability matrix from context facts and decisions to requirements, experience needs, architecture components, backlog items, tests, and publication gates. Save the matrix under `.copilot-tracking/details/`. Report missing links, contradictions, unsupported claims, and unowned risks. Do not implement or publish anything."
+"Review the production artifact set under `.copilot-tracking/research/`,
+`.copilot-tracking/prd-sessions/`, `.copilot-tracking/dt/`,
+`.copilot-tracking/plans/`, `.copilot-tracking/details/`, and
+`.copilot-tracking/github-issues/` as one solution pack. Build a traceability
+matrix from context facts and decisions to requirements, experience needs,
+architecture components, backlog items, tests, and publication gates. Save
+the matrix under `.copilot-tracking/details/`. Report missing links,
+contradictions, unsupported claims, and unowned risks. Do not implement or
+publish anything."
 ```
 
 Then complete these steps:
