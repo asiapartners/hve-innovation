@@ -37,14 +37,14 @@
       <p>SME → PM → Design → Technical → Team review</p>
       <h3>Use the Copilot app</h3>
       <ol>
-        <li>Choose the named agent or invoke its skill in chat.</li>
-        <li>Attach your shared session-context path.</li>
-        <li>Copy a source prompt, review placeholders and path warnings, then send it yourself.</li>
+        <li>Choose the named agent in the agent picker (or /agent), or invoke its skill with /.</li>
+        <li>Type @ to add your shared session-context file.</li>
+        <li>Copy a source prompt, fill its placeholders and check its output paths, then send it yourself.</li>
         <li>Review the draft and hand the saved artifact to the next role.</li>
       </ol>
       <p class="notice">This guide does not send prompts, create issues, deploy, publish or approve work.</p>
       <details><summary>Stuck or missing a component?</summary>
-        <p>Check available slash commands, repository customizations and enabled plugins. A VS Code extension does not automatically configure this app.</p>
+        <p>Check / commands, Customize &gt; Installed and repository trust; start a new session after enabling customizations.</p>
         <p>Keep a Markdown backlog if GitHub writes are unavailable. Record missing evidence as Unknown and name its owner. Optional Figma and cloud actions require separate setup and consent.</p>
       </details>
       <details><summary>Source gaps and app adaptations</summary><ul id="gaps"></ul></details>
@@ -61,7 +61,7 @@
         <details id="full-source"><summary>Read all instructions for this stage</summary><div id="source" class="markdown"></div></details>
       </section>
       <section class="panel"><h3>Source prompts for this stage</h3>
-        <p class="notice">Before sending: fill placeholders, read the topic from the session context, fix any <code>./copilot-tracking</code> typo to <code>.copilot-tracking</code>, and verify output paths. Selecting a source prompt does not authorize its actions.</p>
+        <p class="notice">Before sending: fill placeholders, read the topic from the session context, and verify output paths start with <code>.copilot-tracking/</code>. Selecting a source prompt does not authorize its actions.</p>
         <div id="prompts"></div>
       </section>
       <section class="panel"><h3>How the work connects</h3>
@@ -73,7 +73,7 @@
           <img class="diagram" src="handoffs.svg" alt="Evidence goes through shared context, research, requirements, experience and architecture to a solution review. Publication plans and a shared monetization plan inform an explicitly human-approved implementation slice, then review.">
           <p>Use this flow to check handoff dependencies. It does not imply that publication is complete.</p></details>
         <details><summary>PlantUML: facilitation and product boundaries</summary>
-          <img class="diagram" src="components.svg" alt="Participant uses the guide and Copilot chat. HVE planning components produce the solution pack. Two coaches create connected publication plans. A separate Microsoft 365 customer agent binds to an Azure backend. Humans own approval gates.">
+          <img class="diagram" src="components.svg" alt="Participant uses the guide and the Copilot app. HVE planning components produce the solution pack. Two coaches create connected publication plans. A separate Microsoft 365 customer agent binds to an Azure backend. Humans own approval gates.">
           <p>Workflow/component view, not a deployment diagram. HVE planning agents and the customer-facing Microsoft 365 agent are distinct products.</p></details>
       </section>
     </main>

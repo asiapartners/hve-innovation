@@ -3,7 +3,7 @@ title: Partner Workshop Publishing Follow-Up
 description: Frame publication readiness and product pricing for Microsoft Marketplace and Microsoft 365 Copilot Agent Store
 sidebar_position: 11
 author: Microsoft
-ms.date: 2026-10-25
+ms.date: 2026-11-11
 ms.topic: how-to
 keywords:
   - Azure Applications
@@ -21,7 +21,7 @@ estimated_reading_time: 16
 | Step | Activity                                                                                      | Time   |
 |------|-----------------------------------------------------------------------------------------------|--------|
 | 1    | [Workshop Overview](partner-workshop.md)                                                      | 30 min |
-| 2    | [Set up Codespaces or local VS Code](partner-workshop-setup.md)                               | 30 min |
+| 2    | [Set up the GitHub Copilot app](partner-workshop-setup.md)                                    | 30 min |
 | 3    | [Plan, Envision, Experience, Architecture Design, Backlog](partner-workshop-role-tracks.md)   | 90 min |
 | 4    | [Validation & Solution](partner-workshop-solution.md)                                         | 30 min |
 | 5    | [**Microsoft Marketplace and Copilot Agent Store readiness**](partner-workshop-publishing.md) | 60 min |
@@ -66,7 +66,7 @@ Two repository-local coaching agents support this session.
 | **Microsoft Marketplace Coach** | The Azure side: SaaS, Managed Application, Container App, or Azure VM offers, pricing, Partner Center configuration, and Azure IP Co-sell eligibility | `ms-marketplace-publish`      |
 | **Copilot Agent Store Coach**   | The Microsoft 365 side: agent type selection, packaging, Agent Store submission, monetization, tenant rollout, and Agent 365 governance               | `copilot-agent-store-publish` |
 
-Select the agent from the agent picker in Copilot Chat, then paste one of the prompts below.
+Choose the coach in the agent picker in the prompt box, or type `/agent`, then paste one of the prompts below.
 
 > [!TIP]
 > Both coaches work best when you tell them your current state honestly. "We have a prototype and no Partner Center account" produces a far more useful plan than "we're ready to publish."
@@ -91,7 +91,7 @@ Marketplace programs, offer types, fee percentages, and the Copilot publishing m
 
 ### Microsoft Marketplace track
 
-Select **Microsoft Marketplace Coach** and provide the current product state in one prompt:
+Choose **Microsoft Marketplace Coach** in the agent picker and provide the current product state in one prompt:
 
 ```text
 Read available BRD, PRD, architecture, and Marketplace planning artifacts in
@@ -114,7 +114,7 @@ Marketplace plan under .copilot-tracking/details/.
 
 ### Microsoft 365 Copilot Agent track
 
-Select **Copilot Agent Store Coach** and provide the current agent state in one prompt:
+Choose **Copilot Agent Store Coach** in the agent picker and provide the current agent state in one prompt:
 
 ```text
 Read our available BRD, PRD, architecture, and Marketplace planning artifacts in
@@ -147,7 +147,7 @@ Use this prompt to prepare an MVP pricing recommendation: one launch package, a 
 
 Complete this step before configuring a Marketplace offer so the Product Manager can review what customers buy, what they pay separately, and whether the proposed price is supported by costs and market evidence. Missing costs, licensing requirements and approvals remain visible; the result is a recommendation for review, not an approved price list.
 
-Select **Microsoft Marketplace Coach** and paste:
+Choose **Microsoft Marketplace Coach** in the agent picker and paste:
 
 ```text
 Use ms-marketplace-publish's MVP commercialization decision mode to create or
@@ -162,7 +162,7 @@ Reconciling agent monetization means checking the companion agent's charges, lic
 
 Use this step to prevent double billing for backend usage or included support and conflicting prices across the two publishing tracks. The prompt updates the existing shared plan and identifies unresolved costs, licensing decisions and approvals; it does not create another price list or approve prices for sale.
 
-Select **Copilot Agent Store Coach** and paste:
+Choose **Copilot Agent Store Coach** in the agent picker and paste:
 
 ```text
 Use copilot-agent-store-publish's monetization reconciliation workflow to update
@@ -171,7 +171,7 @@ breakdown and approval gaps for review, and link it from the Agent Store
 handoff. Planning only; do not publish.
 ```
 
-After reconciliation, Product Manager can review the shared plan at `.\.copilot-tracking\details\YYYY-MM-DD\solution-monetization-plan.md`. Use the existing plan's date folder, or the actual saved path reported by the coach if different, and include that path in the review request. Review the package, public/private prices, separate customer charges and unresolved approval gaps before authorizing commercial implementation.
+After reconciliation, Product Manager can review the shared plan at `.copilot-tracking/details/YYYY-MM-DD/solution-monetization-plan.md`. Use the existing plan's date folder, or the actual saved path reported by the coach if different, and include that path in the review request. Review the package, public/private prices, separate customer charges and unresolved approval gaps before authorizing commercial implementation.
 
 ## Publication Readiness Reference
 

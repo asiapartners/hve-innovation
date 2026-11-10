@@ -2,7 +2,7 @@
 title: Implement and review workshop outcomes
 description: Move completed workshop artifacts into a working repository, implement the first approved slice, and review the result with HVE Core
 author: Microsoft
-ms.date: 2026-10-25
+ms.date: 2026-11-11
 ms.topic: tutorial
 keywords:
   - workshop
@@ -23,7 +23,7 @@ the result against the original evidence.
 | Step | Activity                                                                                    | Time   |
 |------|---------------------------------------------------------------------------------------------|--------|
 | 1    | [Workshop Overview](partner-workshop.md)                                                    | 30 min |
-| 2    | [Set up Codespaces or local VS Code](partner-workshop-setup.md)                             | 30 min |
+| 2    | [Set up the GitHub Copilot app](partner-workshop-setup.md)                                  | 30 min |
 | 3    | [Plan, Envision, Experience, Architecture Design, Backlog](partner-workshop-role-tracks.md) | 90 min |
 | 4    | [Validation & Solution](partner-workshop-solution.md)                                       | 30 min |
 | 5    | [Microsoft Marketplace and Copilot Agent Store readiness](partner-workshop-publishing.md)   | 60 min |
@@ -31,37 +31,45 @@ the result against the original evidence.
 
 ## From Workshop to Solution Implementation
 
-The simplest setup is to install the HVE Core VS Code extension for the target project repository for implementation. It manages the HVE agents.
-RPI Agent and the `/rpi`, `/rpi-research`, `/rpi-plan`, `/rpi-implement`, and
-`/rpi-review`. In addition copy .copilot-tracking to your target project repository to preserve context, and .github files from this repo for Microsoft Partner specific custom agents and skills.
+Continue in the GitHub Copilot app. The `hve-core` plugin provides RPI Agent and
+the `/rpi`, `/rpi-research`, `/rpi-plan`, `/rpi-implement`, and `/rpi-review`
+skills in the implementation repository. Also copy `.copilot-tracking/` to the
+target repository to preserve context, and copy this repository's `.github/`
+files for the Microsoft partner custom agents and skills.
 
-Follow [Installing HVE Core](install.md) to choose one of these options:
+Choose one of these setup options:
 
-| Situation | Recommended setup |
-|---|---|
-| Most teams using VS Code | Install the HVE Core VS Code extension |
-| Teams using Copilot CLI | Install the `hve-core` plugin |
-| Teams that must own and customize the artifacts | Use selective clone adoption |
+| Situation                                       | Recommended setup                                                                                        |
+|-------------------------------------------------|----------------------------------------------------------------------------------------------------------|
+| Most teams using the GitHub Copilot app         | In **Customize**, add the `microsoft/hve-core` plugin marketplace, then install the `hve-core` plugin    |
+| Teams that also use Copilot CLI                 | Run `copilot plugin marketplace add microsoft/hve-core`, then `copilot plugin install hve-core@hve-core` |
+| Teams that must own and customize the artifacts | Use [selective clone adoption](install.md#selective-clone-adoption)                                      |
 
 Do not copy the entire HVE repository into the product
-repository unless the team intends to maintain those files.
+repository unless the team intends to maintain those files. If you copy this
+repository's full `.github/` folder, it already includes the HVE agents and
+skills. Turn off the `hve-core` plugin in **Customize** > **Installed** while you
+work in that repository so each agent appears once.
 
 After installation:
 
-1. Open the implementation repository in VS Code.
-2. Open GitHub Copilot Chat.
-3. Select **RPI Agent**, or use the direct phase commands.
+1. In the sidebar, next to **Sessions**, select **+**, then select **Add GitHub repository** or **Open local folder** to add the implementation repository.
+2. Trust the repository if the app shows a trust card, so its repository customizations load.
+3. Start a session with **Workspace** set to **Current checkout** so it can read copied files that are not committed, such as `.copilot-tracking/` artifacts.
+4. Choose **RPI Agent** in the agent picker, or type `/` to use the phase skills directly.
+5. Confirm under **Customize** > **Installed** that the `hve-core` plugin or the copied repository customizations are listed.
 
-Initial research and planning are already complete, use the /rpi-implement and /rpi-review in the next phase.
+Initial research and planning are already complete, so use `/rpi-implement` and
+`/rpi-review` in the next phase.
 
 ## Step 1A: Start a New Project
 
 Use this path when the workshop output will become a new application or service.
 
-1. Create the repository and open its root in VS Code.
-2. Copy the Hypervelocity Innovation Github Agents and Skills: .github/* to your repository.
-3. Install or enable HVE Core (see [Installing HVE Core](install.md)). 
-4. Review, update and approve workshop outputs,
+1. Create the repository and add it in the app.
+2. Copy the Hypervelocity Innovation GitHub agents and skills (`.github/*`) to your repository.
+3. Install or enable HVE Core with one of the [setup options](#from-workshop-to-solution-implementation), then start a new session in the repository's current checkout so the copied agents and skills load.
+4. Review, update, and approve workshop outputs.
 
    * Copy only the reviewed artifacts into the new repository under a matching
      `.copilot-tracking/` folder (preserve the same relative subpaths):
@@ -84,7 +92,7 @@ Use this path when the workshop output will become a new application or service.
    PRD records a `Blocked` or `Not ready` status.
 6. If the plan is still conceptual, run `/rpi-plan` once to adapt it to the new
    repository. Do not repeat product discovery.
-7. Project Manager to facilitate approval of the first implementation task. 
+7. Project Manager to facilitate approval of the first implementation task.
    * A named accountable owner (product, tech lead, or delivery owner) reviews
      the plan's first P0 task against step 5's readiness checks.
    * The owner confirms in writing (a comment, a checked box in the plan, or a
@@ -116,12 +124,12 @@ The first implementation should produce a runnable, testable scope of work. It s
 
 Use this path when the workshop adds a capability to an existing product.
 
-1. Open the current repository in VS Code.
-2. Copy the Hypervelocity Innovation Github Agents and Skills: .github/* to your repository.
-3. Install or enable HVE Core (see [Installing HVE Core](install.md)). 
-4. Review, Update and approve workshop outputs.
+1. Add the current repository in the app if it is not already listed.
+2. Copy the Hypervelocity Innovation GitHub agents and skills (`.github/*`) to your repository.
+3. Install or enable HVE Core with one of the [setup options](#from-workshop-to-solution-implementation), then start a new session in the repository's current checkout so the copied agents and skills load.
+4. Review, update, and approve workshop outputs.
 
-   * Copy only the reviewed artifacts into the new repository under a matching
+   * Copy only the reviewed artifacts into the current repository under a matching
      `.copilot-tracking/` folder (preserve the same relative subpaths):
      * `.copilot-tracking/research/{{YYYY-MM-DD}}/*-research.md`
      * `.copilot-tracking/brd-sessions/*.md`
@@ -146,11 +154,11 @@ Use this path when the workshop adds a capability to an existing product.
    that mapping.
 7. Confirm research and plan readiness before implementation starts. Close any gap before continuing to the next step. Do not start `/rpi-implement` while the plan or
    PRD records a `Blocked` or `Not ready` status.
-9. Approve the first implementation task using the same approval process in
+8. Approve the first implementation task using the same approval process in
    [Step 1A, item 7](#step-1a-start-a-new-project): a named accountable owner
    confirms in writing, and any required human-review checkbox is checked by
    its named reviewer, not by an agent.
-10. Run `/rpi-implement`.
+9. Run `/rpi-implement`.
 
 Use this prompt:
 
@@ -162,7 +170,7 @@ behavior. Respect approved commercial decisions in the linked shared solution
 monetization plan where relevant to this task; do not implement proposed terms
 as approved rules. Run the smallest existing validation commands that cover the
 change and record implementation evidence under
-.copilot-tracking/changes/.Do not implement deferred work or publication
+.copilot-tracking/changes/. Do not implement deferred work or publication
 activities.
 ```
 
@@ -238,9 +246,10 @@ When review passes:
 1. Confirm that implementation and review evidence are stored with the project.
 2. Update the backlog item with the completed acceptance evidence.
 3. Move deferred work into explicit follow-up items.
-4. Ask a human reviewer to approve the pull request or milestone.
-5. Merge through the repository's normal review process.
-6. Start the next milestone with the remaining approved backlog.
+4. Review the diff in **Changes**, then select **Create PR** to open a pull request.
+5. Ask a human reviewer to approve the pull request or milestone.
+6. Merge through the repository's normal review process.
+7. Start the next milestone with the remaining approved backlog.
 
 Do not mark a human-review checkbox complete on behalf of a reviewer.
 

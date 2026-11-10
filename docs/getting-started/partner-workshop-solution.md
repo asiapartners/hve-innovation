@@ -3,7 +3,7 @@ title: Partner Workshop solution
 description: Integrate role outputs into a shared solution pack, backlog, architecture view, and publication-readiness plan
 sidebar_position: 10
 author: Microsoft
-ms.date: 2026-10-25
+ms.date: 2026-11-11
 ms.topic: tutorial
 keywords:
   - workshop solution
@@ -19,7 +19,7 @@ estimated_reading_time: 8
 | Step | Activity                                                                                    | Time   |
 |------|---------------------------------------------------------------------------------------------|--------|
 | 1    | [Workshop Overview](partner-workshop.md)                                                    | 30 min |
-| 2    | [Set up Codespaces or local VS Code](partner-workshop-setup.md)                             | 30 min |
+| 2    | [Set up the GitHub Copilot app](partner-workshop-setup.md)                                  | 30 min |
 | 3    | [Plan, Envision, Experience, Architecture Design, Backlog](partner-workshop-role-tracks.md) | 90 min |
 | 4    | [**Validation & Solution**](partner-workshop-solution.md)                                   | 30 min |
 | 5    | [Microsoft Marketplace and Copilot Agent Store readiness](partner-workshop-publishing.md)   | 60 min |
@@ -34,7 +34,7 @@ Create one shared solution draft that connects business context, requirements, e
 ## Suggested solution flow
 
 1. Ask each role to summarize its artifact in two minutes.
-2. Open the production artifacts under `.copilot-tracking/research/`, `.copilot-tracking/prd-sessions/`, `.copilot-tracking/dt/`, `.copilot-tracking/plans/`, `.copilot-tracking/details/`, and `.copilot-tracking/github-issues/`.
+2. Type `@` in the prompt box to add the production artifacts under `.copilot-tracking/research/`, `.copilot-tracking/prd-sessions/`, `.copilot-tracking/dt/`, `.copilot-tracking/plans/`, `.copilot-tracking/details/`, and `.copilot-tracking/github-issues/` to the session.
 3. Compare terminology across the files and resolve contradictions.
 4. Use the SME context pack as the source of truth for domain terms and business rules.
 5. Confirm that each user story identifies a user, need, and outcome.
@@ -46,18 +46,18 @@ Create one shared solution draft that connects business context, requirements, e
 
 ## Traceability review
 
-Select **RPI-Plan** and enter this prompt:
+Choose **RPI Agent** in the agent picker and send this `/rpi-plan` prompt:
 
 ```text
-"Review the production artifact set under `.copilot-tracking/research/`,
-`.copilot-tracking/prd-sessions/`, `.copilot-tracking/dt/`,
-`.copilot-tracking/plans/`, `.copilot-tracking/details/`, and
-`.copilot-tracking/github-issues/` as one solution pack. Build a traceability
-matrix from context facts and decisions to requirements, experience needs,
-architecture components, backlog items, tests, and publication gates. Save
-the matrix under `.copilot-tracking/details/`. Report missing links,
-contradictions, unsupported claims, and unowned risks. Do not implement or
-publish anything."
+/rpi-plan Review the production artifact set under
+`.copilot-tracking/research/`, `.copilot-tracking/prd-sessions/`,
+`.copilot-tracking/dt/`, `.copilot-tracking/plans/`,
+`.copilot-tracking/details/`, and `.copilot-tracking/github-issues/` as one
+solution pack. Build a traceability matrix from context facts and decisions to
+requirements, experience needs, architecture components, backlog items, tests,
+and publication gates. Save the matrix under `.copilot-tracking/details/`.
+Report missing links, contradictions, unsupported claims, and unowned risks.
+Do not implement or publish anything.
 ```
 
 Then complete these steps:
@@ -75,12 +75,13 @@ artifact during solution review.
 
 ### Project Manager: GitHub Issues
 
-1. Select **Backlog Manager**.
+1. Choose **Backlog Manager** in the agent picker, or type `/agent`.
 2. Ask it to inspect the backlog plan under `.copilot-tracking/github-issues/` for readiness and duplicates.
 3. Confirm repository, labels, milestone, owners, and issue hierarchy.
 4. Ask for a dry-run summary before any mutation.
 5. Review the proposed issue titles and acceptance criteria.
-6. Create issues only with facilitator approval and repository permission.
+6. Create issues only with facilitator approval and repository permission. If the session cannot write GitHub issues, use the Markdown-only fallback below.
+7. Select **Issues** in the app sidebar to review the created issues.
 
 ### Project Manager: Markdown-only fallback
 
@@ -90,7 +91,7 @@ artifact during solution review.
 
 ### Engineer: Review the architecture
 
-1. Open the architecture notes and diagram under `.copilot-tracking/details/` in Markdown Preview.
+1. Type `@` to add the architecture notes under `.copilot-tracking/details/`, then ask Copilot to show the Mermaid diagram. The app renders Mermaid diagrams in the conversation.
 2. Follow the primary user request from Microsoft 365 Copilot to the Azure API, retrieval layer, model, and response path.
 3. Follow the content ingestion and update path separately.
 4. Identify where authorization is enforced.

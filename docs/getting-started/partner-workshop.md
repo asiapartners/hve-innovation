@@ -3,7 +3,7 @@ title: HVE Partner Workshop
 description: Workshop for partners to create requirements, context, a backlog, Azure architecture, and publication plans with HVE Core
 sidebar_position: 7
 author: Microsoft
-ms.date: 2026-11-10
+ms.date: 2026-11-11
 ms.topic: tutorial
 keywords:
   - partner workshop
@@ -21,10 +21,11 @@ The workshop teaches a repeatable workflow. It does not compress production secu
 
 ## Use the Copilot app guide
 
-In the GitHub Copilot app, open this repository and run `/partner-workshop` to
-prepare and open the interactive guide. It covers every agenda stage with role
-activities, source prompts, hints, diagrams and personal progress. New
-customizations may require a new conversation before the command appears.
+In the GitHub Copilot app, start a session in this repository and run
+`/partner-workshop` to prepare and open the interactive guide. It covers every
+agenda stage with role activities, source prompts, hints, diagrams and personal
+progress. New customizations may require a new session before the command
+appears.
 See the [canvas launch and maintenance guide](../../.github/extensions/partner-workshop/README.md)
 for the direct-file fallback, source assumptions and verification commands.
 The canvas guides the workshop; it does not execute prompts or grant human approvals.
@@ -34,7 +35,7 @@ The canvas guides the workshop; it does not execute prompts or grant human appro
 | Step | Activity                                                                                    | Time   |
 |------|---------------------------------------------------------------------------------------------|--------|
 | 1    | [**Workshop Overview**](partner-workshop.md)                                                | 30 min |
-| 2    | [Set up Codespaces or local VS Code](partner-workshop-setup.md)                             | 30 min |
+| 2    | [Set up the GitHub Copilot app](partner-workshop-setup.md)                                  | 30 min |
 | 3    | [Plan, Envision, Experience, Architecture Design, Backlog](partner-workshop-role-tracks.md) | 90 min |
 | 4    | [Validation & Solution](partner-workshop-solution.md)                                       | 30 min |
 | 5    | [Microsoft Marketplace and Copilot Agent Store readiness](partner-workshop-publishing.md)   | 60 min |
@@ -81,11 +82,11 @@ docs/
 | Publication Plan             | `.copilot-tracking/[session-type]/` | Execute marketplace and agent store publication |
 
 > [!IMPORTANT]
-> HVE Core custom agents run in GitHub Copilot and VS Code. They are not
-> Microsoft 365 Copilot agents and cannot be uploaded directly to the Agent
-> Store. The team should build the customer-facing agent with a supported
-> Microsoft 365 agent tool, package it, validate it, and follow the applicable
-> organizational catalog or Partner Center publishing route.
+> HVE Core custom agents run in the GitHub Copilot app. They are not Microsoft
+> 365 Copilot agents and cannot be uploaded directly to the Agent Store. The
+> team should build the customer-facing agent with a supported Microsoft 365
+> agent tool, package it, validate it, and follow the applicable organizational
+> catalog or Partner Center publishing route.
 
 ## Audience and Roles
 
@@ -131,10 +132,12 @@ The workshop is complete when the team has reviewed the six draft artifacts, ide
 
 ## Related Guidance
 
-* [Installing HVE Core](install.md)
+* [Getting started with the GitHub Copilot app](https://docs.github.com/en/copilot/get-started/quickstart-copilot-app)
+* [Customizing the GitHub Copilot app](https://docs.github.com/en/copilot/how-tos/github-copilot-app/customize-github-copilot-app)
+* [Registering the HVE Core plugin](install.md#copilot-plugin-registration)
 * [Your First Full Workflow](first-workflow.md)
 * [Architecture Diagrams Skill](../agents/project-planning/arch-diagram-builder.md)
-* [MCP Configuration](mcp-configuration.md)
+* [Adding MCP servers for GitHub Copilot CLI](https://docs.github.com/en/copilot/how-tos/copilot-cli/customize-copilot/add-mcp-servers)
 
 ---
 

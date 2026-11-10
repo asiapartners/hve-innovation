@@ -23,6 +23,17 @@ test("workshop model covers the real agenda and all available referenced compone
     assert.ok(rolePrompts.every((p) => !p.text.includes("home-screen-sketch.png")));
 });
 
+test("workshop guides and canvas text target the GitHub Copilot app, not VS Code", async () => {
+    const workshop = await loadWorkshop(repoRoot);
+    const canvasText = [
+        ...Object.values(workshop.documents).map((d) => d.markdown),
+        ...steps.flatMap((s) => [s.purpose, ...s.activities.flatMap((a) => [a.title, a.guidance, ...a.hints])]),
+        ...workshop.gaps,
+        await readFile(new URL("../web/index.html", import.meta.url), "utf8"),
+    ];
+    assert.deepEqual(canvasText.flatMap((t) => t.match(/VS ?Code|Visual Studio|Codespaces?|\.vscode|Copilot Chat/g) ?? []), []);
+});
+
 test("source extraction preserves prompt contents, ignores headings in fences and includes child sections", () => {
     const markdown = "---\ntitle: Source\n---\n## Parent\n### Child\n   ```text\n   /rpi-plan\n   ## not a heading\n   Save to `.copilot-tracking/plans/`.\n   ```\n## Next\nend";
     const parsed = extractDocument(markdown);

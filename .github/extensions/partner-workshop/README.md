@@ -2,7 +2,7 @@
 title: Partner workshop canvas
 description: Launch, maintain and verify the source-grounded GitHub Copilot app workshop guide
 author: Microsoft
-ms.date: 2026-11-10
+ms.date: 2026-11-11
 ms.topic: reference
 keywords:
   - workshop
@@ -12,16 +12,16 @@ keywords:
 
 ## Launch in the GitHub Copilot app
 
-Open this workshop repository in the app, then run `/partner-workshop`.
+Add this workshop repository in the app, start a session, then run `/partner-workshop`.
 The [launch command](../../prompts/workshop/partner-workshop.prompt.md) uses the
 [partner-workshop skill](../../skills/workshop/partner-workshop/SKILL.md) to check
 the repository, discover the provider and open one `partner-workshop-guide` panel.
 No npm restore, browser download, Java installation or network connection is
 needed to use the shipped canvas.
 
-New skills and slash commands may require a new conversation or customization
+New skills and slash commands may require a new session or customization
 refresh before the app indexes them. Extension reload refreshes the canvas
-provider, not the current conversation's cached skill catalog. If the command is
+provider, not the current session's cached skill catalog. If the command is
 not yet visible, ask the agent to read the launch command file and follow it;
 the same preparation and open flow applies.
 
@@ -36,7 +36,7 @@ plugin alone into an unrelated product repository does not supply those document
 * Four role filters plus a whole-team view
 * Three-level hints, expected outputs, linked HVE component sources and the
   complete original guide for every stage
-* Source-extracted prompts with placeholders and path warnings preserved;
+* Source-extracted prompts with placeholders preserved;
   no automatic prompt submission or workshop actions
 * A D3 duration-proportional journey and stage-to-component relationship view,
   a Mermaid handoff flow and a PlantUML workflow/product-boundary view
@@ -94,18 +94,18 @@ owned by those workflows; canvas activity checks never replace them.
 
 ### Source conflicts and assumptions
 
-* Setup documents Codespaces/local VS Code, not the app. The guide adapts host
-  navigation to repository customizations, app agents and runtime canvases.
-  It does not claim that VS Code extensions or `.vscode/mcp.json` configure
-  the app. Figma remains optional and separately authorized.
-* Some evidence examples omit the dot in `.copilot-tracking/`. Source prompts
-  remain verbatim; visible warnings require correcting the path before sending.
+* The workshop guides target the GitHub Copilot app. Agents and skills come
+  from repository customizations or the `hve-core` plugin; repository MCP
+  servers come from `.github/mcp.json` or `.mcp.json` after you trust the
+  repository. Figma remains optional and separately authorized.
+* The guides use the canonical `.copilot-tracking/` root. Verify the saved path
+  an agent reports before linking or copying an artifact.
 * The solution guide places the canonical Marketplace implementation plan under
   `plans/`, while coach prompts and implementation handoff use `details/`.
   Participants must find the existing canonical plan, report its actual path and
   link it instead of creating duplicates.
-* The named Arch Diagram Builder agent is absent. The available
-  `architecture-diagrams` skill is the appropriate local capability.
+* System Architecture Reviewer produces the conceptual Mermaid diagram. The
+  `architecture-diagrams` skill fits once infrastructure code exists.
 * The only bundled FSI input is
   [a draft lean canvas](../../../docs/getting-started/samples/FSI/workshop-input/leancanvas.md).
   It explicitly lacks supporting business evidence; users, pricing, metrics and
