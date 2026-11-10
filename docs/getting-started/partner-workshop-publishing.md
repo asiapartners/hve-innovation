@@ -18,16 +18,20 @@ estimated_reading_time: 16
 
 ## Workshop Agenda
 
-| Step | Activity                                                                                      | Time   |
-|------|-----------------------------------------------------------------------------------------------|--------|
-| 1    | [Workshop Overview](partner-workshop.md)                                                      | 30 min |
-| 2    | [Set up the GitHub Copilot app](partner-workshop-setup.md)                                    | 30 min |
-| 3    | [Plan, Envision, Experience, Architecture Design, Backlog](partner-workshop-role-tracks.md)   | 90 min |
-| 4    | [Validation & Solution](partner-workshop-solution.md)                                         | 30 min |
-| 5    | [**Microsoft Marketplace and Copilot Agent Store readiness**](partner-workshop-publishing.md) | 60 min |
-| 6    | [Handoff to Implementation & Commercialization](partner-workshop-implementation.md)           | 30 min |
+| Step | Activity                                                       | Time   |
+|------|----------------------------------------------------------------|--------|
+| 1    | [Meet the FSI client](partner-workshop.md)                     | 30 min |
+| 2    | [Prepare the FSI case](partner-workshop-setup.md)              | 30 min |
+| 3    | [Design the briefing](partner-workshop-role-tracks.md)         | 90 min |
+| 4    | [Challenge the briefing](partner-workshop-solution.md)         | 30 min |
+| 5    | [**Plan both launch paths**](partner-workshop-publishing.md)   | 60 min |
+| 6    | [Hand off the first slice](partner-workshop-implementation.md) | 30 min |
 
-Use this guide during the publication-readiness portion of the workshop. The goal is to turn the workshop outputs into a clear follow-up plan for the right publication path.
+Turn the reviewed Client A briefing design into two connected publication
+handoffs: the proposed Azure backend and the companion Microsoft 365 Copilot
+agent. Use the same `relationship-manager-fsi` context and actual artifacts from
+stage 4. Planning a route does not mean the product is built, certified, or
+commercially approved.
 
 ## Objective
 
@@ -44,14 +48,25 @@ By the end of the session, the team should be able to answer:
 
 ## Commercial readiness and publication planning
 
-Before building the offer package, capture the commercial and go-to-market context that will affect Marketplace and agent-store review.
+The PM starts with a truthful product-state summary: **a fictional briefing
+scenario and reviewed design artifacts**, not a deployed product or a verified
+publisher account. The proposed value is helping a manager prepare for a client
+meeting while preserving citations, account permissions, and human decisions.
 
-1. Define the product brand, messaging, and primary value proposition for both the Azure offer and the Microsoft 365 agent experience.
-2. Confirm the initial geographic coverage, target customer segment, and any launch limitations such as language or regional compliance constraints.
-3. Complete the [product manager monetization plan](#product-manager-monetization-plan) with both publishing tracks so pricing, billing, costs, and taxation assumptions are aligned.
-4. Capture a simple Lean Business Canvas summary with customer segments, problem, solution, channels, revenue, cost, partners, and differentiators.
-5. For Azure IP Co-sell on Marketplace, complete a Partner Center Admin checklist that covers publisher setup, legal entity and tax readiness, offer metadata, support contacts, pricing plan, and technical package validation.
-6. For a Copilot Agent Store add-on, verify the supported agent type, packaging path, tenant admin approvals, consent boundaries, and whether the agent should be listed as a standalone offer or an add-on to the Azure offer.
+1. Attach the FSI context, lean canvas, PRD, architecture notes, and solution
+   review. Preserve the difference between classroom choices and validated
+   customer demand.
+2. Record the first market, buyer, measured value, costs, and willingness to pay
+   as Unknown unless the team has supporting evidence.
+3. Assign owners for product scope, publisher/account readiness, legal and tax
+   questions, customer support, engineering, and tenant administration.
+4. Take the proposed customer-subscription deployment to **Microsoft Marketplace
+   Coach**, then the companion-agent boundary to **Copilot Agent Store Coach**.
+5. Reconcile both tracks in one shared monetization plan. Do not promise launch
+   dates, co-sell eligibility, or prices from the fictional briefing exercise.
+
+The handoff is a shared commercial context and a list of verification owners,
+not an offer package or approved business case.
 
 > [!NOTE]
 > Treat any commercial route, offer type, or add-on limitation as a verification item until current Microsoft guidance confirms the supported path. The policy matrix can change by agent type and distribution route.
@@ -91,49 +106,47 @@ Marketplace programs, offer types, fee percentages, and the Copilot publishing m
 
 ### Microsoft Marketplace track
 
-Choose **Microsoft Marketplace Coach** in the agent picker and provide the current product state in one prompt:
+Choose **Microsoft Marketplace Coach** and attach the FSI context, reviewed
+solution pack, and commercial-context notes. Customer-controlled Azure resources
+are the sample's design hypothesis; ask the coach to examine that choice.
 
 ```text
-Read available BRD, PRD, architecture, and Marketplace planning artifacts in
-.copilot-tracking/ folder. We are building product for customers and need to
-reach Azure IP Co-sell eligibility in 2 weeks.
-
-Recommend:
-1. SaaS, Managed Application, or Azure Container
-2. The deployment and publisher-access model
-3. The pricing and transaction approach, using the shared product manager
-   monetization plan: fixed, hybrid, or consumption; separate public and
-   private prices; SMC/SMB self-service checkout; costs, profit, fees, and tax
-4. The shortest credible readiness path
-
-State the trade-offs and blockers, then ask me to confirm all decisions
-together.
-Record confirmed decisions, owners, evidence, and next actions in the canonical
-Marketplace plan under .copilot-tracking/details/.
+Read the attached relationship-manager-fsi context, solution pack, and commercial
+notes. We have workshop design artifacts for a read-only client briefing, not a
+deployed product or confirmed Partner Center readiness.
+Assess the proposed Azure Managed Application in each customer's subscription
+against SaaS and Container alternatives. Explain deployment, publisher access,
+packaging, billing, support, and co-sell prerequisites without assuming approval.
+Cite current Microsoft guidance with retrieval dates for volatile rules. Treat
+account-specific state, prices, costs, and launch timing as Unknown unless
+evidence supports them. Ask the accountable owners to confirm proposed decisions.
+Create or update the canonical Marketplace plan under .copilot-tracking/details/,
+report its actual path, and link the existing architecture and monetization
+records. Separate decisions, blockers, owners, and next evidence needed.
+Planning only; do not deploy, configure paid terms, submit, or publish.
 ```
+
+Check that the result explains what must be built and verified after the
+workshop. It must not treat a conceptual Mermaid diagram as a tested package.
 
 ### Microsoft 365 Copilot Agent track
 
-Choose **Copilot Agent Store Coach** in the agent picker and provide the current agent state in one prompt:
+Choose **Copilot Agent Store Coach**. Attach the same FSI context and solution
+pack plus the Marketplace plan's actual path.
 
 ```text
-Read our available BRD, PRD, architecture, and Marketplace planning artifacts in
-.copilot-tracking/ folder.
-We are building copilot agent experience for customers and need to reach
-publication in 2 weeks.
-
-Recommend:
-1. Declarative agent, custom engine agent, or another supported agent type
-2. The backend binding and authentication model
-3. The licensing, entitlement, and tenant rollout approach, reconciled with the
-   shared monetization plan and Marketplace pricing so agent and backend
-   charges are clear and included usage is not billed twice
-4. The shortest credible validation and submission path
-
-State the trade-offs and blockers, then ask me to confirm all decisions
-together.
-Record confirmed decisions, owners, evidence, and next actions in the canonical
-agent-store plan under .copilot-tracking/details/.
+Read the attached FSI context, briefing experience, architecture, and canonical
+Marketplace plan. Plan the customer-facing Microsoft 365 Copilot companion that
+requests a cited Client A briefing from the Azure backend.
+Verify the current publishing matrix before recommending an agent type and
+distribution route. Cite current guidance with retrieval dates. Explain backend
+binding, identity, service-side account authorization, tenant consent, licensing,
+entitlement, and removal. Preserve missing-evidence and denied-access behavior.
+HVE workshop agents are development tools, not publishable customer agents.
+Record proposed decisions, blockers, owners, and next evidence in the canonical
+Agent Store plan under .copilot-tracking/details/ and report its path.
+Link the Marketplace plan and reconcile charges through the same monetization
+record. Planning only; do not configure a tenant, submit, or publish.
 ```
 
 > [!IMPORTANT]
@@ -143,7 +156,10 @@ agent-store plan under .copilot-tracking/details/.
 
 The Product Manager owns pricing with finance, engineering, partner sales, and both publishing-track owners. The Marketplace skill supplies the reusable cost checklist, pricing comparisons, private-service scope, and approval checks.
 
-Use this prompt to prepare an MVP pricing recommendation: one launch package, a proposed price range using available market references, public versus private prices, and fixed-package versus per-user billing with monthly and annual terms.
+For the briefing product, distinguish the partner's product charge from the
+customer's Azure consumption and Microsoft 365 license requirements. The Client A
+fixtures cannot establish willingness to pay or cost. Keep missing figures
+Unknown rather than inventing a profitable price.
 
 Complete this step before configuring a Marketplace offer so the Product Manager can review what customers buy, what they pay separately, and whether the proposed price is supported by costs and market evidence. Missing costs, licensing requirements and approvals remain visible; the result is a recommendation for review, not an approved price list.
 
@@ -151,9 +167,14 @@ Choose **Microsoft Marketplace Coach** in the agent picker and paste:
 
 ```text
 Use ms-marketplace-publish's MVP commercialization decision mode to create or
-update our shared solution monetization plan from the BRD, PRD, architecture and
-publication decisions. Keep it concise for Product Manager review and link it
-from the Marketplace handoff. Planning only; do not publish.
+update the FSI briefing product's shared solution monetization plan from the
+attached context, PRD, architecture, and two publication handoffs.
+Compare one proposed launch package, fixed versus per-user charging, public
+versus private pricing, and monthly versus annual terms. Separate the partner
+charge, customer Azure consumption, Microsoft 365 licensing, and support.
+Keep unsupported costs and prices Unknown, and identify the evidence and owner
+needed for each decision. Link the same plan from the Marketplace handoff and
+report its actual path. Planning only; do not approve prices or publish.
 ```
 
 ### Reconcile Agent Monetization
@@ -166,9 +187,11 @@ Choose **Copilot Agent Store Coach** in the agent picker and paste:
 
 ```text
 Use copilot-agent-store-publish's monetization reconciliation workflow to update
-our existing shared solution monetization plan. Present the agent/backend charge
-breakdown and approval gaps for review, and link it from the Agent Store
-handoff. Planning only; do not publish.
+the attached existing FSI briefing monetization plan, not create another price
+list. Reconcile companion access, backend entitlement, included usage, separate
+customer licenses, and support so the proposed package does not bill twice for
+the same usage. Preserve Unknowns and approval gaps. Link the same plan from the
+Agent Store handoff. Planning only; do not approve prices or publish.
 ```
 
 After reconciliation, Product Manager can review the shared plan at `.copilot-tracking/details/YYYY-MM-DD/solution-monetization-plan.md`. Use the existing plan's date folder, or the actual saved path reported by the coach if different, and include that path in the review request. Review the package, public/private prices, separate customer charges and unresolved approval gaps before authorizing commercial implementation.

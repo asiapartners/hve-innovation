@@ -1,6 +1,6 @@
 ---
 title: HVE Partner Workshop
-description: Workshop for partners to create requirements, context, a backlog, Azure architecture, and publication plans with HVE Core
+description: Follow an FSI relationship-manager scenario from a client briefing idea to a reviewed delivery and publication handoff
 sidebar_position: 7
 author: Microsoft
 ms.date: 2026-11-11
@@ -15,16 +15,56 @@ keywords:
 estimated_reading_time: 8
 ---
 
-Use this workshop to move a product idea to a connected set of delivery artifacts. Participants work in one shared project, split into role tracks, and then combine their outputs into a requirements pack, prioritized backlog, Azure architecture, and publication readiness plan.
+Build the **Relationship Manager Intelligence Experience** together. Across six
+stages, your partner team takes one financial-services client-briefing scenario
+from a user need to requirements, a user journey, an Azure design, a backlog, and
+publication plans. The sample is the main walkthrough, not an optional exercise.
 
 The workshop teaches a repeatable workflow. It does not compress production security review, Azure deployment, or Microsoft Marketplace certification into a day.
+
+## Client A briefing mission
+
+You are the partner team helping a relationship manager prepare for a meeting
+with **Client A**, a fictional business client. Today, the manager assembles
+context from CRM records, email, transaction history, and internal knowledge.
+Your proposed product brings that context into Microsoft 365 Copilot:
+
+> Prepare me for my meeting with Client A. What changed, what needs attention,
+> and what should I do next?
+
+The first slice is a **read-only, cited pre-meeting briefing for one authorized
+account**. It distinguishes supported facts from missing information and drafts
+next actions for the manager to review. It does not send messages, update the CRM,
+make financial decisions, or perform transactions.
+
+The broader sample proposes an Azure Managed Application in each customer's
+subscription, with data, search, model, API, identity, and monitoring resources.
+Treat this as a design hypothesis to examine, not a validated deployment or
+confirmed publication route.
+
+1. Assign an SME, PM, designer, and technical lead within your team of four to six.
+2. Read the meeting question aloud. Agree that the walkthrough will produce a
+   briefing with citations, permission-aware access, explicit unknowns, and human
+   review of suggested actions.
+3. Keep customer data out of the workshop. Client A and the later practice
+   records are fictional; the supplied lean canvas contains assumptions, not
+   validated customer research. No customer data may be used for model training.
+4. Record the role owners and the first-slice boundary for the setup stage.
+
+Your handoff is one shared mission: help the manager prepare, without revealing
+unauthorized information or presenting an unsupported answer as fact.
+
+You use the **GitHub Copilot app** and HVE agents to do the workshop. The
+**Microsoft 365 Copilot agent** is the customer-facing product you are designing;
+it is not the workshop tool.
 
 ## Use the Copilot app guide
 
 In the GitHub Copilot app, start a session in this repository and run
 `/partner-workshop` to prepare and open the interactive guide. It covers every
-agenda stage with role activities, source prompts, hints, diagrams and personal
-progress. New customizations may require a new session before the command
+agenda stage with the Client A exercise and copy-ready prompts visible directly
+in the activity cards. Hints, reusable instructions, and diagrams remain optional
+reference material. New customizations may require a new session before the command
 appears.
 See the [canvas launch and maintenance guide](../../.github/extensions/partner-workshop/README.md)
 for the direct-file fallback, source assumptions and verification commands.
@@ -32,14 +72,14 @@ The canvas guides the workshop; it does not execute prompts or grant human appro
 
 ## Workshop Agenda
 
-| Step | Activity                                                                                    | Time   |
-|------|---------------------------------------------------------------------------------------------|--------|
-| 1    | [**Workshop Overview**](partner-workshop.md)                                                | 30 min |
-| 2    | [Set up the GitHub Copilot app](partner-workshop-setup.md)                                  | 30 min |
-| 3    | [Plan, Envision, Experience, Architecture Design, Backlog](partner-workshop-role-tracks.md) | 90 min |
-| 4    | [Validation & Solution](partner-workshop-solution.md)                                       | 30 min |
-| 5    | [Microsoft Marketplace and Copilot Agent Store readiness](partner-workshop-publishing.md)   | 60 min |
-| 6    | [Handoff to Implementation & Commercialization](partner-workshop-implementation.md)         | 30 min |
+| Step | Activity                                                       | Time   |
+|------|----------------------------------------------------------------|--------|
+| 1    | [**Meet the FSI client**](partner-workshop.md)                 | 30 min |
+| 2    | [Prepare the FSI case](partner-workshop-setup.md)              | 30 min |
+| 3    | [Design the briefing](partner-workshop-role-tracks.md)         | 90 min |
+| 4    | [Challenge the briefing](partner-workshop-solution.md)         | 30 min |
+| 5    | [Plan both launch paths](partner-workshop-publishing.md)       | 60 min |
+| 6    | [Hand off the first slice](partner-workshop-implementation.md) | 30 min |
 
 ## Outcomes
 
@@ -101,30 +141,22 @@ Form multidisciplinary teams of four to six people.
 
 Review the broader [HVE role guides](../hve-guide/roles/) after the workshop for ongoing role-specific workflows.
 
-### Sample Scenario
-
-Use this scenario when participants do not bring a project:
-
-> A financial services partner wants to offer a Relationship Manager Intelligence
-> Experience to enterprise customers. Relationship managers ask questions in
-> Microsoft 365 Copilot and receive consolidated account insights, risk indicators,
-> growth opportunities, and recommended next actions from CRM systems, email,
-> transaction history, and internal knowledge sources. Each customer deploys the
-> Azure data, search, model, API, identity, and monitoring resources into its own
-> subscription through an Azure Managed Application. The solution must preserve
-> source citations, respect user access controls per account, avoid using customer
-> data for model training, and provide operational audit evidence.
-
-Do not use production customer data during the workshop. Use synthetic or public sample content.
-
 ## Participant Flow
 
-1. Review the [workshop overview](partner-workshop.md), choose a scenario, and confirm the workshop outcomes.
-2. Complete [shared setup](partner-workshop-setup.md) and create the shared session context.
-3. Complete the [role guide](partner-workshop-role-tracks.md), including architecture design.
-4. Complete the [cross-role solution guide](partner-workshop-solution.md) to integrate and validate the role outputs.
-5. Complete the [publication guide](partner-workshop-publishing.md) and record the follow-up work needed for Marketplace and Agent Store readiness.
-6. Complete the [implementation handoff](partner-workshop-implementation.md) for approved engineering and commercialization follow-up.
+1. Frame the Client A briefing mission and assign role owners.
+2. Complete [shared setup](partner-workshop-setup.md) and create the `relationship-manager-fsi` session context.
+3. Follow the [role walkthrough](partner-workshop-role-tracks.md) to turn the practice evidence into a briefing design and backlog.
+4. [Challenge the joined-up solution](partner-workshop-solution.md) with authorized, missing-data, and denied-access cases.
+5. [Plan both launch paths](partner-workshop-publishing.md) for the Azure backend and companion Microsoft 365 agent, with one shared monetization record.
+6. [Hand off the first briefing slice](partner-workshop-implementation.md), its acceptance checks, and the approvals still required before building.
+
+## Adapt the walkthrough to your own project
+
+Complete the Client A route first, or agree an adaptation with the facilitator.
+Replace the user, core job, evidence location, and product boundaries in one
+shared session-context artifact. Then keep the same six-stage handoffs and
+approval gates. Do not mix the fictional FSI records with real customer evidence
+or silently reuse the sample's commercial assumptions.
 
 ## Completion Standard
 

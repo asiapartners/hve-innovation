@@ -16,16 +16,76 @@ estimated_reading_time: 8
 
 ## Workshop Agenda
 
-| Step | Activity                                                                                    | Time   |
-|------|---------------------------------------------------------------------------------------------|--------|
-| 1    | [Workshop Overview](partner-workshop.md)                                                    | 30 min |
-| 2    | [**Set up the GitHub Copilot app**](partner-workshop-setup.md)                              | 30 min |
-| 3    | [Plan, Envision, Experience, Architecture Design, Backlog](partner-workshop-role-tracks.md) | 90 min |
-| 4    | [Validation & Solution](partner-workshop-solution.md)                                       | 30 min |
-| 5    | [Microsoft Marketplace and Copilot Agent Store readiness](partner-workshop-publishing.md)   | 60 min |
-| 6    | [Handoff to Implementation & Commercialization](partner-workshop-implementation.md)         | 30 min |
+| Step | Activity                                                       | Time   |
+|------|----------------------------------------------------------------|--------|
+| 1    | [Meet the FSI client](partner-workshop.md)                     | 30 min |
+| 2    | [**Prepare the FSI case**](partner-workshop-setup.md)          | 30 min |
+| 3    | [Design the briefing](partner-workshop-role-tracks.md)         | 90 min |
+| 4    | [Challenge the briefing](partner-workshop-solution.md)         | 30 min |
+| 5    | [Plan both launch paths](partner-workshop-publishing.md)       | 60 min |
+| 6    | [Hand off the first slice](partner-workshop-implementation.md) | 30 min |
 
 The workshop runs in the [GitHub Copilot app](https://docs.github.com/en/copilot/get-started/quickstart-copilot-app) on Windows, macOS, or Linux. The HVE Core agents and skills load from this repository, so you do not install a separate extension.
+
+## Walkthrough: prepare the FSI case
+
+Carry the Client A briefing mission from stage 1 into one shared context file.
+Use the two activities below for the sample. The later sections provide detailed
+installation help and reusable setup prompts.
+
+### Connect the FSI workshop repository
+
+1. In the GitHub Copilot app, select **+** next to **Sessions** and add
+   `asiapartners/hve-innovation`, or open its existing local folder.
+2. Start a session in that repository with **This computer**, **Current checkout**,
+   and **Interactive** selected. Use the team's branch and review repository
+   trust and tool permissions. Run one workshop session at a time in this shared
+   checkout.
+3. Check that the agent picker lists **RPI Agent**, **PRD Builder**, and
+   **UX UI Designer**, and that typing `/` shows `/rpi-research` and `/rpi-plan`.
+   If anything is missing, check **Customize** > **Installed** and start a new
+   session after enabling the repository customizations.
+
+You are ready when your team can use the same local files and invoke the HVE
+components. You do not need a customer tenant, live CRM connection, or Azure
+deployment for this walkthrough.
+
+### Create the FSI session context
+
+Choose **RPI Agent**. Replace only `[YYYY-MM-DD]` with your workshop date, then
+review and send this prompt. The case name and evidence references are already
+filled in.
+
+```text
+Create only the shared session context for the Relationship Manager Intelligence
+Experience workshop.
+Session: relationship-manager-fsi
+Date: [YYYY-MM-DD]
+First slice: a read-only, cited briefing for a relationship manager preparing
+for a meeting with fictional Client A. Show what changed, what needs attention,
+and draft next actions for human review.
+Evidence: docs/getting-started/samples/FSI/workshop-input/leancanvas.md and
+the "Inspect the Client A practice evidence" section of
+docs/getting-started/partner-workshop-role-tracks.md.
+Record that the lean canvas is assumption-labelled and the Client A records are
+fictional teaching fixtures, not customer research or financial advice.
+Record citations, account-level authorization, explicit missing-data behavior,
+no customer-data training, and no CRM writes, messages, or transactions as the
+proposed workshop boundaries. Use the role owners agreed by the team; ask for
+missing names instead of inventing them.
+Save .copilot-tracking/research/[YYYY-MM-DD]/relationship-manager-fsi-session-context.md
+with the topic, evidence references, boundaries, owners, and production output
+roots. Mark it draft for human review. Do not start research, implementation,
+issue creation, deployment, or publication.
+```
+
+Review the saved file in **Changes**. For every later exercise, add that file
+with `@`, followed by the actual artifacts from the preceding activity. Keep
+their reported paths with the handoff; do not assume an output exists merely
+because a prompt names its directory.
+
+The handoff is the reviewed session context, not a generated research pack.
+Every role now starts with the same Client A question and evidence boundary.
 
 ## Prerequisites
 

@@ -15,19 +15,98 @@ estimated_reading_time: 7
 sidebar_position: 5
 ---
 
-Use this guide to move the approved research and plan, and handoff into the implementation repository, deliver one incremental scope, and review
-the result against the original evidence.
+Finish the Client A walkthrough by preparing one buildable briefing slice and
+its review contract. The 30-minute stage is a handoff, not a requirement to build,
+deploy, or publish the full product. The later reference sections describe the
+separately approved implementation follow-up.
 
 ## Workshop Agenda
 
-| Step | Activity                                                                                    | Time   |
-|------|---------------------------------------------------------------------------------------------|--------|
-| 1    | [Workshop Overview](partner-workshop.md)                                                    | 30 min |
-| 2    | [Set up the GitHub Copilot app](partner-workshop-setup.md)                                  | 30 min |
-| 3    | [Plan, Envision, Experience, Architecture Design, Backlog](partner-workshop-role-tracks.md) | 90 min |
-| 4    | [Validation & Solution](partner-workshop-solution.md)                                       | 30 min |
-| 5    | [Microsoft Marketplace and Copilot Agent Store readiness](partner-workshop-publishing.md)   | 60 min |
-| 6    | [**Handoff to Implementation & Commercialization**](partner-workshop-implementation.md)     | 30 min |
+| Step | Activity                                                           | Time   |
+|------|--------------------------------------------------------------------|--------|
+| 1    | [Meet the FSI client](partner-workshop.md)                         | 30 min |
+| 2    | [Prepare the FSI case](partner-workshop-setup.md)                  | 30 min |
+| 3    | [Design the briefing](partner-workshop-role-tracks.md)             | 90 min |
+| 4    | [Challenge the briefing](partner-workshop-solution.md)             | 30 min |
+| 5    | [Plan both launch paths](partner-workshop-publishing.md)           | 60 min |
+| 6    | [**Hand off the first slice**](partner-workshop-implementation.md) | 30 min |
+
+## Walkthrough: hand off the Client A slice
+
+### Package the reviewed FSI context
+
+1. Choose the intended implementation repository. Record whether it is new or
+   existing; do not switch projects merely by changing a canvas stage.
+2. Inventory the actual paths of the reviewed session context, fixture
+   references, research, PRD and state, plan, experience draft, architecture,
+   traceability matrix, backlog, two coach plans, and shared monetization plan.
+3. Retain the draft and approval status of every artifact. Transfer only the
+   reviewed handoff when the destination and file changes are authorized, keeping
+   relative paths intact. Carry the fictional fixture section or an explicitly
+   reviewed extract with its source and synthetic label so it is still readable
+   outside the workshop repository.
+4. Add the target repository in the GitHub Copilot app, enable its HVE
+   customizations, and use **Current checkout** when you need copied uncommitted
+   context. Follow the setup reference below for the chosen repository.
+
+The handoff should let an engineer explain the Client A question, the two
+practice records, the missing-data and denied-access cases, and the approvals
+still outstanding without repeating discovery.
+
+### Define the first briefing build task
+
+Propose one task: **return a read-only briefing from approved synthetic inputs,
+with citations and permission checks**. Use **RPI Agent** in planning mode with
+the context and reviewed plan attached:
+
+```text
+/rpi-plan
+Read the attached FSI context, reviewed briefing plan, PRD, traceability matrix,
+and commercial handoffs. Prepare the first Client A implementation task for
+human approval. Map it to the intended repository if that repository is available;
+otherwise record repository mapping as an open dependency.
+Scope one testable slice using the synthetic fixtures: cite CRM-01 and MAIL-01,
+mark absent transaction evidence Unknown, deny Client B before retrieval, and
+leave next actions as drafts. Exclude live CRM integration, cloud deployment,
+paid-term enforcement, and publication.
+Record dependencies, acceptance checks, accountable approver, and unresolved
+readiness gates in the existing plan. Do not implement, create external work
+items, invent approval, or mark human-review checkboxes complete.
+```
+
+Check that the task is small enough to run and test independently. Before a
+later `/rpi-implement` invocation, a named accountable human must approve this
+task in writing with a date, and its designated reviewer must complete every
+applicable human-review checkbox. Canvas progress does neither.
+
+### Agree the briefing review evidence
+
+Write the review contract into the task before anyone starts building:
+
+* The authorized Client A case returns only supported statements and their
+  correct practice citations.
+* Missing transaction history produces an explicit unknown, not invented
+  financial information.
+* The denied Client B case retrieves and exposes no protected account content.
+* Suggested next actions remain drafts; no CRM update, message, or transaction
+  occurs.
+* Implementation and test evidence will be saved under
+  `.copilot-tracking/changes/`, and the later `/rpi-review` result under
+  `.copilot-tracking/reviews/`.
+
+Assign a reviewer and follow-up date. If implementation has not happened, mark
+these checks **Not run**. After a separately approved implementation and review,
+use **Changes** and **Create PR** for human review in the app.
+
+End the workshop with the handoff and open decisions. MVP completion,
+Marketplace readiness, Agent Store approval, and commercial approval require
+separate evidence; none follows from finishing the walkthrough.
+
+## Implementation follow-up reference
+
+The remaining instructions apply after the relevant people approve the first
+task and its destination. They are not additional actions to perform merely
+because you reached the final canvas stage.
 
 ## From Workshop to Solution Implementation
 

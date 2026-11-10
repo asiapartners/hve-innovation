@@ -1,6 +1,6 @@
 ---
 title: Partner workshop canvas
-description: Launch, maintain and verify the source-grounded GitHub Copilot app workshop guide
+description: Launch and maintain the scenario-first FSI workshop walkthrough in the GitHub Copilot app
 author: Microsoft
 ms.date: 2026-11-11
 ms.topic: reference
@@ -32,12 +32,16 @@ plugin alone into an unrelated product repository does not supply those document
 
 ## What participants get
 
-* Six stages, the original 270-minute agenda and 21 guided activities
+* One primary FSI storyline: a trusted, read-only client briefing for fictional
+  Client A, from the meeting question to an engineering handoff
+* Six stages, the original 270-minute agenda and 21 guided activities, each
+  showing its source-backed exercise directly rather than hiding it in a drawer
 * Four role filters plus a whole-team view
-* Three-level hints, expected outputs, linked HVE component sources and the
-  complete original guide for every stage
-* Source-extracted prompts with placeholders preserved;
-  no automatic prompt submission or workshop actions
+* Incoming and outgoing handoffs at every stage, concrete practice cases,
+  expected outputs, and inline copy-ready prompts
+* Optional hints, complete source guides, reusable prompts, workflow diagrams,
+  and guidance for adapting to another project
+* Exact source-prompt copying with no automatic submission or workshop actions
 * A D3 duration-proportional journey and stage-to-component relationship view,
   a Mermaid handoff flow and a PlantUML workflow/product-boundary view
 * Primer dark colors, native keyboard controls, visible focus, skip navigation,
@@ -55,25 +59,25 @@ checkbox, external write, engineering task or commercial decision.
 The canvas reads all six
 [workshop guides](../../../docs/getting-started/partner-workshop.md) directly at
 open, validates every mapped activity section and checks referenced component
-files. It displays the full original instructions so manual and optional
-activities are not reduced to the shorter facilitation summaries.
+files. Each activity renders its selected walkthrough section inline, including
+the case-specific prompt and review criteria. The complete guide and all stage
+prompts remain in collapsed reference panels. The page never generates or
+rewrites a prompt on the participant's behalf.
 
-| Stage                 | HVE components                                                     | Artifact / handoff                                              |
-|-----------------------|--------------------------------------------------------------------|-----------------------------------------------------------------|
-| 1. Overview, 30m       | Team alignment, no required agent                                  | Scenario, roles, outcomes and completion standard                |
-| 2. Setup, 30m          | RPI Agent and available RPI commands                                | `.copilot-tracking/research/<date>/<session>-session-context.md` |
-| 3. SME, within 90m     | `rpi-research`, BRD/PRD Builders when needed                         | Research/context pack, lean canvas, BRD/PRD drafts               |
-| 3. PM, within 90m      | BRD/PRD Builders, `rpi-plan`, Functional Planner, Backlog Manager     | Requirements, phased plan, `.copilot-tracking/github-issues/`    |
-| 3. Design, within 90m  | UX UI Designer, DT Coach/Tutor, AI Discovery Cards, accessibility/RAI | `.copilot-tracking/dt/` experience and design evidence            |
-| 3. Technical, in 90m   | System Architecture Reviewer, architecture-diagrams, Security Planner | `.copilot-tracking/details/` architecture and publication inputs |
-| 4. Solution, 30m       | `rpi-plan`, Backlog Manager, approved executor or Markdown fallback  | Traceability matrix, gap owners, conceptual architecture review |
-| 5. Publishing, 60m     | Marketplace Coach and Agent Store Coach with their backing skills  | Connected readiness plans and one shared monetization plan      |
-| 6. Handoff, 30m        | `rpi-implement` and `rpi-review` after separate human task approval   | Reviewed context transfer, changes/review evidence, next owners  |
+| Stage                            | Participant work                                        | Handoff                                                   |
+|----------------------------------|---------------------------------------------------------|-----------------------------------------------------------|
+| 1. Meet the FSI client, 30m      | Frame the Client A meeting question and assign owners   | One read-only briefing mission                            |
+| 2. Prepare the FSI case, 30m     | Connect the app and create the shared FSI context       | Reviewed context and exact evidence references            |
+| 3. Design the briefing, 90m      | Research, specify, design, and architect the same slice | PRD, plan, Markdown backlog, journey, architecture        |
+| 4. Challenge the briefing, 30m   | Rehearse allowed, missing-evidence, and denied cases    | Traceability, review findings, and gap owners             |
+| 5. Plan both launch paths, 60m   | Plan Azure and Microsoft 365 publication together       | Two linked coach plans and one monetization record        |
+| 6. Hand off the first slice, 30m | Prepare a build task and agree review evidence          | Approver, acceptance checks, reviewer, and next milestone |
 
-PM typically owns BRD/PRD drafts; SME contributes domain evidence even though
-those prompts appear in the SME section. Suggested role handoff is SME, PM,
+PM owns the primary PRD exercise; SME contributes domain evidence. Suggested role handoff is SME, PM,
 Design, Technical, then whole-team integration. Backlog creation is a separate
 approved write, not a condition for completing a Markdown-only workshop.
+The existing activity IDs and progress storage are retained, so changing the
+presentation does not reset a participant's role, stage, or activity checks.
 
 The overview lists `docs/planning/adrs/` as an output. ADR Creator exists here,
 but the role guide does not prescribe a mandatory ADR exercise. The canvas marks
@@ -100,16 +104,16 @@ owned by those workflows; canvas activity checks never replace them.
   repository. Figma remains optional and separately authorized.
 * The guides use the canonical `.copilot-tracking/` root. Verify the saved path
   an agent reports before linking or copying an artifact.
-* The solution guide places the canonical Marketplace implementation plan under
-  `plans/`, while coach prompts and implementation handoff use `details/`.
-  Participants must find the existing canonical plan, report its actual path and
-  link it instead of creating duplicates.
+* Participants link each publishing coach's actual canonical plan path instead
+  of creating duplicates. Both publishing tracks share one monetization record.
 * System Architecture Reviewer produces the conceptual Mermaid diagram. The
   `architecture-diagrams` skill fits once infrastructure code exists.
-* The only bundled FSI input is
-  [a draft lean canvas](../../../docs/getting-started/samples/FSI/workshop-input/leancanvas.md).
-  It explicitly lacks supporting business evidence; users, pricing, metrics and
-  business-model claims remain assumptions or Unknown.
+* The supplied
+  [draft lean canvas](../../../docs/getting-started/samples/FSI/workshop-input/leancanvas.md)
+  explicitly lacks supporting business evidence. The role guide now also
+  supplies fictional Client A fixtures for CRM-01, MAIL-01, missing transaction
+  evidence, and denied Client B access. These teach behavior, not customer facts;
+  users, policies, prices, metrics, and business-model claims remain unverified.
 * HVE custom agents are planning tools, not publishable Microsoft 365 agents.
   Azure and Microsoft 365 customer products have separate identity, packaging
   and certification gates. The PlantUML view describes these boundaries, not a
@@ -148,10 +152,13 @@ npm test
 npm run test:browser
 ```
 
-`npm run test:browser` checks all six stages with source instructions expanded,
-both SVG diagrams, role filtering, hints, keyboard navigation, checkbox
-persistence, 320px reflow, 200%-equivalent reflow, no external runtime requests,
-and axe WCAG A/AA rules. It bypasses CSP only in the isolated test context to
+`npm run test:browser` checks that all 21 walkthrough exercises are visible
+without expanding details and that each inline copy preserves the exact source
+prompt. Clipboard writes are stubbed only in the test browser. It also checks
+all six stages with full source instructions expanded, both SVG diagrams,
+role filtering, hints, keyboard navigation, checkbox persistence, all-stage
+320px and 200%-equivalent reflow, no external runtime requests, and axe WCAG A/AA
+rules. It bypasses CSP only in the isolated test context to
 inject axe; the served app CSP remains restrictive. These checks are not a formal
 accessibility certification or a real screen-reader assessment.
 

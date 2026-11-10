@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#0d1117">
-  <title>Partner workshop</title>
+  <title>Partner workshop: FSI briefing walkthrough</title>
   <link rel="stylesheet" href="style.css">
   <script defer src="d3.min.js"></script>
   <script defer src="marked.js"></script>
@@ -15,8 +15,9 @@
 <body>
   <a class="skip" href="#main">Skip to current step</a>
   <header>
-    <div><p class="eyebrow">HVE / PARTNER WORKSHOP</p><h1>From evidence to an approved next step</h1>
-      <p class="muted">One shared scenario. Four roles. Six connected stages.</p></div>
+    <div><p class="eyebrow">HVE / GUIDED FSI WORKSHOP</p><h1>Build a trusted client briefing</h1>
+      <p>Relationship Manager Intelligence Experience</p>
+      <p class="muted">Follow fictional Client A from a meeting question to a reviewed delivery handoff.</p></div>
     <div class="summary"><strong>4h 30m</strong><span>facilitated agenda</span>
       <label for="role">Your role</label><select id="role"></select></div>
   </header>
@@ -31,18 +32,24 @@
   </section>
   <div class="workspace">
     <aside>
-      <h2>Facilitation compass</h2>
+      <h2>Your scenario</h2>
       <p id="step-budget" class="budget"></p>
+      <blockquote class="scenario-question">Prepare me for my meeting with Client A. What changed, what needs attention, and what should I do next?</blockquote>
+      <p class="small">Your workshop tool is the GitHub Copilot app. Your proposed customer product is a Microsoft 365 Copilot agent with an Azure backend.</p>
       <p class="small">Suggested role handoff</p>
       <p>SME → PM → Design → Technical → Team review</p>
       <h3>Use the Copilot app</h3>
       <ol>
         <li>Choose the named agent in the agent picker (or /agent), or invoke its skill with /.</li>
         <li>Type @ to add your shared session-context file.</li>
-        <li>Copy a source prompt, fill its placeholders and check its output paths, then send it yourself.</li>
+        <li>Follow the visible Client A exercise. Copy its walkthrough prompt, check it, then send it yourself.</li>
         <li>Review the draft and hand the saved artifact to the next role.</li>
       </ol>
       <p class="notice">This guide does not send prompts, create issues, deploy, publish or approve work.</p>
+      <details id="adapt-project"><summary>Adapt to your own project</summary>
+        <p>Use the FSI case as the default. After trying it, or with your facilitator's agreement, replace the user, job, evidence, and product boundaries in one shared session-context file.</p>
+        <p>Keep the six-stage handoffs and approval gates. Do not mix Client A's fictional records with real customer evidence.</p>
+      </details>
       <details><summary>Stuck or missing a component?</summary>
         <p>Check / commands, Customize &gt; Installed and repository trust; start a new session after enabling customizations.</p>
         <p>Keep a Markdown backlog if GitHub writes are unavailable. Record missing evidence as Unknown and name its owner. Optional Figma and cloud actions require separate setup and consent.</p>
@@ -53,18 +60,23 @@
       <div class="step-heading"><div><p id="step-label" class="eyebrow"></p><h2 id="step-title"></h2></div>
         <div class="navigation"><button id="previous" type="button">Previous</button><button id="next" type="button">Next step</button></div></div>
       <p id="purpose" class="lead"></p>
+      <dl class="stage-handoff">
+        <div><dt>Start with</dt><dd id="stage-input"></dd></div>
+        <div><dt>Leave with</dt><dd id="stage-output"></dd></div>
+      </dl>
+      <p class="small muted">Guided sample: synthetic practice records and explicit assumptions, not validated customer research. Prompts are read from the workshop guides.</p>
       <p id="role-note" class="muted"></p>
       <div id="activities"></div>
-      <section class="panel source-panel"><h3>Original workshop guide</h3>
-        <p class="muted">Read the complete source, including manual activities and optional follow-up. Copy-ready prompts below are extracted from this file, not invented by the canvas.</p>
+      <details id="full-source" class="panel source-panel"><summary>Reference: complete stage guide</summary>
+        <p class="muted">The exercises above are the primary walkthrough. Use this full guide for setup help, reusable methods, and optional follow-up.</p>
         <a id="raw-source" target="_blank" rel="noreferrer">Open source Markdown</a>
-        <details id="full-source"><summary>Read all instructions for this stage</summary><div id="source" class="markdown"></div></details>
-      </section>
-      <section class="panel"><h3>Source prompts for this stage</h3>
+        <div id="source" class="markdown"></div>
+      </details>
+      <details id="reference-prompts" class="panel"><summary>Reference: all stage prompts</summary>
         <p class="notice">Before sending: fill placeholders, read the topic from the session context, and verify output paths start with <code>.copilot-tracking/</code>. Selecting a source prompt does not authorize its actions.</p>
         <div id="prompts"></div>
-      </section>
-      <section class="panel"><h3>How the work connects</h3>
+      </details>
+      <details id="connections" class="panel"><summary>Reference: workflow diagrams and components</summary>
         <p class="muted">Select a stage in the D3 map to see its real HVE components. The table is the text equivalent.</p>
         <div id="relationships"></div>
         <div class="table-wrap"><table><caption>Stage → HVE component → artifact</caption>
@@ -75,7 +87,7 @@
         <details><summary>PlantUML: facilitation and product boundaries</summary>
           <img class="diagram" src="components.svg" alt="Participant uses the guide and the Copilot app. HVE planning components produce the solution pack. Two coaches create connected publication plans. A separate Microsoft 365 customer agent binds to an Azure backend. Humans own approval gates.">
           <p>Workflow/component view, not a deployment diagram. HVE planning agents and the customer-facing Microsoft 365 agent are distinct products.</p></details>
-      </section>
+      </details>
     </main>
   </div>
 </body>

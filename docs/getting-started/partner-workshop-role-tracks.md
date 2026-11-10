@@ -1,6 +1,6 @@
 ---
 title: Partner Workshop Role Guide
-description: Structured role-based guide for the HVE partner workshop
+description: Design the Client A briefing through connected SME, PM, design, and technical exercises
 sidebar_position: 9
 author: Microsoft
 ms.date: 2026-11-11
@@ -16,16 +16,224 @@ estimated_reading_time: 10
 
 ## Workshop Agenda
 
-| Step | Activity                                                                                        | Time   |
-|------|-------------------------------------------------------------------------------------------------|--------|
-| 1    | [Workshop Overview](partner-workshop.md)                                                        | 30 min |
-| 2    | [Set up the GitHub Copilot app](partner-workshop-setup.md)                                      | 30 min |
-| 3    | [**Plan, Envision, Experience, Architecture Design, Backlog**](partner-workshop-role-tracks.md) | 90 min |
-| 4    | [Validation & Solution](partner-workshop-solution.md)                                           | 30 min |
-| 5    | [Microsoft Marketplace and Copilot Agent Store readiness](partner-workshop-publishing.md)       | 60 min |
-| 6    | [Handoff to Implementation & Commercialization](partner-workshop-implementation.md)             | 30 min |
+| Step | Activity                                                       | Time   |
+|------|----------------------------------------------------------------|--------|
+| 1    | [Meet the FSI client](partner-workshop.md)                     | 30 min |
+| 2    | [Prepare the FSI case](partner-workshop-setup.md)              | 30 min |
+| 3    | [**Design the briefing**](partner-workshop-role-tracks.md)     | 90 min |
+| 4    | [Challenge the briefing](partner-workshop-solution.md)         | 30 min |
+| 5    | [Plan both launch paths](partner-workshop-publishing.md)       | 60 min |
+| 6    | [Hand off the first slice](partner-workshop-implementation.md) | 30 min |
 
-Use this guide during the role-exercise portion of the workshop. Participants should work from the same scenario, capture assumptions, and leave with a handoff that the next role can use.
+Use the `relationship-manager-fsi` context from stage 2 throughout these
+activities. Add it with `@` and attach the reviewed outputs as each role hands
+over. The primary route designs the Client A briefing; the reference sections
+below offer reusable prompts and optional tools for later adaptation.
+
+## Walkthrough: design the Client A briefing
+
+### Inspect the Client A practice evidence
+
+The SME starts with the bundled
+[FSI lean canvas](samples/FSI/workshop-input/leancanvas.md). Its business claims
+are assumptions and its baselines, prices, and target segment are unknown.
+Copy it to `.copilot-tracking/research/workshop-input/leancanvas.md` if you need
+an annotated working copy; do not overwrite the supplied source.
+
+Use these **fictional teaching fixtures** for the briefing exercise. They
+illustrate response behavior, not real customer facts, policies, or research:
+
+| Fixture          | Practice input                                                  | Access in the exercise |
+|------------------|-----------------------------------------------------------------|------------------------|
+| CRM-01           | Client A's next meeting includes a contract renewal discussion. | Allowed                |
+| MAIL-01          | Client A asked for an onboarding timeline before the meeting.   | Allowed                |
+| No record        | No approved transaction-history evidence has been supplied.     | Unknown                |
+| Client B request | The manager is not authorized to access this account.           | Denied; no content     |
+
+1. Separate the fictional records from the lean canvas's business assumptions.
+2. Record unanswered business questions, such as the actual preparation-time
+   baseline, policy requirements, and first customer segment, with an owner.
+3. Hand the annotated assumptions and the exact fixture references to the
+   research activity. Do not invent additional records to make the answer look
+   complete.
+
+A useful sample response shape is: "Discuss renewal [CRM-01]. Confirm the
+onboarding timeline [MAIL-01]. Transaction changes: Unknown." These are practice
+citations, not links to a real CRM or email system.
+
+### Research the briefing constraints
+
+Choose **RPI Agent** and attach the shared session context and SME annotations.
+The exercise is to establish what is supported and what still needs research,
+not to turn the classroom examples into market evidence.
+
+```text
+/rpi-research
+Read the attached relationship-manager-fsi session context and its exact
+evidence references, including the Client A practice evidence section.
+Create a context pack for the pre-meeting briefing. Separate fictional fixture
+facts, business assumptions, proposed design constraints, and Unknowns.
+Trace the two available statements to CRM-01 and MAIL-01. Record the missing
+transaction evidence and the denied-account case without inventing account data.
+Identify what customer research and policy evidence the SME must obtain before
+real requirements can be approved. Save the dated research artifact under
+.copilot-tracking/research/ and report its path. Context discovery only;
+do not implement, create external work items, deploy, or publish.
+```
+
+Check that the result does not claim measured time savings or verified banking
+policies. Hand the research path and unresolved questions to the PM.
+
+### Specify the first briefing slice
+
+The PM uses **PRD Builder** to turn the research into a draft for one job:
+prepare for a Client A meeting. Add the research artifact and session context
+with `@`.
+
+```text
+Use PRD Builder. Read the attached relationship-manager-fsi session context and
+research pack. Draft the first read-only client-briefing slice, with requirements
+for source citations, account-level authorization, explicit missing evidence,
+and human review of suggested next actions.
+Define observable acceptance checks for the Client A fixtures, missing
+transaction history, and a denied Client B request. Exclude sending messages,
+updating CRM records, making financial decisions, and transactions.
+Keep business metrics, policies, and commercial terms unconfirmed where evidence
+is missing. Save the draft and session state under .copilot-tracking/prd-sessions/
+and report their paths. Do not claim human approval.
+```
+
+Review the draft, then select **RPI Agent** to plan it:
+
+```text
+/rpi-plan
+Read the attached FSI session context, research pack, and reviewed PRD draft.
+Plan one thin client-briefing slice: authorized inputs, cited briefing,
+missing-evidence response, denied-access response, and their acceptance checks.
+Save the plan and phase details under .copilot-tracking/plans/. Record owners,
+dependencies, and unresolved approvals. Keep the Azure Managed Application and
+Microsoft 365 agent as publication hypotheses for stage 5.
+Do not implement or publish anything.
+```
+
+The handoff is a PRD and plan that a designer can use without guessing what
+"trusted briefing" means. Use **BRD Builder** from the reference material if the
+team also needs a fuller business case.
+
+### Draft the briefing backlog
+
+Choose **Functional Planner** and attach the reviewed PRD and plan.
+Start with the user story: "As a relationship manager, I want a cited briefing
+for an account I can access so that I can prepare without assembling every source
+manually." This is a proposed workshop story, not validated user research.
+
+```text
+Use Functional Planner. Read the attached FSI context, PRD, and briefing plan.
+Draft a Markdown backlog for the read-only Client A briefing with traceability
+to the actual requirement IDs. Cover authorized retrieval, citations, missing
+evidence, denied access, and acceptance checks. Identify the first independently
+testable slice and dependencies. Save the handoff under
+.copilot-tracking/github-issues/ and report its path.
+Planning only. Do not create GitHub issues or mark human-review boxes complete.
+```
+
+Check that access and missing-data behavior are part of the first slice, not
+deferred behind a happy-path demo. Keep the backlog local for the solution
+review; external issue creation is a separate approved action.
+
+### Design the manager's meeting preparation
+
+Choose **UX UI Designer**. Attach the context, research, PRD, and plan. Use this
+journey: ask about Client A, inspect the briefing, open a citation, inspect an
+unknown, and review a suggested follow-up.
+
+```text
+Use UX UI Designer. Read the attached FSI context and reviewed role artifacts.
+Draft the relationship manager's Client A meeting-preparation journey in
+Microsoft 365 Copilot. Show the request, briefing, practice citations, missing
+transaction evidence, and a proposed next action awaiting human review.
+Include a denied-account state and an unavailable-source state. Label the
+journey as a fictional workshop design, not observed user research.
+Save .copilot-tracking/dt/relationship-manager-fsi/experience-draft.md with
+evidence references, assumptions, and open user-research questions.
+Do not build the product or send any messages.
+```
+
+Review whether the manager can distinguish an evidence-backed statement from an
+assumption and find its source. Sketches, DT coaching, and Figma are optional;
+the experience draft is the required handoff.
+
+### Challenge the briefing experience
+
+Review the same experience draft with **Accessibility Planner**, then with
+**RAI Planner**, selecting one agent at a time. Attach the context and experience
+draft and use this focused request for each planner's scope:
+
+```text
+Read the attached FSI context and Client A experience draft. Within your
+planner's scope, examine the briefing, source citations, missing-evidence state,
+denied-access state, and human review of suggested actions.
+Identify barriers or potential harms, proposed mitigations, and observable
+checks. Consider keyboard and screen-reader access, uncertainty that does not
+rely on color, unsupported risk claims, and inappropriate reliance on a draft.
+Report your workflow artifact's actual path and summarize the findings for the
+experience handoff. Keep all findings draft; do not claim certification,
+validated customer research, or human approval.
+```
+
+Carry the relevant findings into the experience draft with owners. A "risk
+indicator" without supporting evidence is not an acceptable answer merely
+because it is labelled AI-generated.
+
+### Draw the permission-aware briefing path
+
+Choose **System Architecture Reviewer**. Attach the context, PRD, plan, and
+experience draft. Follow the manager's question through the proposed system,
+separately from how source content is ingested.
+
+```text
+Use System Architecture Reviewer. Read the attached FSI context and reviewed
+PRD, plan, and experience draft. Create conceptual architecture notes under
+.copilot-tracking/details/ for the Client A briefing, including a Mermaid diagram.
+Trace Microsoft 365 Copilot through identity, the Azure API, account-level
+authorization, retrieval, model grounding, citations, and the response.
+Show ingestion separately. Include denied access, missing evidence, dependency
+failure, tenant isolation, no customer-data training, and audit telemetry without
+secrets or unnecessary personal data. Map components to actual requirements.
+Record the customer-subscription Managed Application as a hypothesis and identify
+tradeoffs and unresolved controls. Report the saved path.
+Do not deploy or describe the diagram as deployment-validated.
+```
+
+Review the rendered Mermaid diagram in the GitHub Copilot app. Confirm that
+authorization is enforced by the service, not by an agent prompt. Use
+**Security Planner** for the resulting security follow-up; an ADR is optional.
+
+### Separate the backend and companion agent
+
+The technical lead identifies two proposed product boundaries: the Azure
+backend deployed in the customer's subscription and the Microsoft 365
+customer-facing agent. HVE's workshop agents are neither of those products.
+Choose **RPI Agent** and attach the existing architecture notes:
+
+```text
+Read the attached FSI context, plan, and architecture notes. Update those same
+notes with the proposed Azure backend and Microsoft 365 companion-agent
+boundaries for the client briefing. Record the API, identity, authorization,
+data, and entitlement questions between them.
+Keep Managed Application packaging and agent distribution as hypotheses until
+the publishing coaches verify them. Assign unresolved decisions to owners and
+link the existing plan. Do not create a separate publication plan, configure
+billing, deploy resources, or publish.
+```
+
+Hand the notes to the whole team. Stage 4 will challenge the briefing behavior;
+stage 5 will turn these publication questions into connected coach handoffs.
+
+## Role facilitation reference
+
+The remaining sections provide reusable methods and prompts for deeper work or
+an explicitly adapted project. They are not a second set of required exercises.
 
 ## Suggested role order
 

@@ -46,7 +46,23 @@ function sourceLink(path, text) {
     link.rel = "noreferrer";
     return link;
 }
-function renderMarkdown(target, markdown) {
+function promptActions(text, code, walkthrough = false) {
+    const actions = node("div", undefined, "prompt-actions");
+    const button = node("button", walkthrough ? "Copy walkthrough prompt" : "Copy source text");
+    button.type = "button";
+    button.addEventListener("click", async () => {
+        try {
+            await navigator.clipboard.writeText(text);
+            announce("Prompt copied. Attach the reviewed context, check the request, and send it yourself.");
+        } catch {
+            code.tabIndex = 0; code.focus();
+            announce("Clipboard unavailable. Select and copy the prompt manually.");
+        }
+    });
+    actions.append(button, node("span", "Review and send manually in the Copilot app", "muted small"));
+    return actions;
+}
+function renderMarkdown(target, markdown, copyPrompts = false) {
     target.innerHTML = DOMPurify.sanitize(marked.parse(markdown), { FORBID_TAGS: ["img", "style", "form", "input"] });
     for (const link of target.querySelectorAll("a")) {
         const href = link.getAttribute("href") ?? "";
@@ -56,6 +72,11 @@ function renderMarkdown(target, markdown) {
             link.target = "_blank"; link.rel = "noreferrer";
         } else {
             link.replaceWith(node("span", link.textContent));
+        }
+    }
+    if (copyPrompts) {
+        for (const code of target.querySelectorAll("pre > code.language-text")) {
+            code.parentElement.before(promptActions(code.textContent.trimEnd(), code, true));
         }
     }
 }
@@ -114,6 +135,7 @@ function drawRelationships() {
 }
 function renderActivity(item, source) {
     const card = node("article", undefined, "activity");
+    card.dataset.activityId = item.id;
     const top = node("div", undefined, "activity-top");
     const heading = node("div");
     heading.append(node("span", workshop.roles.find(([id]) => id === item.role)[1], "tag"), node("h3", item.title));
@@ -130,7 +152,19 @@ function renderActivity(item, source) {
         });
     });
     label.append(check, document.createTextNode(" Activity done"));
-    top.append(heading, label); card.append(top, node("p", item.guidance));
+    top.append(heading, label); card.append(top, node("p", item.guidance, "activity-summary"));
+    for (const [label, path] of item.sources) card.append(sourceLink(path, label));
+    const section = source.sections.find((s) => s.title === item.section);
+    const walkthrough = node("div", undefined, "markdown walkthrough");
+    walkthrough.dataset.section = item.section;
+    renderMarkdown(walkthrough, section.markdown.replace(/^#{2,6} .+\r?\n/, ""), true);
+    for (const original of walkthrough.querySelectorAll("h2, h3, h4, h5, h6")) {
+        const level = Math.min(6, Number(original.tagName.slice(1)) - section.level + 3);
+        const nested = node(`h${level}`);
+        nested.append(...original.childNodes);
+        original.replaceWith(nested);
+    }
+    card.append(walkthrough);
     const componentLine = node("div");
     for (const id of item.components) {
         const component = workshop.components[id];
@@ -138,9 +172,10 @@ function renderActivity(item, source) {
         link.className = `component${component.available ? "" : " missing"}`;
         componentLine.append(link);
     }
-    card.append(componentLine, node("p", "Expected output / handoff", "small muted"));
+    card.append(componentLine, node("p", "Carry into the next activity", "small muted"));
     for (const output of item.outputs) card.append(node("code", output, "artifact"));
     const hints = node("details");
+    hints.className = "hints";
     hints.append(node("summary", "Need a hint? Start here"));
     let target = hints;
     item.hints.forEach((text, index) => {
@@ -151,12 +186,7 @@ function renderActivity(item, source) {
             target.append(next); target = next;
         }
     });
-    const sourceDetails = node("details");
-    sourceDetails.append(node("summary", `Read source activity: ${item.section}`));
-    const rendered = node("div", undefined, "markdown");
-    renderMarkdown(rendered, source.sections.find((s) => s.title === item.section).markdown);
-    sourceDetails.append(rendered);
-    card.append(hints, sourceDetails);
+    card.append(hints);
     return card;
 }
 function renderPrompts(source) {
@@ -168,15 +198,7 @@ function renderPrompts(source) {
         const pre = node("pre");
         const text = node("code", prompt.text);
         pre.append(text);
-        const actions = node("div", undefined, "prompt-actions");
-        const button = node("button", "Copy source text");
-        button.type = "button";
-        button.addEventListener("click", async () => {
-            try { await navigator.clipboard.writeText(prompt.text); announce("Source text copied. Review placeholders and warnings before sending."); }
-            catch { text.tabIndex = 0; text.focus(); announce("Clipboard unavailable. Select and copy the source text manually."); }
-        });
-        actions.append(button, node("span", "Original source; review before execution", "muted small"));
-        details.append(actions, pre); $("prompts").append(details);
+        details.append(promptActions(prompt.text, text), pre); $("prompts").append(details);
     }
 }
 function render() {
@@ -193,6 +215,8 @@ function render() {
     $("step-label").textContent = `STAGE ${step.id} OF 6`;
     $("step-title").textContent = step.title;
     $("purpose").textContent = step.purpose;
+    $("stage-input").textContent = step.entry;
+    $("stage-output").textContent = step.exit;
     const offset = workshop.steps.slice(0, step.id - 1).reduce((n, s) => n + s.minutes, 0);
     $("step-budget").textContent = `${step.minutes} min / agenda ${offset}-${offset + step.minutes}m`;
     $("previous").disabled = step.id === 1; $("next").disabled = step.id === 6;
@@ -205,6 +229,7 @@ function render() {
     $("raw-source").href = `source?path=${encodeURIComponent(`docs/getting-started/${step.file}`)}`;
     renderMarkdown($("source"), source.markdown);
     $("full-source").open = false;
+    $("reference-prompts").open = false;
     renderPrompts(source);
     renderProgress(); drawRelationships();
 }

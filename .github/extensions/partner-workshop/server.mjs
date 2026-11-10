@@ -69,7 +69,7 @@ export async function startServer({ root = repoRoot, stateDirectory, log = conso
     const prefix = `/${token}/`;
     const readable = new Set([
         ...steps.map((s) => `docs/getting-started/${s.file}`),
-        "docs/getting-started/samples/FSI/workshop-input/leancanvas.md",
+        ...steps.flatMap((s) => s.activities.flatMap((a) => a.sources.map(([, path]) => path))),
         ...Object.values(components).map(([, path]) => path),
     ]);
     function send(res, status, body, type = "application/json") {

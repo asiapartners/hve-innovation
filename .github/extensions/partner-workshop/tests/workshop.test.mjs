@@ -27,11 +27,33 @@ test("workshop guides and canvas text target the GitHub Copilot app, not VS Code
     const workshop = await loadWorkshop(repoRoot);
     const canvasText = [
         ...Object.values(workshop.documents).map((d) => d.markdown),
-        ...steps.flatMap((s) => [s.purpose, ...s.activities.flatMap((a) => [a.title, a.guidance, ...a.hints])]),
+        ...steps.flatMap((s) => [s.title, s.purpose, s.entry, s.exit,
+            ...s.activities.flatMap((a) => [a.title, a.guidance, ...a.hints])]),
         ...workshop.gaps,
         await readFile(new URL("../web/index.html", import.meta.url), "utf8"),
     ];
     assert.deepEqual(canvasText.flatMap((t) => t.match(/VS ?Code|Visual Studio|Codespaces?|\.vscode|Copilot Chat/g) ?? []), []);
+});
+
+test("the primary walkthrough carries the FSI case across source-backed activities", async () => {
+    const workshop = await loadWorkshop(repoRoot);
+    for (const step of workshop.steps) {
+        assert.ok(step.entry && step.exit, `Stage ${step.id} must connect its incoming and outgoing handoff`);
+        const document = workshop.documents[step.file];
+        const sections = step.activities.map((item) => document.sections.find((s) => s.title === item.section));
+        const primary = sections.map((s) => s.markdown).join("\n");
+        assert.match(primary, /Client A/, `Stage ${step.id} must continue the sample, not ask for a new scenario`);
+        assert.doesNotMatch(primary, /Use your own project or|when participants do not bring a project/);
+        assert.doesNotMatch(primary, /Topic: \[topic|Session name: \[short name/);
+        if ([3, 4, 6].includes(step.id)) {
+            for (const fixture of ["CRM-01", "MAIL-01", "Client B"]) assert.ok(primary.includes(fixture));
+        }
+        if (step.id === 3) assert.ok(sections.every((s) => !s.markdown.includes("## Role facilitation reference")));
+        if (step.id === 6) {
+            assert.match(primary, /Not run/);
+            assert.doesNotMatch(primary, /```text\s+\/rpi-implement/);
+        }
+    }
 });
 
 test("source extraction preserves prompt contents, ignores headings in fences and includes child sections", () => {
@@ -77,6 +99,9 @@ test("loopback server persists across fresh panels and rejects unsafe routes and
         const source = await fetch(new URL("source?path=docs/getting-started/partner-workshop.md", first.url));
         assert.equal(source.status, 200);
         assert.ok((await source.text()).includes("Workshop Agenda"));
+        const leanCanvas = await fetch(new URL("source?path=docs/getting-started/samples/FSI/workshop-input/leancanvas.md", first.url));
+        assert.equal(leanCanvas.status, 200);
+        assert.match(await leanCanvas.text(), /All business-model statements below are assumptions/);
         for (const name of ["d3.min.js", "marked.js", "purify.js", "handoffs.svg", "components.svg"]) {
             const response = await fetch(new URL(name, first.url));
             assert.equal(response.status, 200, name);
