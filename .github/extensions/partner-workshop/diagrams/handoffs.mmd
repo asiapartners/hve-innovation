@@ -1,0 +1,15 @@
+%% Source: the six docs/getting-started/partner-workshop*.md guides.
+flowchart TB
+    C["Shared context<br/>and evidence boundary"] --> R["SME research<br/>facts and unknowns"]
+    R --> P["PM / BRD and PRD<br/>testable requirements"]
+    P --> D["Design<br/>experience and guardrails"]
+    D --> A["Technical<br/>architecture and risks"]
+    P --> B["Phased plan<br/>and backlog draft"]
+    A --> S["Team solution review<br/>traceability and owners"]
+    B --> S
+    S --> M["Marketplace and<br/>Agent Store plans"]
+    M --> N["Shared monetization<br/>review approval gaps"]
+    N --> H{"Explicit human<br/>approval for first task?"}
+    H -->|Yes| I["Implement one slice<br/>then RPI review"]
+    H -->|Not yet| W["Resolve readiness<br/>and approval gaps"]
+    W --> H

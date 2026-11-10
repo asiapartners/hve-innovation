@@ -1,0 +1,26 @@
+{
+  "d3.min.js": {
+    "url": "https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js",
+    "sha512": "bdce7caafbc176b0d1e1eb5bc4c7654ede06050935aa3bf23914769ebb0fb053f2aecfbfbb9737fb50adeaea4e81d668225edeaba9376b550f0d2340422ff7d8"
+  },
+  "d3.LICENSE": {
+    "url": "https://cdn.jsdelivr.net/npm/d3@7.9.0/LICENSE",
+    "sha512": "25aee12620422c7cbf87e10af049c6a2b1ed00c46c32b699a4d342ee0a5f1ea50e404453d037256cdc07f5977f5b4f7cadb2ea0141c49f0230173cf3cd7ea494"
+  },
+  "marked.umd.js": {
+    "url": "https://cdn.jsdelivr.net/npm/marked@15.0.12/lib/marked.umd.js",
+    "sha512": "713d14cfadd6d90cdd06211c7b74fb825e1f4d37b93b41edc3db83446e95720d506053d4cbaaac73ff2de7a2741607320ea78f6e5277e070e14e034bf0592682"
+  },
+  "marked.LICENSE": {
+    "url": "https://cdn.jsdelivr.net/npm/marked@15.0.12/LICENSE.md",
+    "sha512": "3e687c7cbb9bc729f95940f820eceaee3b9c364aa0f1a446290306d34c0e95f83d6e5df447414ebbb1d9be95548b047377107f862395f21a4cd09c7de7cf0a5f"
+  },
+  "purify.min.js": {
+    "url": "https://cdn.jsdelivr.net/npm/dompurify@3.4.11/dist/purify.min.js",
+    "sha512": "9413d6594859263541ddabfe8c5782c2095ede8f15690210bbcebb47d7d98781e535d3e5ffdfe378655ac91e01115eb7e491579d579c2b9d8a20112eed41fd52"
+  },
+  "dompurify.LICENSE": {
+    "url": "https://cdn.jsdelivr.net/npm/dompurify@3.4.11/LICENSE",
+    "sha512": "98f6b79b778f7b0a15415bd750c3a8a097d650511cb4ec8115188e115c47053fe700f578895c097051c9bc3dfb6197c2b13a15de203273e1a3218884f86e90e8"
+  }
+}

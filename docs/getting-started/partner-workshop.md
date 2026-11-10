@@ -3,7 +3,7 @@ title: HVE Partner Workshop
 description: Workshop for partners to create requirements, context, a backlog, Azure architecture, and publication plans with HVE Core
 sidebar_position: 7
 author: Microsoft
-ms.date: 2026-10-25
+ms.date: 2026-11-10
 ms.topic: tutorial
 keywords:
   - partner workshop
@@ -18,6 +18,16 @@ estimated_reading_time: 8
 Use this workshop to move a product idea to a connected set of delivery artifacts. Participants work in one shared project, split into role tracks, and then combine their outputs into a requirements pack, prioritized backlog, Azure architecture, and publication readiness plan.
 
 The workshop teaches a repeatable workflow. It does not compress production security review, Azure deployment, or Microsoft Marketplace certification into a day.
+
+## Use the Copilot app guide
+
+In the GitHub Copilot app, open this repository and run `/partner-workshop` to
+prepare and open the interactive guide. It covers every agenda stage with role
+activities, source prompts, hints, diagrams and personal progress. New
+customizations may require a new conversation before the command appears.
+See the [canvas launch and maintenance guide](../../.github/extensions/partner-workshop/README.md)
+for the direct-file fallback, source assumptions and verification commands.
+The canvas guides the workshop; it does not execute prompts or grant human approvals.
 
 ## Workshop Agenda
 
