@@ -119,7 +119,7 @@ function drawRelationships() {
     const container = d3.select("#relationships");
     container.selectAll("*").remove();
     const svg = container.append("svg").attr("viewBox", `0 0 900 ${height}`).attr("role", "img")
-        .attr("aria-label", `Stage ${active.id} uses ${ids.map((id) => workshop.components[id].name).join(", ") || "team alignment without a required agent"}. See the mapping table below.`);
+        .attr("aria-label", `Stage ${active.id} uses ${ids.map((id) => workshop.components[id].name).join(", ") || "team alignment without a required agent"}. See the stage handoff cards below.`);
     const y = d3.scalePoint().domain(ids).range([25, height - 25]);
     for (const id of ids) {
         svg.append("path").attr("d", `M 240 ${height / 2} C 360 ${height / 2}, 360 ${y(id)}, 440 ${y(id)}`)
@@ -132,6 +132,53 @@ function drawRelationships() {
         .attr("rx", 6).attr("fill", "#152b44").attr("stroke", "#4493f8");
     svg.append("text").attr("x", 12).attr("y", height / 2 + 5).attr("fill", "#f0f6fc").attr("font-size", 14)
         .text(`${active.id}. ${active.title}`);
+}
+function renderMapping() {
+    $("mapping").replaceChildren(...workshop.steps.map((step) => {
+        const row = node("li", undefined, "stage-map-item");
+        row.dataset.stageId = step.id;
+        const header = node("div", undefined, "stage-map-heading");
+        const title = node("h3", `${step.id}. ${step.title}`);
+        const time = node("span", `${step.minutes} min`, "stage-map-time");
+        const button = node("button", "Open stage", "stage-map-button");
+        button.type = "button";
+        button.addEventListener("click", () => navigate(step.id));
+        header.append(title, time, button);
+        const outcome = node("div", undefined, "stage-map-outcome");
+        outcome.append(node("span", "Handoff", "stage-map-label"), node("p", step.exit));
+        row.append(header, outcome);
+
+        const componentIds = [...new Set(step.activities.flatMap((item) => item.components))];
+        const componentDetails = node("details", undefined, "stage-map-details");
+        componentDetails.append(node("summary", `HVE components · ${componentIds.length}`));
+        const componentList = node("ul", undefined, "stage-map-list");
+        for (const id of componentIds) {
+            const component = workshop.components[id];
+            const link = sourceLink(component.path, component.name + (component.available ? "" : " (missing)"));
+            if (!component.available) link.className = "missing";
+            const item = node("li");
+            item.append(link);
+            componentList.append(item);
+        }
+        if (!componentIds.length) componentList.append(node("li", "Team alignment; no dedicated HVE component."));
+        componentDetails.append(componentList);
+
+        const outputs = [...new Set(step.activities.flatMap((item) => item.outputs))];
+        const outputDetails = node("details", undefined, "stage-map-details");
+        outputDetails.append(node("summary", `Artifact references · ${outputs.length}`));
+        const outputList = node("ul", undefined, "stage-map-list");
+        for (const output of outputs) {
+            const item = node("li");
+            if (/^(?:\.copilot-tracking|docs\/)/.test(output)) item.append(node("code", output, "artifact"));
+            else item.textContent = output;
+            outputList.append(item);
+        }
+        outputDetails.append(outputList);
+        const details = node("div", undefined, "stage-map-details-row");
+        details.append(componentDetails, outputDetails);
+        row.append(details);
+        return row;
+    }));
 }
 function renderActivity(item, source) {
     const card = node("article", undefined, "activity");
@@ -212,6 +259,10 @@ function render() {
         button.addEventListener("click", () => navigate(item.id));
         return button;
     }));
+    for (const row of $("mapping").children) {
+        if (Number(row.dataset.stageId) === step.id) row.setAttribute("aria-current", "step");
+        else row.removeAttribute("aria-current");
+    }
     $("step-label").textContent = `STAGE ${step.id} OF 6`;
     $("step-title").textContent = step.title;
     $("purpose").textContent = step.purpose;
@@ -242,20 +293,7 @@ async function initialize() {
     $("previous").addEventListener("click", () => navigate(state.step - 1));
     $("next").addEventListener("click", () => navigate(state.step + 1));
     $("gaps").replaceChildren(...workshop.gaps.map((gap) => node("li", gap)));
-    for (const step of workshop.steps) {
-        const row = node("tr");
-        const heading = node("th");
-        heading.scope = "row";
-        const button = node("button", `${step.id}. ${step.title}`);
-        button.type = "button"; button.addEventListener("click", () => navigate(step.id));
-        heading.append(button);
-        const componentCell = node("td");
-        componentCell.textContent = [...new Set(step.activities.flatMap((a) => a.components))]
-            .map((id) => workshop.components[id].name).join("; ") || "Team alignment";
-        const outputCell = node("td");
-        for (const output of new Set(step.activities.flatMap((a) => a.outputs))) outputCell.append(node("code", output, "artifact"));
-        row.append(heading, componentCell, outputCell); $("mapping").append(row);
-    }
+    renderMapping();
     render();
     setInterval(async () => {
         try {

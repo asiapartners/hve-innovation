@@ -77,10 +77,9 @@
         <div id="prompts"></div>
       </details>
       <details id="connections" class="panel"><summary>Reference: workflow diagrams and components</summary>
-        <p class="muted">Select a stage in the D3 map to see its real HVE components. The table is the text equivalent.</p>
+        <p class="muted">The relationship map follows your selected stage. The stage list below leads with each handoff; expand a row for component links and artifact references.</p>
         <div id="relationships"></div>
-        <div class="table-wrap"><table><caption>Stage → HVE component → artifact</caption>
-          <thead><tr><th scope="col">Stage</th><th scope="col">Components</th><th scope="col">Artifacts / outcomes</th></tr></thead><tbody id="mapping"></tbody></table></div>
+        <ol id="mapping" class="stage-map" aria-label="Stage handoffs, components, and tracking references"></ol>
         <details><summary>Mermaid: evidence and approval flow</summary>
           <img class="diagram" src="handoffs.svg" alt="Evidence goes through shared context, research, requirements, experience and architecture to a solution review. Publication plans and a shared monetization plan inform an explicitly human-approved implementation slice, then review.">
           <p>Use this flow to check handoff dependencies. It does not imply that publication is complete.</p></details>

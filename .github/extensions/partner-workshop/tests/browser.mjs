@@ -30,6 +30,7 @@ try {
     await page.locator(".activity").first().waitFor();
     assert.equal(await page.locator("#steps button").count(), 6);
     assert.equal(await page.locator("#journey svg").count(), 1);
+    assert.equal(await page.locator("#mapping .stage-map-item").count(), 6);
     assert.match(await page.locator("header").textContent(), /Relationship Manager Intelligence Experience/);
     assert.equal(await page.locator("#adapt-project").getAttribute("open"), null);
     await page.keyboard.press("Tab");
@@ -47,6 +48,10 @@ try {
         assert.equal(await page.locator("#stage-output").textContent(), model.exit);
         assert.equal(await page.locator("#full-source").getAttribute("open"), null);
         assert.equal(await page.locator("#reference-prompts").getAttribute("open"), null);
+        const mapRow = page.locator(`#mapping [data-stage-id="${step}"]`);
+        assert.equal(await mapRow.locator(".stage-map-outcome p").textContent(), model.exit);
+        assert.equal(await mapRow.getAttribute("aria-current"), "step");
+        assert.equal(await mapRow.locator("details[open]").count(), 0);
         assert.equal(await page.locator(".walkthrough").count(), model.activities.length);
         for (const activity of model.activities) {
             const primary = page.locator(`[data-activity-id="${activity.id}"] .walkthrough`);
@@ -92,7 +97,21 @@ try {
         assert.equal(await nested.getAttribute("open"), "");
         await page.locator("#full-source summary").click();
         assert.ok((await page.locator("#source").textContent()).length > 1000);
+        await page.locator("#full-source summary").click();
         await connections.locator(":scope > summary").click();
+        assert.equal(await page.locator("#mapping .stage-map-item").count(), 6);
+        assert.equal(await page.locator("#mapping table").count(), 0);
+        await page.locator("#mapping [data-stage-id=\"3\"] .stage-map-details").first().locator("summary").click();
+        assert.equal(await page.locator("#mapping [data-stage-id=\"3\"] .stage-map-list a").count(),
+            new Set(workshop.steps[2].activities.flatMap((item) => item.components)).size);
+        await page.locator("#mapping [data-stage-id=\"3\"] .stage-map-details").nth(1).locator("summary").click();
+        assert.ok((await page.locator("#mapping [data-stage-id=\"3\"] .artifact").count()) > 0);
+        for (const width of [320, 720]) {
+            await page.setViewportSize({ width, height: 900 });
+            assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth),
+                true, `Expanded stage map reflows at ${width}px`);
+        }
+        await page.setViewportSize({ width: 1440, height: 1100 });
         for (const summary of ["Mermaid: evidence and approval flow", "PlantUML: facilitation and product boundaries"]) {
             const details = connections.locator("details").filter({ has: page.getByText(summary, { exact: true }) });
             if (await details.getAttribute("open") === null) await details.locator("summary").first().click();
@@ -140,6 +159,9 @@ try {
     assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth), true, "320px page reflow");
     await page.setViewportSize({ width: 720, height: 900 });
     assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth), true, "200% equivalent reflow");
+    await page.locator("#connections > summary").click();
+    await page.locator("#mapping [data-stage-id=\"5\"] .stage-map-button").click();
+    await page.waitForFunction(() => document.querySelector("#step-label").textContent === "STAGE 5 OF 6");
     assert.deepEqual(network, [], "Runtime must not request third-party resources");
     assert.deepEqual(failures, [], "No browser errors");
     const violations = results.flatMap((r) => r.violations.map((v) => ({ step: r.step, ...v })));

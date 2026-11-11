@@ -42,8 +42,9 @@ plugin alone into an unrelated product repository does not supply those document
 * Optional hints, complete source guides, reusable prompts, workflow diagrams,
   and guidance for adapting to another project
 * Exact source-prompt copying with no automatic submission or workshop actions
-* A D3 duration-proportional journey and stage-to-component relationship view,
-  a Mermaid handoff flow and a PlantUML workflow/product-boundary view
+* A D3 duration-proportional journey and relationship map, with a scannable
+  stage-handoff list and expandable component links and artifact references
+* A Mermaid handoff flow and a PlantUML workflow/product-boundary view
 * Primer dark colors, native keyboard controls, visible focus, skip navigation,
   text equivalents for diagrams and responsive layouts
 
