@@ -7,7 +7,7 @@ import { loadWorkshop } from "./content.mjs";
 
 const here = dirname(fileURLToPath(import.meta.url));
 const workshop = await loadWorkshop(resolve(here, "../../.."));
-for (const file of ["web/index.html", "web/app.js", "web/style.css", "vendor/d3.min.js",
+for (const file of ["web/index.html", "web/app.js", "web/style.css", "team.mjs", "vendor/d3.min.js",
     "vendor/marked.umd.js", "vendor/purify.min.js", "diagrams/handoffs.svg", "diagrams/components.svg"]) {
     const contents = await readFile(resolve(here, file), "utf8");
     if (!contents.length) throw new Error(`Empty canvas asset: ${file}`);

@@ -13,7 +13,7 @@ const session = await joinSession({
         actions: [
             {
                 name: "get_state",
-                description: "Read the workshop agenda, source availability, saved personal progress and diagram inventory.",
+                description: "Read the workshop agenda, source availability, saved team details, personal progress and diagram inventory.",
                 handler: async (ctx) => (await getServer(ctx.instanceId)).snapshot(),
             },
             {

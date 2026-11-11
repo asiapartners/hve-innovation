@@ -15,6 +15,7 @@ const browser = await chromium.launch({ channel: "chrome" });
 const failures = [];
 const network = [];
 const results = [];
+let teamAccessibility = [];
 try {
     const workshop = await (await fetch(new URL("workshop", server.url))).json();
     const page = await browser.newPage({ viewport: { width: 1440, height: 1100 }, reducedMotion: "reduce", bypassCSP: true });
@@ -37,6 +38,116 @@ try {
     assert.equal(await page.locator(":focus").textContent(), "Skip to current step");
     await page.keyboard.press("Enter");
     assert.equal(await page.locator(":focus").getAttribute("id"), "main");
+
+    assert.equal(await page.locator(".team-member").count(), 4);
+    assert.equal(await page.locator("#team-name").inputValue(), "");
+    assert.equal(await page.locator(".team-remove:disabled").count(), 4);
+    assert.equal(await page.locator("#copy-team").isDisabled(), true);
+    if (process.env.WORKSHOP_EVIDENCE_DIR) {
+        await mkdir(process.env.WORKSHOP_EVIDENCE_DIR, { recursive: true });
+        await page.locator("#team-setup").screenshot({ path: join(process.env.WORKSHOP_EVIDENCE_DIR, "workshop-team-empty.png") });
+    }
+    await page.locator("#team-name").fill("Example workshop");
+    for (let index = 0; index < 4; index++) {
+        await page.locator(`#team-member-${index}-name`).fill(`Example member ${index + 1}`);
+        await page.locator(`#team-member-${index}-handle`).fill(`@example-${index + 1}`);
+    }
+    await page.locator("#team-member-0-handle").fill("https://github.com/example");
+    await page.locator("#save-team").click();
+    assert.match(await page.locator("#team-error").textContent(), /not a URL/);
+    assert.equal(await page.locator(":focus").getAttribute("id"), "team-member-0-handle");
+    assert.equal((await server.snapshot()).team.name, "");
+    await page.locator("#team-member-0-handle").fill("@example-1");
+    await page.locator("#team-member-1-handle").fill("@EXAMPLE-1");
+    await page.locator("#save-team").click();
+    assert.match(await page.locator("#team-error").textContent(), /already listed/);
+    await page.locator("#team-member-1-handle").fill("@example-2");
+    for (let index = 4; index < 8; index++) {
+        await page.locator("#add-member").click();
+        assert.equal(await page.locator(":focus").getAttribute("id"), `team-member-${index}-name`);
+        await page.locator(`#team-member-${index}-name`).fill(`Example member ${index + 1}`);
+        await page.locator(`#team-member-${index}-handle`).fill(`example-${index + 1}`);
+    }
+    assert.equal(await page.locator(".team-member").count(), 8);
+    assert.equal(await page.locator("#add-member").isDisabled(), true);
+    assert.equal(await page.locator("#team-member-0-name").inputValue(), "Example member 1");
+
+    await page.route("**/state", async (route) => {
+        if (route.request().method() === "POST") {
+            await route.fulfill({ status: 503, contentType: "application/json", body: JSON.stringify({ error: "Synthetic save failure" }) });
+        } else await route.continue();
+    });
+    await page.locator("#save-team").click();
+    await page.locator("#team-error").waitFor({ state: "visible" });
+    assert.match(await page.locator("#team-error").textContent(), /could not be saved/);
+    assert.match(await page.locator("#team-save-status").textContent(), /Unsaved/);
+    assert.equal(await page.locator("#team-member-7-name").inputValue(), "Example member 8");
+    assert.equal((await server.snapshot()).team.name, "");
+    await page.unroute("**/state");
+    await page.locator("#save-team").click();
+    await page.waitForFunction(() => document.querySelector("#team-save-status").textContent === "Saved locally for all workshop stages.");
+    assert.equal(await page.locator("#error").isVisible(), false);
+    assert.equal(await page.locator("#team-member-0-handle").inputValue(), "example-1");
+    assert.equal((await server.snapshot()).team.members.length, 8);
+
+    for (const width of [320, 720]) {
+        await page.setViewportSize({ width, height: 900 });
+        assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth),
+            true, `Eight-member team form reflows at ${width}px`);
+    }
+    if (process.env.WORKSHOP_EVIDENCE_DIR) {
+        await page.setViewportSize({ width: 390, height: 900 });
+        await page.locator("#team-setup").screenshot({ path: join(process.env.WORKSHOP_EVIDENCE_DIR, "workshop-team-mobile.png") });
+    }
+    await page.setViewportSize({ width: 1440, height: 1100 });
+    if (process.env.WORKSHOP_EVIDENCE_DIR) {
+        await page.locator("#team-setup").screenshot({ path: join(process.env.WORKSHOP_EVIDENCE_DIR, "workshop-team-desktop.png") });
+    }
+    await page.addScriptTag({ path: resolve(here, "../node_modules/axe-core/axe.min.js") });
+    teamAccessibility = await page.evaluate(async () => (await window.axe.run(document, {
+        runOnly: { type: "tag", values: ["wcag2a", "wcag2aa", "wcag21aa", "wcag22aa"] },
+    })).violations.map((v) => ({ id: v.id, nodes: v.nodes.map((n) => n.target) })));
+
+    await page.locator("#steps button").nth(1).click();
+    await page.waitForFunction(() => document.querySelector("#step-label").textContent === "STAGE 2 OF 6");
+    assert.equal(await page.locator("#team-setup").isVisible(), false);
+    assert.equal(await page.locator("#team-reference-name").textContent(), "Example workshop");
+    await page.locator("#team-reference-members > summary").click();
+    assert.equal(await page.locator("#team-roster li").count(), 8);
+    await page.locator("#copy-team").click();
+    const teamText = await page.evaluate(() => window.copiedPrompts.at(-1));
+    assert.match(teamText, /^Company \/ team: Example workshop/);
+    assert.match(teamText, /Example member 8 \(@example-8\)/);
+    await page.reload();
+    await page.locator(".activity").first().waitFor();
+    assert.equal(await page.locator("#team-reference-name").textContent(), "Example workshop");
+    await page.locator("#edit-team").click();
+    await page.locator("#team-setup").waitFor({ state: "visible" });
+    assert.equal(await page.locator(".team-member").count(), 8);
+    await page.locator("#team-member-7-name").fill("Updated member 8");
+    await page.locator("#steps button").nth(1).click();
+    await page.waitForFunction(() => document.querySelector("#step-label").textContent === "STAGE 2 OF 6");
+    assert.equal(await page.locator("#team-pending").isVisible(), true);
+    await page.locator("#edit-team").click();
+    await page.locator("#team-setup").waitFor({ state: "visible" });
+    assert.equal(await page.locator("#team-member-7-name").inputValue(), "Updated member 8", "Navigation retains unsaved edits");
+    await server.update({ role: "sme" });
+    await page.waitForFunction(() => document.querySelector("#role").value === "sme");
+    assert.equal(await page.locator("#team-member-7-name").inputValue(), "Updated member 8", "Polling retains unsaved edits");
+    for (let count = 8; count > 4; count--) await page.locator(".team-remove").last().click();
+    assert.equal(await page.locator(".team-member").count(), 4);
+    assert.equal(await page.locator(".team-remove:disabled").count(), 4);
+    assert.equal(await page.locator("#add-member").isDisabled(), false);
+    await page.locator("#save-team").click();
+    await page.waitForFunction(() => document.querySelector("#team-save-status").textContent === "Saved locally for all workshop stages.");
+    await page.selectOption("#role", "all");
+    await page.waitForFunction(() => document.querySelector("#role").value === "all" &&
+        document.querySelector("#status").textContent === "Personal progress saved. This is not human approval.");
+    await page.reload();
+    await page.locator(".activity").first().waitFor();
+    assert.equal(await page.locator(".team-member").count(), 4);
+    assert.equal(await page.locator("#team-member-0-name").inputValue(), "Example member 1");
+
     for (let step = 1; step <= 6; step++) {
         await page.locator("#steps button").nth(step - 1).focus();
         await page.keyboard.press("Enter");
@@ -44,6 +155,8 @@ try {
             document.activeElement?.id === "main", step);
         assert.equal(await page.locator(":focus").getAttribute("id"), "main");
         const model = workshop.steps[step - 1];
+        assert.equal(await page.locator("#team-reference-name").textContent(), "Example workshop");
+        assert.equal(await page.locator("#team-setup").isVisible(), step === 1);
         assert.equal(await page.locator("#stage-input").textContent(), model.entry);
         assert.equal(await page.locator("#stage-output").textContent(), model.exit);
         assert.equal(await page.locator("#full-source").getAttribute("open"), null);
@@ -164,11 +277,15 @@ try {
     await page.waitForFunction(() => document.querySelector("#step-label").textContent === "STAGE 5 OF 6");
     assert.deepEqual(network, [], "Runtime must not request third-party resources");
     assert.deepEqual(failures, [], "No browser errors");
-    const violations = results.flatMap((r) => r.violations.map((v) => ({ step: r.step, ...v })));
+    const violations = [...results, { step: "eight-member team", violations: teamAccessibility }]
+        .flatMap((r) => r.violations.map((v) => ({ step: r.step, ...v })));
     const report = { engine: "system Chrome via Playwright", stages: results, runtimeExternalRequests: network,
         browserErrors: failures, keyboard: "skip link, stage buttons, D3 stage control, hints, checkbox",
         walkthrough: "all 21 source-backed exercises visible by default; exact prompt copying without submission",
-        persistence: "survives page reload", reflow: "all six primary walkthrough stages at 320px and 720px passed" };
+        team: { members: "starts at four; adds up to eight; can remove back to four", accessibility: teamAccessibility,
+            persistence: "saved roster survives reload and is available in all stages; unsaved drafts survive navigation and polling",
+            errors: "invalid URLs, duplicate handles and failed saves preserve the draft without claiming success" },
+        persistence: "survives page reload", reflow: "all six primary walkthrough stages and team form at 320px and 720px passed" };
     if (process.env.WORKSHOP_EVIDENCE_DIR) await writeFile(join(process.env.WORKSHOP_EVIDENCE_DIR, "browser-results.json"), JSON.stringify(report, null, 2));
     assert.deepEqual(violations, [], "Axe WCAG A/AA violations");
     console.info(JSON.stringify(report, null, 2));

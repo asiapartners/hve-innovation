@@ -37,6 +37,8 @@ plugin alone into an unrelated product repository does not supply those document
 * Six stages, the original 270-minute agenda and 21 guided activities, each
   showing its source-backed exercise directly rather than hiding it in a drawer
 * Four role filters plus a whole-team view
+* A company/team roster with four initial member slots and a maximum of eight,
+  saved locally and available in every stage with a manual copy action
 * Incoming and outgoing handoffs at every stage, concrete practice cases,
   expected outputs, and inline copy-ready prompts
 * Optional hints, complete source guides, reusable prompts, workflow diagrams,
@@ -48,12 +50,19 @@ plugin alone into an unrelated product repository does not supply those document
 * Primer dark colors, native keyboard controls, visible focus, skip navigation,
   text equivalents for diagrams and responsive layouts
 
-Personal progress is stored under
+Personal progress and saved team details are stored under
 `$COPILOT_HOME/extensions/partner-workshop/artifacts/<checkout-hash>/progress.json`
 (`COPILOT_HOME` defaults to `~/.copilot`). It belongs to this user and checkout,
 not a panel or loopback port, and survives provider restarts and new panels.
 Worktrees have independent progress. Activity checks never approve a human-review
 checkbox, external write, engineering task or commercial decision.
+
+The roster editor uses **Save team**. Unsaved edits survive stage navigation but
+must be saved before a canvas reload. Names and handles are not looked up,
+invited, or submitted to GitHub. The local state file uses owner-only permissions;
+it is not a repository file. Clear the fields and save to remove stored roster
+details. **Copy saved team details** copies only the saved roster for deliberate
+reuse in a session-context artifact; it does not alter source prompts.
 
 ## Workshop analysis
 

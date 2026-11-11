@@ -56,6 +56,12 @@ Choose **RPI Agent**. Replace only `[YYYY-MM-DD]` with your workshop date, then
 review and send this prompt. The case name and evidence references are already
 filled in.
 
+If you saved your roster in the canvas introduction, open **Your team** and
+choose **Copy saved team details**. Paste it with the prompt below so the shared
+context can carry your company or team name, member names, and GitHub handles.
+Review the roster before including it in a repository artifact. Role assignments
+still need the team's agreement; a saved handle is not an approval or invitation.
+
 ```text
 Create only the shared session context for the Relationship Manager Intelligence
 Experience workshop.

@@ -7,15 +7,17 @@ import { homedir } from "node:os";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { components, loadWorkshop, roles, steps } from "./content.mjs";
+import { emptyTeam, validateTeam } from "./team.mjs";
 
 const here = dirname(fileURLToPath(import.meta.url));
 export const repoRoot = resolve(here, "../../..");
 const activityIds = new Set(steps.flatMap((s) => s.activities.map((a) => a.id)));
 const queues = new Map();
-const emptyState = () => ({ step: 1, role: "all", completed: [] });
+const emptyState = () => ({ step: 1, role: "all", completed: [], team: emptyTeam() });
 const assets = new Map([
     ["", ["web/index.html", "text/html"]],
     ["app.js", ["web/app.js", "text/javascript"]],
+    ["team.mjs", ["team.mjs", "text/javascript"]],
     ["style.css", ["web/style.css", "text/css"]],
     ["d3.min.js", ["vendor/d3.min.js", "text/javascript"]],
     ["marked.js", ["vendor/marked.umd.js", "text/javascript"]],
@@ -25,20 +27,20 @@ const assets = new Map([
 ]);
 
 export function validateState(value, partial = false) {
-    if (!value || typeof value !== "object" || Array.isArray(value)) throw new Error("Expected a progress object.");
-    if (Object.keys(value).some((key) => !["step", "role", "completed"].includes(key))) throw new Error("Unknown progress field.");
+    if (!value || typeof value !== "object" || Array.isArray(value)) throw new Error("Expected a workshop state object.");
+    if (Object.keys(value).some((key) => !["step", "role", "completed", "team"].includes(key))) throw new Error("Unknown workshop state field.");
     if ((!partial || "step" in value) && (!Number.isInteger(value.step) || value.step < 1 || value.step > 6)) throw new Error("Step must be 1-6.");
     if ((!partial || "role" in value) && !roles.some(([id]) => id === value.role)) throw new Error("Unknown role.");
     if ((!partial || "completed" in value) && (!Array.isArray(value.completed) ||
         value.completed.some((id) => !activityIds.has(id)) || new Set(value.completed).size !== value.completed.length)) {
         throw new Error("Completed activities must be unique known activity IDs.");
     }
-    return value;
+    return "team" in value ? { ...value, team: validateTeam(value.team) } : value;
 }
 
 async function loadState(path) {
     try {
-        return validateState(JSON.parse(await readFile(path, "utf8")));
+        return { ...emptyState(), ...validateState(JSON.parse(await readFile(path, "utf8"))) };
     } catch (error) {
         if (error.code === "ENOENT") return emptyState();
         throw new Error(`Cannot read saved workshop progress: ${error.message}`);
@@ -46,9 +48,9 @@ async function loadState(path) {
 }
 
 function updateState(path, patch) {
-    validateState(patch, true);
+    const update = validateState(patch, true);
     const operation = (queues.get(path) ?? Promise.resolve()).then(async () => {
-        const state = validateState({ ...await loadState(path), ...patch });
+        const state = validateState({ ...await loadState(path), ...update });
         await mkdir(dirname(path), { recursive: true, mode: 0o700 });
         const temporary = `${path}.${randomUUID()}.tmp`;
         await writeFile(temporary, `${JSON.stringify(state)}\n`, { mode: 0o600 });
@@ -102,7 +104,7 @@ export async function startServer({ root = repoRoot, stateDirectory, log = conso
                 const chunks = [];
                 for await (const chunk of req) {
                     size += chunk.length;
-                    if (size > 8192) { send(res, 413, { error: "Progress payload is too large." }); return; }
+                    if (size > 8192) { send(res, 413, { error: "Workshop state payload is too large." }); return; }
                     chunks.push(chunk);
                 }
                 let patch;
@@ -135,9 +137,12 @@ export async function startServer({ root = repoRoot, stateDirectory, log = conso
     });
     return {
         url: `http://127.0.0.1:${server.address().port}${prefix}`,
-        snapshot: async () => ({ agenda: steps.map(({ id, title, minutes }) => ({ id, title, minutes })),
-            progress: await loadState(statePath), components: workshop.components,
-            diagrams: ["D3 interactive agenda and component map", "Mermaid handoff flow", "PlantUML component ownership"] }),
+        snapshot: async () => {
+            const { team, ...progress } = await loadState(statePath);
+            return { agenda: steps.map(({ id, title, minutes }) => ({ id, title, minutes })),
+                progress, team, components: workshop.components,
+                diagrams: ["D3 interactive agenda and component map", "Mermaid handoff flow", "PlantUML component ownership"] };
+        },
         update: (patch) => updateState(statePath, patch),
         close: () => new Promise((accept, reject) => server.close((error) => error ? reject(error) : accept())),
     };

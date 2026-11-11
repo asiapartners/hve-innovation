@@ -2,9 +2,14 @@
 // SPDX-License-Identifier: MIT
 /* global d3, marked, DOMPurify */
 "use strict";
+import { MIN_MEMBERS, MAX_MEMBERS, NAME_LIMIT, HANDLE_LIMIT, validateTeam, teamContext } from "./team.mjs";
+
 let workshop;
 let state;
 let saving = Promise.resolve();
+let teamDraft;
+let teamDirty = false;
+let teamSaving = false;
 const $ = (id) => document.getElementById(id);
 function node(tag, text, className) {
     const element = document.createElement(tag);
@@ -22,7 +27,7 @@ async function request(route, options) {
     }
     return response.json();
 }
-function save(patch) {
+function save(patch, message = "Personal progress saved. This is not human approval.") {
     saving = saving.then(async () => {
         const previous = state;
         state = await request("state", {
@@ -31,13 +36,154 @@ function save(patch) {
         });
         $("error").hidden = true;
         if (previous.step !== state.step || previous.role !== state.role) render();
-        else renderProgress();
-        announce("Personal progress saved. This is not human approval.");
-    }).catch(fail);
+        else { renderProgress(); refreshTeam(); }
+        announce(message);
+        return state;
+    }).catch((error) => { fail(error); return null; });
     return saving;
 }
 function navigate(step) {
-    save({ step }).then(() => { $("main").focus(); });
+    return save({ step }).then((saved) => { if (saved) $("main").focus(); });
+}
+function clearTeamError() {
+    $("team-error").hidden = true;
+    for (const input of $("team-form").querySelectorAll("[aria-invalid]")) {
+        input.removeAttribute("aria-invalid");
+        input.setAttribute("aria-describedby", "team-input-help");
+    }
+}
+function showTeamError(error) {
+    $("team-error").textContent = error.message;
+    $("team-error").hidden = false;
+    const input = $(error.field);
+    if (input instanceof HTMLInputElement) {
+        input.setAttribute("aria-invalid", "true");
+        input.setAttribute("aria-describedby", "team-error team-input-help");
+        input.focus();
+    } else $("team-error").focus();
+}
+function updateTeamStatus() {
+    $("team-fields").disabled = teamSaving;
+    $("add-member").disabled = teamDraft.members.length >= MAX_MEMBERS;
+    for (const button of $("team-members").querySelectorAll("button")) button.disabled = teamDraft.members.length <= MIN_MEMBERS;
+    $("team-member-count").textContent = `${teamDraft.members.length} / ${MAX_MEMBERS} member slots`;
+    $("save-team").disabled = !teamDirty || teamSaving;
+    $("team-pending").hidden = !teamDirty;
+    const hasSavedTeam = state.team.name || state.team.members.some((member) => member.name || member.handle);
+    $("copy-team").disabled = teamDirty || teamSaving || !hasSavedTeam;
+    const message = teamSaving ? "Saving team details..." : teamDirty ? "Unsaved changes. Save to use them in later stages." :
+        hasSavedTeam ? "Saved locally for all workshop stages." : "Ready for your team details.";
+    if ($("team-save-status").textContent !== message) $("team-save-status").textContent = message;
+}
+function editTeamDraft() {
+    teamDirty = JSON.stringify(teamDraft) !== JSON.stringify(state.team);
+    clearTeamError();
+    updateTeamStatus();
+}
+function renderTeamInputs() {
+    $("team-name").value = teamDraft.name;
+    $("team-members").replaceChildren(...teamDraft.members.map((member, index) => {
+        const row = node("fieldset", undefined, "team-member");
+        row.append(node("legend", `Member ${index + 1}`));
+        const fields = node("div", undefined, "team-member-fields");
+        for (const [field, label, limit] of [["name", "Name", NAME_LIMIT], ["handle", "GitHub handle", HANDLE_LIMIT + 1]]) {
+            const group = node("div", undefined, "team-field");
+            const input = node("input");
+            input.type = "text";
+            input.id = input.name = `team-member-${index}-${field}`;
+            input.value = member[field];
+            input.maxLength = limit;
+            input.setAttribute("aria-describedby", "team-input-help");
+            if (field === "handle") {
+                input.placeholder = "@username";
+                input.spellcheck = false;
+                input.setAttribute("autocapitalize", "none");
+            }
+            const caption = node("label", label);
+            caption.htmlFor = input.id;
+            input.addEventListener("input", () => { teamDraft.members[index][field] = input.value; editTeamDraft(); });
+            group.append(caption, input);
+            fields.append(group);
+        }
+        const remove = node("button", "Remove", "team-remove");
+        remove.type = "button";
+        remove.setAttribute("aria-label", `Remove member ${index + 1}`);
+        remove.addEventListener("click", () => {
+            if (teamDraft.members.length <= MIN_MEMBERS) { announce("Keep at least four member slots."); return; }
+            teamDraft.members.splice(index, 1);
+            renderTeamInputs();
+            editTeamDraft();
+            $(`team-member-${Math.min(index, teamDraft.members.length - 1)}-name`).focus();
+        });
+        fields.append(remove);
+        row.append(fields);
+        return row;
+    }));
+    updateTeamStatus();
+}
+function refreshTeam() {
+    if (!teamDirty && !teamSaving && JSON.stringify(teamDraft) !== JSON.stringify(state.team)) {
+        teamDraft = structuredClone(state.team);
+        renderTeamInputs();
+    }
+    $("team-reference-name").textContent = state.team.name || "Company / team name not entered";
+    const members = state.team.members.filter((member) => member.name || member.handle);
+    $("team-reference-count").textContent = `Team members (${members.length})`;
+    $("team-roster").replaceChildren(...members.map((member) => {
+        const item = node("li");
+        item.append(node("strong", member.name || "Name not entered"),
+            node("span", member.handle ? `@${member.handle}` : "Handle not entered", "muted"));
+        return item;
+    }));
+    if (!members.length) $("team-roster").append(node("li", "Add your team in the introduction, then save it for later stages."));
+    updateTeamStatus();
+}
+async function saveTeam(event) {
+    event.preventDefault();
+    clearTeamError();
+    let team;
+    try { team = validateTeam(teamDraft); }
+    catch (error) { showTeamError(error); return; }
+    teamSaving = true;
+    updateTeamStatus();
+    const saved = await save({ team }, "Team details saved locally for all workshop stages. Nothing was sent to GitHub.");
+    teamSaving = false;
+    if (saved) {
+        teamDraft = structuredClone(saved.team);
+        teamDirty = false;
+        renderTeamInputs();
+    } else showTeamError(new Error("Team details could not be saved. Your edits are still here; try Save team again."));
+    refreshTeam();
+}
+function initializeTeam() {
+    teamDraft = structuredClone(state.team);
+    $("team-name").maxLength = NAME_LIMIT;
+    $("team-name").addEventListener("input", (event) => { teamDraft.name = event.target.value; editTeamDraft(); });
+    $("add-member").addEventListener("click", () => {
+        if (teamDraft.members.length >= MAX_MEMBERS) { announce("The team has the maximum of eight member slots."); return; }
+        teamDraft.members.push({ name: "", handle: "" });
+        renderTeamInputs();
+        editTeamDraft();
+        $(`team-member-${teamDraft.members.length - 1}-name`).focus();
+    });
+    $("team-form").addEventListener("submit", saveTeam);
+    $("edit-team").addEventListener("click", async () => {
+        const saved = state.step === 1 ? state : await save({ step: 1 });
+        if (saved) $("team-name").focus();
+    });
+    $("copy-team").addEventListener("click", async () => {
+        try {
+            await navigator.clipboard.writeText(teamContext(state.team));
+            announce("Saved team details copied. Paste and review them in your shared session context.");
+        } catch {
+            $("team-roster").focus();
+            announce("Clipboard unavailable. Select and copy the saved roster manually.");
+        }
+    });
+    window.addEventListener("beforeunload", (event) => {
+        if (teamDirty || teamSaving) { event.preventDefault(); event.returnValue = ""; }
+    });
+    renderTeamInputs();
 }
 function sourceLink(path, text) {
     const link = node("a", text);
@@ -277,6 +423,8 @@ function render() {
         $("role-note").textContent = "No dedicated activity for your role here. Review the team handoffs below.";
     } else $("role-note").textContent = state.role === "all" ? "All role handoffs shown." : "Showing your role and whole-team activities. Choose Whole team to inspect other handoffs.";
     $("activities").replaceChildren(...visible.map((item) => renderActivity(item, source)));
+    $("team-setup").hidden = step.id !== 1;
+    refreshTeam();
     $("raw-source").href = `source?path=${encodeURIComponent(`docs/getting-started/${step.file}`)}`;
     renderMarkdown($("source"), source.markdown);
     $("full-source").open = false;
@@ -286,6 +434,7 @@ function render() {
 }
 async function initialize() {
     [workshop, state] = await Promise.all([request("workshop"), request("state")]);
+    initializeTeam();
     $("role").replaceChildren(...workshop.roles.map(([id, name]) => {
         const option = node("option", name); option.value = id; return option;
     }));
@@ -297,8 +446,10 @@ async function initialize() {
     render();
     setInterval(async () => {
         try {
-            await saving;
+            const pending = saving;
+            await pending;
             const latest = await request("state");
+            if (pending !== saving) return;
             if (JSON.stringify(latest) !== JSON.stringify(state)) { state = latest; render(); }
         } catch (error) { fail(error); }
     }, 2500);

@@ -42,7 +42,7 @@ subscription, with data, search, model, API, identity, and monitoring resources.
 Treat this as a design hypothesis to examine, not a validated deployment or
 confirmed publication route.
 
-1. Assign an SME, PM, designer, and technical lead within your team of four to six.
+1. Assign an SME, PM, designer, and technical lead within your team of four to eight.
 2. Read the meeting question aloud. Agree that the walkthrough will produce a
    briefing with citations, permission-aware access, explicit unknowns, and human
    review of suggested actions.
@@ -57,6 +57,17 @@ unauthorized information or presenting an unsupported answer as fact.
 You use the **GitHub Copilot app** and HVE agents to do the workshop. The
 **Microsoft 365 Copilot agent** is the customer-facing product you are designing;
 it is not the workshop tool.
+
+In the canvas introduction, use **Your workshop team** to enter your company or
+team name and each member's name and GitHub handle. Four member slots are ready;
+choose **Add member** for up to eight. Choose **Save team** to keep the details
+on this computer for this checkout. Blank slots can be saved while you gather
+the roster. Saving does not look up accounts, invite members, or assign roles.
+
+The **Your team** section remains available in later stages. Use **Copy saved
+team details** when adding the roster to your shared context. Review those
+details before sharing them; the canvas does not automatically write them to
+the repository or send them to GitHub.
 
 ## Use the Copilot app guide
 
@@ -130,7 +141,7 @@ docs/
 
 ## Audience and Roles
 
-Form multidisciplinary teams of four to six people.
+Form multidisciplinary teams of four to eight people.
 
 | Track                 | Suggested Participants                                                 | Primary Workshop Output                                                 |
 |-----------------------|------------------------------------------------------------------------|-------------------------------------------------------------------------|
