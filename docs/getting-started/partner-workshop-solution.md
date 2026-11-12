@@ -3,7 +3,7 @@ title: Partner Workshop solution
 description: Integrate role outputs into a shared solution pack, backlog, architecture view, and publication-readiness plan
 sidebar_position: 10
 author: Microsoft
-ms.date: 2026-10-25
+ms.date: 2026-11-11
 ms.topic: tutorial
 keywords:
   - workshop solution
@@ -16,25 +16,30 @@ estimated_reading_time: 8
 
 ## Workshop Agenda
 
-| Step | Activity                                                                                    | Time   |
-|------|---------------------------------------------------------------------------------------------|--------|
-| 1    | [Workshop Overview](partner-workshop.md)                                                    | 30 min |
-| 2    | [Set up Codespaces or local VS Code](partner-workshop-setup.md)                             | 30 min |
-| 3    | [Plan, Envision, Experience, Architecture Design, Backlog](partner-workshop-role-tracks.md) | 90 min |
-| 4    | [**Validation & Solution**](partner-workshop-solution.md)                                   | 30 min |
-| 5    | [Microsoft Marketplace and Copilot Agent Store readiness](partner-workshop-publishing.md)   | 60 min |
-| 6    | [Handoff to Implementation & Commercialization](partner-workshop-implementation.md)         | 30 min |
+| Step | Activity                                                       | Time   |
+|------|----------------------------------------------------------------|--------|
+| 1    | [Meet the FSI client](partner-workshop.md)                     | 30 min |
+| 2    | [Prepare the FSI case](partner-workshop-setup.md)              | 30 min |
+| 3    | [Design the briefing](partner-workshop-role-tracks.md)         | 90 min |
+| 4    | [**Challenge the briefing**](partner-workshop-solution.md)     | 30 min |
+| 5    | [Plan both launch paths](partner-workshop-publishing.md)       | 60 min |
+| 6    | [Hand off the first slice](partner-workshop-implementation.md) | 30 min |
 
-Use this guide during the solution portion of the workshop. Participants should bring their role outputs together, check for gaps and traceability, and leave with a reviewed handoff that can be refined after the session.
+Bring the Client A research, PRD, plan, experience, architecture, and Markdown
+backlog together. This stage checks whether every role has designed the same
+read-only briefing, including what happens when evidence is missing or access
+is denied. It is a tabletop review, not proof that the product already works.
 
 ## Objective
 
-Create one shared solution draft that connects business context, requirements, experience, backlog, architecture, and publication readiness into a coherent story.
+Create one shared briefing solution draft. The manager should see the two cited
+practice facts, an explicit transaction-history unknown, and a proposed next
+action that has not been executed.
 
 ## Suggested solution flow
 
 1. Ask each role to summarize its artifact in two minutes.
-2. Open the production artifacts under `.copilot-tracking/research/`, `.copilot-tracking/prd-sessions/`, `.copilot-tracking/dt/`, `.copilot-tracking/plans/`, `.copilot-tracking/details/`, and `.copilot-tracking/github-issues/`.
+2. Type `@` in the prompt box to add the production artifacts under `.copilot-tracking/research/`, `.copilot-tracking/prd-sessions/`, `.copilot-tracking/dt/`, `.copilot-tracking/plans/`, `.copilot-tracking/details/`, and `.copilot-tracking/github-issues/` to the session.
 3. Compare terminology across the files and resolve contradictions.
 4. Use the SME context pack as the source of truth for domain terms and business rules.
 5. Confirm that each user story identifies a user, need, and outcome.
@@ -46,18 +51,23 @@ Create one shared solution draft that connects business context, requirements, e
 
 ## Traceability review
 
-Select **RPI-Plan** and enter this prompt:
+Each role has two minutes to show how its artifact handles Client A. Choose
+**RPI Agent**, then attach the shared session context and the actual role
+artifacts with `@`. Use the real requirement and backlog IDs, not a second set
+invented for this review.
 
 ```text
-"Review the production artifact set under `.copilot-tracking/research/`,
-`.copilot-tracking/prd-sessions/`, `.copilot-tracking/dt/`,
-`.copilot-tracking/plans/`, `.copilot-tracking/details/`, and
-`.copilot-tracking/github-issues/` as one solution pack. Build a traceability
-matrix from context facts and decisions to requirements, experience needs,
-architecture components, backlog items, tests, and publication gates. Save
-the matrix under `.copilot-tracking/details/`. Report missing links,
-contradictions, unsupported claims, and unowned risks. Do not implement or
-publish anything."
+/rpi-plan
+Read the attached relationship-manager-fsi context and role artifacts as one
+Client A briefing solution pack. Trace the authorized briefing, practice
+citations, missing transaction evidence, denied Client B request, and human
+review of next actions through requirements, experience, architecture, backlog,
+proposed acceptance checks, and publication gates.
+Use existing IDs and paths. Save the matrix under .copilot-tracking/details/
+and report contradictions, missing links, unsupported claims, and unowned risks.
+Separate tabletop checks from tests that have actually run. Keep publication
+questions in the existing architecture notes for the two coaches.
+Do not implement or publish anything.
 ```
 
 Then complete these steps:
@@ -68,29 +78,48 @@ Then complete these steps:
 4. Record remaining publication gaps in the architecture notes with an owner.
 5. Mark generated content as draft until a responsible human reviews it.
 
-The next workshop gives these publication inputs to the Microsoft Marketplace
-Coach, which creates the canonical Marketplace implementation plan under
-`.copilot-tracking/plans/`. Do not create a separate publication-readiness
-artifact during solution review.
+The next stage gives these inputs to the publishing coaches. Link each coach's
+actual canonical plan path rather than creating a competing readiness record.
+Do not create a separate publication-readiness artifact during solution review.
 
-### Project Manager: GitHub Issues
+## Project Manager: GitHub Issues
 
-1. Select **Backlog Manager**.
-2. Ask it to inspect the backlog plan under `.copilot-tracking/github-issues/` for readiness and duplicates.
-3. Confirm repository, labels, milestone, owners, and issue hierarchy.
-4. Ask for a dry-run summary before any mutation.
-5. Review the proposed issue titles and acceptance criteria.
-6. Create issues only with facilitator approval and repository permission.
+The default walkthrough leaves a reviewed **Markdown backlog**. Choose
+**Backlog Manager**, attach the Client A backlog and traceability matrix, and
+request a dry run:
 
-### Project Manager: Markdown-only fallback
+```text
+Read the attached FSI briefing backlog and traceability matrix. Review whether
+the first slice covers authorized facts, citations, missing evidence, and
+denied access. Identify blockers and duplicates in the proposed hierarchy.
+Prepare a dry-run handoff under .copilot-tracking/github-issues/ with owners,
+review status, and acceptance criteria. Leave target repository or external IDs
+unconfirmed when not supplied.
+Do not create or update GitHub issues, or mark human-review checkboxes complete.
+```
 
-1. Keep the backlog plan under `.copilot-tracking/github-issues/` as the system-neutral backlog.
-2. Add columns for target system, owner, state, and external ID.
-3. Assign a post-workshop owner to import or create each approved item.
+Record the target system, owner, state, and external ID fields for later import.
+If the facilitator separately approves issue creation, first confirm the target
+repository, permissions, labels, milestone, and hierarchy, and complete the
+human-review gate. Then review the created items under **Issues** in the app.
+Missing write access does not prevent completion of this stage.
 
-### Engineer: Review the architecture
+## Engineer: Review the architecture
 
-1. Open the architecture notes and diagram under `.copilot-tracking/details/` in Markdown Preview.
+Rehearse these three cases against the experience and conceptual Mermaid
+diagram. Use only the fictional fixtures from stage 3:
+
+| Case                         | Expected walkthrough behavior                                                                                       |
+|------------------------------|---------------------------------------------------------------------------------------------------------------------|
+| Authorized Client A briefing | Renewal discussion cites CRM-01; onboarding request cites MAIL-01; next action stays a draft for human review       |
+| Missing transaction history  | Response says Unknown or insufficient evidence; it does not invent a trend, balance, risk score, or growth forecast |
+| Denied Client B request      | Service denies access before retrieval; no account content appears in the answer, citations, or diagnostic output   |
+
+These are expected behaviors for review, not a record of passed implementation
+tests. Ask the designer to show what the manager sees and the technical lead to
+show where the corresponding control is enforced.
+
+1. Type `@` to add the architecture notes under `.copilot-tracking/details/`, then ask Copilot to show the Mermaid diagram. The app renders Mermaid diagrams in the conversation.
 2. Follow the primary user request from Microsoft 365 Copilot to the Azure API, retrieval layer, model, and response path.
 3. Follow the content ingestion and update path separately.
 4. Identify where authorization is enforced.
@@ -100,6 +129,10 @@ artifact during solution review.
 8. Add failure paths for model, search, identity, and dependency outages.
 9. Add a cost owner and an operational owner.
 10. Mark the diagram as conceptual until infrastructure source and deployment validation exist.
+
+Hand off the reviewed matrix, the three highest unresolved risks, their owners,
+and the architecture's publication questions. A citation in a mockup is not
+proof that retrieval or authorization has been implemented.
 
 ## Ten-minute team discussion
 

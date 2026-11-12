@@ -1,0 +1,15 @@
+{
+  "name": "hve-partner-workshop-canvas",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test tests/*.test.mjs",
+    "test:browser": "node tests/browser.mjs",
+    "prepare:assets": "node scripts/prepare-assets.mjs",
+    "render:diagrams": "node scripts/render-diagrams.mjs"
+  },
+  "devDependencies": {
+    "axe-core": "4.14.0",
+    "playwright": "1.64.1"
+  }
+}

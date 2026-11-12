@@ -1,9 +1,9 @@
 ---
 title: Partner Workshop Role Guide
-description: Structured role-based guide for the HVE partner workshop
+description: Design the Client A briefing through connected SME, PM, design, and technical exercises
 sidebar_position: 9
 author: Microsoft
-ms.date: 2026-10-25
+ms.date: 2026-11-11
 ms.topic: tutorial
 keywords:
   - Project Manager
@@ -16,16 +16,224 @@ estimated_reading_time: 10
 
 ## Workshop Agenda
 
-| Step | Activity                                                                                        | Time   |
-|------|-------------------------------------------------------------------------------------------------|--------|
-| 1    | [Workshop Overview](partner-workshop.md)                                                        | 30 min |
-| 2    | [Set up Codespaces or local VS Code](partner-workshop-setup.md)                                 | 30 min |
-| 3    | [**Plan, Envision, Experience, Architecture Design, Backlog**](partner-workshop-role-tracks.md) | 90 min |
-| 4    | [Validation & Solution](partner-workshop-solution.md)                                           | 30 min |
-| 5    | [Microsoft Marketplace and Copilot Agent Store readiness](partner-workshop-publishing.md)       | 60 min |
-| 6    | [Handoff to Implementation & Commercialization](partner-workshop-implementation.md)             | 30 min |
+| Step | Activity                                                       | Time   |
+|------|----------------------------------------------------------------|--------|
+| 1    | [Meet the FSI client](partner-workshop.md)                     | 30 min |
+| 2    | [Prepare the FSI case](partner-workshop-setup.md)              | 30 min |
+| 3    | [**Design the briefing**](partner-workshop-role-tracks.md)     | 90 min |
+| 4    | [Challenge the briefing](partner-workshop-solution.md)         | 30 min |
+| 5    | [Plan both launch paths](partner-workshop-publishing.md)       | 60 min |
+| 6    | [Hand off the first slice](partner-workshop-implementation.md) | 30 min |
 
-Use this guide during the role-exercise portion of the workshop. Participants should work from the same scenario, capture assumptions, and leave with a handoff that the next role can use.
+Use the `relationship-manager-fsi` context from stage 2 throughout these
+activities. Add it with `@` and attach the reviewed outputs as each role hands
+over. The primary route designs the Client A briefing; the reference sections
+below offer reusable prompts and optional tools for later adaptation.
+
+## Walkthrough: design the Client A briefing
+
+### Inspect the Client A practice evidence
+
+The SME starts with the bundled
+[FSI lean canvas](samples/FSI/workshop-input/leancanvas.md). Its business claims
+are assumptions and its baselines, prices, and target segment are unknown.
+Copy it to `.copilot-tracking/research/workshop-input/leancanvas.md` if you need
+an annotated working copy; do not overwrite the supplied source.
+
+Use these **fictional teaching fixtures** for the briefing exercise. They
+illustrate response behavior, not real customer facts, policies, or research:
+
+| Fixture          | Practice input                                                  | Access in the exercise |
+|------------------|-----------------------------------------------------------------|------------------------|
+| CRM-01           | Client A's next meeting includes a contract renewal discussion. | Allowed                |
+| MAIL-01          | Client A asked for an onboarding timeline before the meeting.   | Allowed                |
+| No record        | No approved transaction-history evidence has been supplied.     | Unknown                |
+| Client B request | The manager is not authorized to access this account.           | Denied; no content     |
+
+1. Separate the fictional records from the lean canvas's business assumptions.
+2. Record unanswered business questions, such as the actual preparation-time
+   baseline, policy requirements, and first customer segment, with an owner.
+3. Hand the annotated assumptions and the exact fixture references to the
+   research activity. Do not invent additional records to make the answer look
+   complete.
+
+A useful sample response shape is: "Discuss renewal [CRM-01]. Confirm the
+onboarding timeline [MAIL-01]. Transaction changes: Unknown." These are practice
+citations, not links to a real CRM or email system.
+
+### Research the briefing constraints
+
+Choose **RPI Agent** and attach the shared session context and SME annotations.
+The exercise is to establish what is supported and what still needs research,
+not to turn the classroom examples into market evidence.
+
+```text
+/rpi-research
+Read the attached relationship-manager-fsi session context and its exact
+evidence references, including the Client A practice evidence section.
+Create a context pack for the pre-meeting briefing. Separate fictional fixture
+facts, business assumptions, proposed design constraints, and Unknowns.
+Trace the two available statements to CRM-01 and MAIL-01. Record the missing
+transaction evidence and the denied-account case without inventing account data.
+Identify what customer research and policy evidence the SME must obtain before
+real requirements can be approved. Save the dated research artifact under
+.copilot-tracking/research/ and report its path. Context discovery only;
+do not implement, create external work items, deploy, or publish.
+```
+
+Check that the result does not claim measured time savings or verified banking
+policies. Hand the research path and unresolved questions to the PM.
+
+### Specify the first briefing slice
+
+The PM uses **PRD Builder** to turn the research into a draft for one job:
+prepare for a Client A meeting. Add the research artifact and session context
+with `@`.
+
+```text
+Use PRD Builder. Read the attached relationship-manager-fsi session context and
+research pack. Draft the first read-only client-briefing slice, with requirements
+for source citations, account-level authorization, explicit missing evidence,
+and human review of suggested next actions.
+Define observable acceptance checks for the Client A fixtures, missing
+transaction history, and a denied Client B request. Exclude sending messages,
+updating CRM records, making financial decisions, and transactions.
+Keep business metrics, policies, and commercial terms unconfirmed where evidence
+is missing. Save the draft and session state under .copilot-tracking/prd-sessions/
+and report their paths. Do not claim human approval.
+```
+
+Review the draft, then select **RPI Agent** to plan it:
+
+```text
+/rpi-plan
+Read the attached FSI session context, research pack, and reviewed PRD draft.
+Plan one thin client-briefing slice: authorized inputs, cited briefing,
+missing-evidence response, denied-access response, and their acceptance checks.
+Save the plan and phase details under .copilot-tracking/plans/. Record owners,
+dependencies, and unresolved approvals. Keep the Azure Managed Application and
+Microsoft 365 agent as publication hypotheses for stage 5.
+Do not implement or publish anything.
+```
+
+The handoff is a PRD and plan that a designer can use without guessing what
+"trusted briefing" means. Use **BRD Builder** from the reference material if the
+team also needs a fuller business case.
+
+### Draft the briefing backlog
+
+Choose **Functional Planner** and attach the reviewed PRD and plan.
+Start with the user story: "As a relationship manager, I want a cited briefing
+for an account I can access so that I can prepare without assembling every source
+manually." This is a proposed workshop story, not validated user research.
+
+```text
+Use Functional Planner. Read the attached FSI context, PRD, and briefing plan.
+Draft a Markdown backlog for the read-only Client A briefing with traceability
+to the actual requirement IDs. Cover authorized retrieval, citations, missing
+evidence, denied access, and acceptance checks. Identify the first independently
+testable slice and dependencies. Save the handoff under
+.copilot-tracking/github-issues/ and report its path.
+Planning only. Do not create GitHub issues or mark human-review boxes complete.
+```
+
+Check that access and missing-data behavior are part of the first slice, not
+deferred behind a happy-path demo. Keep the backlog local for the solution
+review; external issue creation is a separate approved action.
+
+### Design the manager's meeting preparation
+
+Choose **UX UI Designer**. Attach the context, research, PRD, and plan. Use this
+journey: ask about Client A, inspect the briefing, open a citation, inspect an
+unknown, and review a suggested follow-up.
+
+```text
+Use UX UI Designer. Read the attached FSI context and reviewed role artifacts.
+Draft the relationship manager's Client A meeting-preparation journey in
+Microsoft 365 Copilot. Show the request, briefing, practice citations, missing
+transaction evidence, and a proposed next action awaiting human review.
+Include a denied-account state and an unavailable-source state. Label the
+journey as a fictional workshop design, not observed user research.
+Save .copilot-tracking/dt/relationship-manager-fsi/experience-draft.md with
+evidence references, assumptions, and open user-research questions.
+Do not build the product or send any messages.
+```
+
+Review whether the manager can distinguish an evidence-backed statement from an
+assumption and find its source. Sketches, DT coaching, and Figma are optional;
+the experience draft is the required handoff.
+
+### Challenge the briefing experience
+
+Review the same experience draft with **Accessibility Planner**, then with
+**RAI Planner**, selecting one agent at a time. Attach the context and experience
+draft and use this focused request for each planner's scope:
+
+```text
+Read the attached FSI context and Client A experience draft. Within your
+planner's scope, examine the briefing, source citations, missing-evidence state,
+denied-access state, and human review of suggested actions.
+Identify barriers or potential harms, proposed mitigations, and observable
+checks. Consider keyboard and screen-reader access, uncertainty that does not
+rely on color, unsupported risk claims, and inappropriate reliance on a draft.
+Report your workflow artifact's actual path and summarize the findings for the
+experience handoff. Keep all findings draft; do not claim certification,
+validated customer research, or human approval.
+```
+
+Carry the relevant findings into the experience draft with owners. A "risk
+indicator" without supporting evidence is not an acceptable answer merely
+because it is labelled AI-generated.
+
+### Draw the permission-aware briefing path
+
+Choose **System Architecture Reviewer**. Attach the context, PRD, plan, and
+experience draft. Follow the manager's question through the proposed system,
+separately from how source content is ingested.
+
+```text
+Use System Architecture Reviewer. Read the attached FSI context and reviewed
+PRD, plan, and experience draft. Create conceptual architecture notes under
+.copilot-tracking/details/ for the Client A briefing, including a Mermaid diagram.
+Trace Microsoft 365 Copilot through identity, the Azure API, account-level
+authorization, retrieval, model grounding, citations, and the response.
+Show ingestion separately. Include denied access, missing evidence, dependency
+failure, tenant isolation, no customer-data training, and audit telemetry without
+secrets or unnecessary personal data. Map components to actual requirements.
+Record the customer-subscription Managed Application as a hypothesis and identify
+tradeoffs and unresolved controls. Report the saved path.
+Do not deploy or describe the diagram as deployment-validated.
+```
+
+Review the rendered Mermaid diagram in the GitHub Copilot app. Confirm that
+authorization is enforced by the service, not by an agent prompt. Use
+**Security Planner** for the resulting security follow-up; an ADR is optional.
+
+### Separate the backend and companion agent
+
+The technical lead identifies two proposed product boundaries: the Azure
+backend deployed in the customer's subscription and the Microsoft 365
+customer-facing agent. HVE's workshop agents are neither of those products.
+Choose **RPI Agent** and attach the existing architecture notes:
+
+```text
+Read the attached FSI context, plan, and architecture notes. Update those same
+notes with the proposed Azure backend and Microsoft 365 companion-agent
+boundaries for the client briefing. Record the API, identity, authorization,
+data, and entitlement questions between them.
+Keep Managed Application packaging and agent distribution as hypotheses until
+the publishing coaches verify them. Assign unresolved decisions to owners and
+link the existing plan. Do not create a separate publication plan, configure
+billing, deploy resources, or publish.
+```
+
+Hand the notes to the whole team. Stage 4 will challenge the briefing behavior;
+stage 5 will turn these publication questions into connected coach handoffs.
+
+## Role facilitation reference
+
+The remaining sections provide reusable methods and prompts for deeper work or
+an explicitly adapted project. They are not a second set of required exercises.
 
 ## Suggested role order
 
@@ -61,18 +269,20 @@ This sequence helps each role build on the previous one without waiting for perf
 
 Use the HVE agents as lightweight helpers for your role. Start with your own draft, then ask an agent to refine or structure it.
 
+In the GitHub Copilot app, choose an agent from the agent picker in the prompt box, or type `/agent`. Type `/` to run skills such as `/rpi-research` and `/rpi-plan`, and type `@` to add files as context.
+
 * **BRD Builder** or **PRD Builder** for first-draft requirements and a simple structure for business outcomes, scope, and acceptance criteria. In this workshop, the Project Management role should typically own the BRD/PRD draft, while the Subject Matter Expert provides the business context, evidence, and constraints that inform it.
 * **RPI Agent** for gathering, testing, and synthesizing evidence before the SME creates the shared context pack.
 * **Functional Planner** for turning a draft requirement into a lightweight epic, feature, story, and task hierarchy when the team needs a delivery handoff.
 * **UX UI Designer** for user journeys, pain points, wireframe outline, and experience artifacts.
-* **Design Thinking Coach** for facilitation and discovery.
-* **Design Thinking Learning Tutor** for guided learning and method support.
+* **DT Coach** (Design Thinking Coach) for facilitation and discovery.
+* **DT Learning Tutor** (Design Thinking Learning Tutor) for guided learning and method support.
 * **Accessibility Planner** for accessibility requirements and inclusive design considerations.
 * **Accessibility Reviewer** for a review pass on accessibility readiness.
 * **RAI Planner** for responsible AI requirements, risks, and guardrails.
 * **RAI Reviewer** for a responsible AI review pass.
 * **System Architecture Reviewer** for framing a simple solution approach, tradeoffs, and architecture notes.
-* **GitHub Backlog Executor** for creating or updating GitHub Issues after the backlog is reviewed.
+* **GitHub Backlog Executor** for creating or updating GitHub Issues after the backlog is reviewed. **Backlog Manager** dispatches it, so it does not appear in the agent picker.
 * **Security Planner** for additional review, risk checks, and readiness considerations.
 
 ### Getting Started Guide
@@ -90,7 +300,7 @@ Capture the business truth before anyone designs or builds anything.
 
 ### Create Context
 1. For your selected use case, gather available evidence such as policy documents, SOPs, process diagrams, notes, document references, PDFs, screenshots, and images.
-1. For workshop case, keep synthetic or public source files in a manually managed `./copilot-tracking/research/workshop-input/` folder, organized by type such as `policies/`, `sops/`, and `process-diagrams/`. Keep original diagram files beside rendered images.
+1. For workshop case, keep synthetic or public source files in a manually managed `.copilot-tracking/research/workshop-input/` folder, organized by type such as `policies/`, `sops/`, and `process-diagrams/`. Keep original diagram files beside rendered images.
 1. For an actual production case, do not copy customer, regulated, confidential, or production evidence into the repository. Keep it in an approved system such as a governed SharePoint or OneDrive library, Azure Blob Storage or ADLS with controlled access, an approved document-management system, or a secure data room. Confirm classification, retention, and access permissions, then provide `/rpi-research` with a trusted readable path or controlled links.
 
 ### Marketplace Lean Canvas as Workshop Input
@@ -125,7 +335,7 @@ channels,
 revenue model, costs, success metrics, and unique advantage. Separate facts from
 assumptions and flag each unknown item for follow-up. Keep the wording grounded
 in evidence, not marketing language. Save the output under
-./copilot-tracking/research/workshop-input/leancanvas.md
+.copilot-tracking/research/workshop-input/leancanvas.md
 ```
 #### Output checklist
 
@@ -176,12 +386,12 @@ in evidence, not marketing language. Save the output under
 1. Review the generated research artifact at `.copilot-tracking/research/`. This is your permanent evidence trail.
 1. Extract and record key findings in a context document: problem statement, affected users, business impact, business rules, known failure cases, and AI guardrails. Reference the research artifact for traceability.
 1. Separate facts from assumptions, decisions, and open questions. Link or reference the supporting material when available.
-1. If you need structure, ask **BRD Builder** or **PRD Builder** to draft a business or product requirements outline. Start by sharing your notes and ask it to create a problem statement, business goals, scope, assumptions, and acceptance criteria.
+1. If you need structure, choose **BRD Builder** or **PRD Builder** in the agent picker, or type `/agent`, and ask it to draft a business or product requirements outline. Type `@` to add your notes, then ask it to create a problem statement, business goals, scope, assumptions, and acceptance criteria.
 
    Use **BRD Builder** when the team needs to establish the business case, stakeholders, outcomes, constraints, and decision context:
 
    ```text
-   Select the /BRD Builder agent. Session context:
+   Use the BRD Builder agent. Session context:
    .copilot-tracking/research/[date]/[session-name]-session-context.md.
    Read the topic from the session context, then use its evidence references and
    research artifact. Draft a concise business requirements outline covering the
@@ -198,7 +408,7 @@ in evidence, not marketing language. Save the output under
    Use **PRD Builder** when the team needs product behavior, user needs, functional requirements, non-functional requirements, and acceptance criteria:
 
    ```text
-   Select the /PRD Builder agent. Session context:
+   Use the PRD Builder agent. Session context:
    .copilot-tracking/research/[date]/[session-name]-session-context.md.
    Read the topic from the session context, then use its research artifact and
    business requirements references. Draft a concise product requirements
@@ -262,8 +472,8 @@ understanding of the problem.
 6. Map the current journey and identify pain points.
 7. Describe the future journey with the intended solution.
 8. Add accessibility and responsible AI requirements.
-9. If you need a first draft, ask **UX UI Designer** to turn the problem into a simple user journey and experience outline.
-   Select the context pack under `.copilot-tracking/research/` and use this prompt in GitHub Copilot Chat:
+9. If you need a first draft, choose **UX UI Designer** in the agent picker to turn the problem into a simple user journey and experience outline.
+   Type `@` to add the context pack files under `.copilot-tracking/research/`, then use this prompt:
 
 ```text
 "Turn these notes into a simple user journey, experience outline, and key pain
@@ -271,7 +481,7 @@ points for this scenario. Save the reviewed experience draft under
 `.copilot-tracking/dt/`."
 ```
 
-10. If the team needs a guided conversation, ask **Design Thinking Coach** to help frame the opportunity and challenge assumptions.
+10. If the team needs a guided conversation, choose **DT Coach** in the agent picker to help frame the opportunity and challenge assumptions.
 
 ```text
 "Coach me through a short design thinking session for this scenario. Help me
@@ -279,7 +489,7 @@ frame the problem, identify user needs, and define a focused opportunity area
 for the solution."
 ```
 
-11. If the team needs learning support or a clearer next step, ask **Design Thinking Learning Tutor** to explain the method and help transform notes into a simple design artifact.
+11. If the team needs learning support or a clearer next step, choose **DT Learning Tutor** in the agent picker to explain the method and help transform notes into a simple design artifact.
 
 ```text
 "Act as a Design Thinking Learning Tutor. Explain the next design thinking step
@@ -288,7 +498,7 @@ statement, or user journey outline."
 ```
 
 12. Use **Accessibility Planner** and **Accessibility Reviewer** to surface accessibility requirements and review the draft for gaps.
-   Select the experience draft under `.copilot-tracking/dt/` and prompt Accessibility Planner:
+   Choose **Accessibility Planner** in the agent picker, type `@` to add the experience draft under `.copilot-tracking/dt/`, and use this prompt:
 
 ```text
 "Review the experience draft under `.copilot-tracking/dt/` and identify
@@ -297,7 +507,7 @@ and updates to the draft."
 ```
 
 13. Use **RAI Planner** and **RAI Reviewer** to capture responsible AI requirements, guardrails, and review findings.
-   Select the experience draft under `.copilot-tracking/dt/` and use the **RAI Planner** prompt:
+   Choose **RAI Planner** in the agent picker, type `@` to add the experience draft under `.copilot-tracking/dt/`, and use this prompt:
 
 ```text
 "Review the experience draft under `.copilot-tracking/dt/` and identify
@@ -309,31 +519,31 @@ the draft."
 
 #### Connect Figma MCP and FigJam
 
-Figma MCP is optional. It connects GitHub Copilot to Figma files and FigJam boards for design evidence, user flows, wireframes, and workshop handoffs.
+Figma MCP is optional. It connects the GitHub Copilot app to Figma files and FigJam boards for design evidence, user flows, wireframes, and workshop handoffs.
 
-15. Create or open `.vscode/mcp.json` in the workspace root.
-16. Add the Figma MCP server:
+15. Choose where to add the Figma MCP server. To share it with your team, create `.github/mcp.json` in the repository and commit it. To keep it to your own checkout, create `.mcp.json` at the repository root instead. If the repository has both files, `.mcp.json` takes precedence. To use the server only on your computer, click **Customize** in the app sidebar, click **MCP**, and add a custom server with the URL below.
+16. Add the Figma MCP server to the file:
 
     ```json
     {
-       "servers": {
-          "figma": {
-             "type": "http",
-             "url": "https://mcp.figma.com/mcp"
-          }
-       }
+      "mcpServers": {
+        "figma": {
+          "type": "http",
+          "url": "https://mcp.figma.com/mcp"
+        }
+      }
     }
     ```
 
-17. Save the file and reload VS Code if the MCP server does not appear in Copilot Chat.
-18. Start a Figma or FigJam action from the relevant design prompt, such as `dt-figma-export`.
-19. On the first call, complete the browser-based Figma OAuth sign-in and grant access to the files or boards used for the workshop.
+17. Save the file and start a new session. Repository MCP servers load only after you trust the repository, so accept the trust card if it appears. If the server is missing, check **Settings** > the project > **Repository customizations** > **MCP servers**.
+18. Start a Figma or FigJam action from the relevant design prompt, or type `/dt-figma-export` to run the `dt-figma-export` skill.
+19. On the first call, complete the browser-based Figma OAuth sign-in and grant access to the files or boards used for the workshop. If the app asks you to sign in to the server, select **Sign in** next to it under **Settings** > the project > **Repository customizations** > **MCP servers**, or under **Customize** > **Installed** if you added it from **Customize**.
 20. Reference the resulting Figma or FigJam URL in the experience draft, along with the artifact type, date, evidence status, and the user-flow or design decision it supports.
 
-The Figma MCP server does not require a local installation. A Figma account with a Dev or Full seat on a Professional, Organization, or Enterprise plan is required for sustained usage. See [MCP Server Configuration](mcp-configuration) for the complete workspace configuration and troubleshooting guidance.
+The Figma MCP server does not require a local installation. A Figma account with a Dev or Full seat on a Professional, Organization, or Enterprise plan is required for sustained usage. For configuration and troubleshooting guidance, see [Configuring MCP servers](https://docs.github.com/en/copilot/how-tos/github-copilot-app/customize-github-copilot-app#configuring-mcp-servers) and [Adding per-repository MCP servers](https://docs.github.com/en/copilot/how-tos/copilot-cli/customize-copilot/add-mcp-servers#adding-per-repository-mcp-servers).
 
 21. Identify and validate the use case for publishing to Microsoft 365 Copilot Agent Store.
-   Select the experience draft under `.copilot-tracking/dt/` and prompt UX UI Designer:
+   Choose **UX UI Designer** in the agent picker, type `@` to add the experience draft under `.copilot-tracking/dt/`, and use this prompt:
 
 ```text
 "How would end users benefit from Microsoft 365 Copilot integrated to this
@@ -359,10 +569,10 @@ Turn business context and user experience into requirements, priorities, and a b
 ### Steps
 
 1. Review the context pack in `.copilot-tracking/research/`, `.copilot-tracking/prd-sessions/`, `.copilot-tracking/brd-sessions/`, and `.copilot-tracking/dt/`. Align them to business outcomes, measurable success metrics, functional and non-functional requirements, user stories, acceptance criteria, out-of-scope items, and open assumptions.
-2. Select **RPI Agent** and run `/rpi-plan` to turn the requirements and context into an implementation plan with phases and phase details. For example:
+2. Choose **RPI Agent** in the agent picker and run `/rpi-plan` to turn the requirements and context into an implementation plan with phases and phase details. For example:
 
    ```text
-   /rpi-plan Read `.copilot-tracking/research/,
+   /rpi-plan Read `.copilot-tracking/research/`,
    `.copilot-tracking/brd-sessions/` and `.copilot-tracking/dt/`. Create a
    lightweight implementation plan for the first MVP of the [Relationship
    Manager
@@ -383,7 +593,7 @@ Turn business context and user experience into requirements, priorities, and a b
 4. Create a backlog outline only if it helps the team move from requirements to implementation. If needed, use a lightweight hierarchy such as epic, feature, story, and task for the first MVP.
 5. Prioritize the first MVP with simple labels such as P0, P1, and P2 only if the team needs a sequencing signal. Keep this lightweight and outcome-focused rather than turning it into a rigid Agile process.
 6. Prepare the requirements and backlog artifacts for publication readiness in Microsoft Marketplace and Microsoft 365 Copilot Agent Store.
-   Select the context, requirements, experience and prompt **Functional Planner**:
+   Choose **Functional Planner** in the agent picker, type `@` to add the context, requirements, and experience files, and use this prompt:
 
 ```text
 "Use the functional-planner skill and review the requirements under
@@ -400,21 +610,15 @@ Marketplace and Microsoft 365 Copilot Agent Store. Keep the output concise,
 outcome-focused, and useful for backlog refinement."
 ```
 
-1. If you are targeting GitHub Issues, ask Backlog Manager to coordinate the workflow and have GitHub Backlog Executor create the first parent issue and child issues for the initial MVP. The **Backlog Manager** should also ensure the resulting issue links and summary are recorded under `.copilot-tracking/github-issues/` for traceability.
+1. If you are targeting GitHub Issues, choose **Backlog Manager** in the agent picker. It coordinates the workflow and dispatches GitHub Backlog Executor to create the first parent issue and child issues for the initial MVP. **Backlog Manager** should also ensure the resulting issue links and summary are recorded under `.copilot-tracking/github-issues/` for traceability.
 
    Enable writing of GitHub issues:
 
-   * Authenticate GitHub CLI
-     * Run: gh auth login --web
-     * Or, if needed: gh auth refresh -h github.com -s repo
-   * Verify authentication
-     * Run: gh auth status
-   * Confirm the target repository
-     * Run: gh repo set-default [your git clone url]/hve-partner-workshop
-   * Create GitHub Issues the backlog creation from a session that exposes GitHub write tools
-     * If you are using Copilot or an agent workflow, make sure the session has access to the GitHub MCP write tools.
-     * Refer to using [Using the GitHub MCP server from Copilot Chat](https://docs.github.com/en/copilot/how-tos/copilot-on-github/copilot-for-github-tasks/using-the-github-mcp-server-from-copilot-chat)
-     * Refer to [Using the GitHub MCP server in your IDE](https://docs.github.com/en/copilot/how-tos/provide-context/use-mcp-in-your-ide/use-the-github-mcp-server)
+   * Confirm that the GitHub account signed in to the app has write access to the target repository.
+   * In a terminal on your computer, authenticate the GitHub CLI with `gh auth login --web`, or run `gh auth refresh -h github.com -s repo` if you need the `repo` scope. Check the result with `gh auth status`.
+   * Confirm the target repository with `gh repo set-default [your git clone url]/hve-partner-workshop`.
+   * GitHub Backlog Executor creates issues through GitHub MCP issue-write tools. If your session does not expose those tools, keep the reviewed Markdown backlog under `.copilot-tracking/github-issues/` and create the issues later from a session that does.
+   * After the issues exist, click **Issues** in the app sidebar to review them. See [Managing issues and pull requests with the GitHub Copilot app](https://docs.github.com/en/copilot/how-tos/github-copilot-app/managing-issues-and-pull-requests).
 
    Prompt:
 
@@ -444,13 +648,13 @@ Frame the solution approach, architecture, and publication considerations aligne
 
 ### Steps
 
-1. Review the requirements under `.copilot-tracking/brd-sessions/`,`copilot-tracking/prd-sessions/`, the experience draft under `.copilot-tracking/dt/`, and the implementation plan at `.copilot-tracking/plans/`.
+1. Review the requirements under `.copilot-tracking/brd-sessions/`, `.copilot-tracking/prd-sessions/`, the experience draft under `.copilot-tracking/dt/`, and the implementation plan at `.copilot-tracking/plans/`.
 2. Identify the core services, data sources, and integration points that support the phased plan.
-3. Select **System Architecture Reviewer** to help frame a simple solution approach, major tradeoffs, and architecture notes that align to each phase of the plan:
+3. Choose **System Architecture Reviewer** in the agent picker to help frame a simple solution approach, major tradeoffs, and architecture notes that align to each phase of the plan:
 
    * Note deployment, security, and operational considerations.
    * Review the draft for well-architected design and Cloud Adoption Framework guidance.
-   * Capture the publication requirements for Microsoft Marketplace and Microsoft 365 Copilot Agent Store readiness, including packaging, discoverability, supportability, and integration expectations.   
+   * Capture the publication requirements for Microsoft Marketplace and Microsoft 365 Copilot Agent Store readiness, including packaging, discoverability, supportability, and integration expectations.
 
    ```text
    "Review the implementation plan at `.copilot-tracking/plans/`, the
@@ -462,7 +666,7 @@ Frame the solution approach, architecture, and publication considerations aligne
    publication requirements, Microsoft IQ, and a Mermaid architecture diagram.
    Link the architecture notes back to the phases in the implementation plan."
    ```
-   * Create a simple Mermaid architecture diagram by selecting **Arch Diagram Builder**.
+   * The prompt asks System Architecture Reviewer to include a Mermaid architecture diagram in the notes. The GitHub Copilot app renders Mermaid diagrams in the conversation. Once infrastructure code exists, type `/architecture-diagrams` to generate diagrams from it.
 
 4. Use **Security Planner** to review readiness and surface follow-up work aligned to each phase.
 
@@ -473,8 +677,8 @@ Frame the solution approach, architecture, and publication considerations aligne
    security-related work back to the appropriate phase."
    ```
 
-5. Review the mermaid diagram and use natural language to refine it.
-6. (Optional) Instead of GitHub Copilot, use **Microsoft 365 Copilot** to create an image. In M365 Copilot, attach the implementation plan, and create an architecture image from the mermaid diagram for this solution using Azure and Copilot-style icons to represent core services, data sources, user experience layers, and integrations for the first MVP.
+5. Ask Copilot to show the Mermaid diagram in the conversation, review it, and describe any changes in natural language.
+6. (Optional) Instead of the GitHub Copilot app, use **Microsoft 365 Copilot** to create an image. In M365 Copilot, attach the implementation plan, and create an architecture image from the mermaid diagram for this solution using Azure and Copilot-style icons to represent core services, data sources, user experience layers, and integrations for the first MVP.
 
    ```text
    "Create an architecture image from the Mermaid diagram for this solution
@@ -492,7 +696,7 @@ Frame the solution approach, architecture, and publication considerations aligne
    * Record architecture constraints that affect solution, including data residency, tenant isolation, customer-controlled infrastructure, and least-privilege access.
    * List unresolved publication assumptions with an owner. Do not resolve commercial or submission details during the role exercise.
 
-   Select **RPI Agent**,
+   Choose **RPI Agent** in the agent picker and use this prompt:
 
    ```text
    "Review the implementation plan at `.copilot-tracking/plans/`, the
@@ -512,7 +716,7 @@ Frame the solution approach, architecture, and publication considerations aligne
    planning to the Partner Workshop Publishing Follow-Up."
    ```
 
-   Complete the detailed readiness assessment during the [Partner Workshop Publishing Follow-Up](partner-workshop-publishing).
+   Complete the detailed readiness assessment during the [Partner Workshop Publishing Follow-Up](partner-workshop-publishing.md).
 
 8. Share the output with the rest of the team.
 

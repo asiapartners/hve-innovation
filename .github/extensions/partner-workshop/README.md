@@ -1,0 +1,210 @@
+---
+title: Partner workshop canvas
+description: Launch and maintain the scenario-first FSI workshop walkthrough in the GitHub Copilot app
+author: Microsoft
+ms.date: 2026-11-11
+ms.topic: reference
+keywords:
+  - workshop
+  - Copilot app
+  - canvas
+---
+
+## Launch in the GitHub Copilot app
+
+Add this workshop repository in the app, start a session, then run `/partner-workshop`.
+The [launch command](../../prompts/workshop/partner-workshop.prompt.md) uses the
+[partner-workshop skill](../../skills/workshop/partner-workshop/SKILL.md) to check
+the repository, discover the provider and open one `partner-workshop-guide` panel.
+No npm restore, browser download, Java installation or network connection is
+needed to use the shipped canvas.
+
+New skills and slash commands may require a new session or customization
+refresh before the app indexes them. Extension reload refreshes the canvas
+provider, not the current session's cached skill catalog. If the command is
+not yet visible, ask the agent to read the launch command file and follow it;
+the same preparation and open flow applies.
+
+The provider is project-scoped at `extension.mjs`; `.github/plugin.json` also
+registers the extension discovery directory, launch command and skill. This guide
+requires the workshop repository's documents and components. Installing its
+plugin alone into an unrelated product repository does not supply those documents.
+
+## What participants get
+
+* One primary FSI storyline: a trusted, read-only client briefing for fictional
+  Client A, from the meeting question to an engineering handoff
+* Six stages, the original 270-minute agenda and 21 guided activities, each
+  showing its source-backed exercise directly rather than hiding it in a drawer
+* Four role filters plus a whole-team view
+* A company/team roster with four initial member slots and a maximum of eight,
+  saved locally and available in every stage with a manual copy action
+* Incoming and outgoing handoffs at every stage, concrete practice cases,
+  expected outputs, and inline copy-ready prompts
+* Optional hints, complete source guides, reusable prompts, workflow diagrams,
+  and guidance for adapting to another project
+* Exact source-prompt copying with no automatic submission or workshop actions
+* A D3 duration-proportional journey and relationship map, with a scannable
+  stage-handoff list and expandable component links and artifact references
+* A Mermaid handoff flow and a PlantUML workflow/product-boundary view
+* Primer dark colors, native keyboard controls, visible focus, skip navigation,
+  text equivalents for diagrams and responsive layouts
+
+Personal progress and saved team details are stored under
+`$COPILOT_HOME/extensions/partner-workshop/artifacts/<checkout-hash>/progress.json`
+(`COPILOT_HOME` defaults to `~/.copilot`). It belongs to this user and checkout,
+not a panel or loopback port, and survives provider restarts and new panels.
+Worktrees have independent progress. Activity checks never approve a human-review
+checkbox, external write, engineering task or commercial decision.
+
+The roster editor uses **Save team**. Unsaved edits survive stage navigation but
+must be saved before a canvas reload. Names and handles are not looked up,
+invited, or submitted to GitHub. The local state file uses owner-only permissions;
+it is not a repository file. Clear the fields and save to remove stored roster
+details. **Copy saved team details** copies only the saved roster for deliberate
+reuse in a session-context artifact; it does not alter source prompts.
+
+## Workshop analysis
+
+The canvas reads all six
+[workshop guides](../../../docs/getting-started/partner-workshop.md) directly at
+open, validates every mapped activity section and checks referenced component
+files. Each activity renders its selected walkthrough section inline, including
+the case-specific prompt and review criteria. The complete guide and all stage
+prompts remain in collapsed reference panels. The page never generates or
+rewrites a prompt on the participant's behalf.
+
+| Stage                            | Participant work                                        | Handoff                                                   |
+|----------------------------------|---------------------------------------------------------|-----------------------------------------------------------|
+| 1. Meet the FSI client, 30m      | Frame the Client A meeting question and assign owners   | One read-only briefing mission                            |
+| 2. Prepare the FSI case, 30m     | Connect the app and create the shared FSI context       | Reviewed context and exact evidence references            |
+| 3. Design the briefing, 90m      | Research, specify, design, and architect the same slice | PRD, plan, Markdown backlog, journey, architecture        |
+| 4. Challenge the briefing, 30m   | Rehearse allowed, missing-evidence, and denied cases    | Traceability, review findings, and gap owners             |
+| 5. Plan both launch paths, 60m   | Plan Azure and Microsoft 365 publication together       | Two linked coach plans and one monetization record        |
+| 6. Hand off the first slice, 30m | Prepare a build task and agree review evidence          | Approver, acceptance checks, reviewer, and next milestone |
+
+PM owns the primary PRD exercise; SME contributes domain evidence. Suggested role handoff is SME, PM,
+Design, Technical, then whole-team integration. Backlog creation is a separate
+approved write, not a condition for completing a Markdown-only workshop.
+The existing activity IDs and progress storage are retained, so changing the
+presentation does not reset a participant's role, stage, or activity checks.
+
+The overview lists `docs/planning/adrs/` as an output. ADR Creator exists here,
+but the role guide does not prescribe a mandatory ADR exercise. The canvas marks
+it optional rather than inventing one. Accessibility and RAI planners may create
+their own workflow records; the workshop's design handoff remains the reviewed
+experience draft.
+
+Supporting contracts live with the components, not in this guide. BRD/PRD use
+`requirements-author`; Functional Planner uses `functional-planner`; backlog
+orchestration uses `backlog-management` with its approved execution workflow;
+ADR Creator uses `adr-author` and its identity/standards/handoff instructions.
+RPI phase commands load their corresponding `rpi-*` skills. The two publishing
+coaches load `ms-marketplace-publish` and `copilot-agent-store-publish`, sharing
+the Marketplace skill's monetization discovery/output contract.
+Tracking-location and untrusted-content instructions keep output roots and
+source authority consistent. Human-review and backlog mutation guards remain
+owned by those workflows; canvas activity checks never replace them.
+
+### Source conflicts and assumptions
+
+* The workshop guides target the GitHub Copilot app. Agents and skills come
+  from repository customizations or the `hve-core` plugin; repository MCP
+  servers come from `.github/mcp.json` or `.mcp.json` after you trust the
+  repository. Figma remains optional and separately authorized.
+* The guides use the canonical `.copilot-tracking/` root. Verify the saved path
+  an agent reports before linking or copying an artifact.
+* Participants link each publishing coach's actual canonical plan path instead
+  of creating duplicates. Both publishing tracks share one monetization record.
+* System Architecture Reviewer produces the conceptual Mermaid diagram. The
+  `architecture-diagrams` skill fits once infrastructure code exists.
+* The supplied
+  [draft lean canvas](../../../docs/getting-started/samples/FSI/workshop-input/leancanvas.md)
+  explicitly lacks supporting business evidence. The role guide now also
+  supplies fictional Client A fixtures for CRM-01, MAIL-01, missing transaction
+  evidence, and denied Client B access. These teach behavior, not customer facts;
+  users, policies, prices, metrics, and business-model claims remain unverified.
+* HVE custom agents are planning tools, not publishable Microsoft 365 agents.
+  Azure and Microsoft 365 customer products have separate identity, packaging
+  and certification gates. The PlantUML view describes these boundaries, not a
+  validated Azure deployment.
+* Publishing policy, fees, offer support, package schemas and tenant/account
+  state must be verified by the coaches against current authoritative sources.
+  The canvas is a guide, not a current-policy oracle.
+* The 30-minute final stage prepares an approved handoff. Implementing and
+  reviewing a runnable slice, deploying, submitting and becoming certified are
+  separate follow-up milestones unless authorized extra time and environments exist.
+
+## Local implementation and dependencies
+
+`server.mjs` serves only allowlisted assets and workshop/component sources from a
+loopback-only, unguessable route. Host/origin checks, a restrictive CSP, sanitized
+Markdown and bounded validated progress writes keep source text separate from
+execution. It does not read tokens, call an external API, run workshop commands or
+write workshop outputs.
+
+Committed runtime libraries are D3 7.9.0, marked 15.0.12 and DOMPurify 3.4.11.
+Their original license notices and source URLs/SHA-512 checksums live in
+`vendor/`. Mermaid 10.9.4 and PlantUML 1.2025.10 are build-time renderers only;
+the canvas serves their committed SVG output. See
+[third-party notices](../../../THIRD-PARTY-NOTICES).
+
+## Maintenance and verification
+
+Run these commands from this directory. The preparation and unit checks use
+Node's standard library. Browser verification uses the locked dev dependencies
+and an existing system Google Chrome; it does not install a browser.
+
+```bash
+node prepare.mjs
+npm ci --ignore-scripts
+npm test
+npm run test:browser
+```
+
+`npm run test:browser` checks that all 21 walkthrough exercises are visible
+without expanding details and that each inline copy preserves the exact source
+prompt. Clipboard writes are stubbed only in the test browser. It also checks
+all six stages with full source instructions expanded, both SVG diagrams,
+role filtering, hints, keyboard navigation, checkbox persistence, all-stage
+320px and 200%-equivalent reflow, no external runtime requests, and axe WCAG A/AA
+rules. It bypasses CSP only in the isolated test context to
+inject axe; the served app CSP remains restrictive. These checks are not a formal
+accessibility certification or a real screen-reader assessment.
+
+To deliberately refresh vendored runtime assets:
+
+```bash
+npm run prepare:assets
+```
+
+That maintenance command downloads pinned public package files from jsDelivr and
+records their byte hashes; ordinary launch never downloads anything. Review the
+changed bytes, URLs, versions and license notices before committing them.
+
+To regenerate diagrams, supply local renderer files and a provisioned Playwright
+WebKit browser:
+
+```bash
+MERMAID_SCRIPT=/approved/local/mermaid-10.9.4.min.js \
+PLANTUML_JAR=/approved/local/plantuml-1.2025.10.jar \
+npm run render:diagrams
+```
+
+Mermaid is the public `mermaid@10.9.4/dist/mermaid.min.js` build. PlantUML is
+available from Maven Central at
+`net/sourceforge/plantuml/plantuml/1.2025.10/plantuml-1.2025.10.jar`;
+the verified SHA-256 is
+`4a01ea09b317180fb8e7eef712dfdca725409d2ee1919e4b5adfe9d8362b6fe5`.
+`WEBKIT_EXECUTABLE` optionally points to an existing compatible WebKit executable.
+All rendering is local; no repository content goes to a public render service.
+Review the two SVGs for readable labels after changing the diagram sources.
+
+This checkout lacks the root `package.json`, `scripts/`, root plugin synchronizer
+and generated-reference tooling mentioned by inherited contributor guidance.
+Do not fabricate those tools or claim their checks passed. The manifest additions
+are bounded and tested here; upstream plugin/extension/documentation-generation
+validation remains unavailable until those tools are restored.
+
+AI-assisted implementation and analysis. Responsible humans retain review and
+approval authority.

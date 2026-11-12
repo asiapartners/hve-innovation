@@ -1,0 +1,29 @@
+Partner workshop canvas runtime libraries
+========================================
+
+D3.js 7.9.0
+Source: https://github.com/d3/d3/tree/v7.9.0
+License: ISC
+Scope: .github/extensions/partner-workshop/vendor/d3.min.js
+The unmodified upstream notice is in vendor/d3.LICENSE.
+
+marked 15.0.12
+Source: https://github.com/markedjs/marked/tree/v15.0.12
+License: MIT
+Scope: .github/extensions/partner-workshop/vendor/marked.umd.js
+The unmodified upstream notice is in vendor/marked.LICENSE.
+
+DOMPurify 3.4.11
+Source: https://github.com/cure53/DOMPurify
+License: Apache-2.0 OR MPL-2.0
+Scope: .github/extensions/partner-workshop/vendor/purify.min.js
+Redistributed under Apache-2.0; the full upstream notice is in
+vendor/dompurify.LICENSE.
+
+Pinned source download URLs and SHA-512 byte hashes are recorded in
+.github/extensions/partner-workshop/vendor/checksums.json.
+
+Mermaid 10.9.4 (MIT) and PlantUML 1.2025.10 (GPL) were used locally to
+render repository-authored diagram sources into SVG. Neither renderer is
+redistributed as part of this canvas. Their generated diagrams contain
+workshop workflow descriptions, not reproduced upstream documentation.

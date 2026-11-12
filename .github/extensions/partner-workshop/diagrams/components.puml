@@ -1,0 +1,47 @@
+@startuml
+!pragma layout smetana
+skinparam backgroundColor #0D1117
+skinparam defaultFontName SansSerif
+skinparam defaultFontColor #F0F6FC
+skinparam ArrowColor #79C0FF
+skinparam componentStyle rectangle
+skinparam shadowing false
+skinparam packageBackgroundColor #161B22
+skinparam packageBorderColor #3D444D
+skinparam componentBackgroundColor #152B44
+skinparam componentBorderColor #4493F8
+skinparam actorBorderColor #79C0FF
+skinparam actorFontColor #F0F6FC
+skinparam noteBackgroundColor #252014
+skinparam noteBorderColor #D29922
+skinparam noteFontColor #EACB8B
+top to bottom direction
+actor Participant
+component "Workshop canvas\nGuide / hints / source prompts" as Guide
+component "Copilot app chat\nHuman sends reviewed requests" as Chat
+package "HVE planning, not the customer product" {
+  component "RPI / requirements /\nexperience / architecture" as HVE
+  component "Reviewed solution pack\nand backlog plan" as Pack
+  component "Marketplace Coach" as Market
+  component "Agent Store Coach" as Store
+  component "Connected plans +\nshared monetization record" as Plans
+}
+package "Proposed customer product, separately built" {
+  component "Microsoft 365 agent" as Agent
+  component "Azure backend\nAPI / retrieval / identity" as Azure
+}
+Participant --> Guide : navigates
+Participant --> Chat : selects and prompts
+Chat --> HVE
+HVE --> Pack : drafts for review
+Pack --> Market
+Pack --> Store
+Market --> Plans
+Store --> Plans
+Agent --> Azure : authenticated API
+note bottom of Plans
+Humans approve engineering and commercial gates.
+Deployment, submission and certification need
+separate evidence and authorized environments.
+end note
+@enduml

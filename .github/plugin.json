@@ -124,7 +124,8 @@
     "prompts/security/sssc-from-security-plan.prompt.md",
     "prompts/security/vex-implement.prompt.md",
     "prompts/security/vex-scan.prompt.md",
-    "prompts/security/vex-triage.prompt.md"
+    "prompts/security/vex-triage.prompt.md",
+    "prompts/workshop/partner-workshop.prompt.md"
   ],
   "rules": [
     "instructions/accessibility/accessibility-identity.instructions.md",
@@ -258,7 +259,11 @@
     "skills/security/vex",
     "skills/shared/backlog-templates",
     "skills/shared/pr-reference",
-    "skills/shared/telemetry-foundations"
+    "skills/shared/telemetry-foundations",
+    "skills/workshop/partner-workshop"
   ],
-  "hooks": "hooks/shared/telemetry.json"
+  "hooks": "hooks/shared/telemetry.json",
+  "extensions": [
+    "extensions"
+  ]
 }
