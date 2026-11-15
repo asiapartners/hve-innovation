@@ -23,7 +23,7 @@ This guide is for you if you define business outcomes, manage stakeholder alignm
 > [!TIP]
 > Install the [HVE Core plugin](../../getting-started/methods/cli-plugins.md) for the complete active component set in VS Code or Copilot CLI.
 >
-> To copy HVE Core into your repository, use the included `hve-core-installer` skill. It copies the full set, including the the business requirements, product advisory, agile coaching, and research components this role uses most. Capability groups help you discover related components; they are not independently installable products. See the [Installation Guide](../../getting-started/install.md).
+> To copy HVE Core into your repository, use the included `hve-core-installer` skill. It copies the full set, including the business requirements, product advisory, agile coaching, and research components this role uses most. Capability groups help you discover related components; they are not independently installable products. See the [Installation Guide](../../getting-started/install.md).
 
 ## What HVE Core Does for You
 
