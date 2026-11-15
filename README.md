@@ -11,6 +11,9 @@ Use this repository when you want to run that repeatable innovation cycle with p
 <img width="500" alt="image" src="https://github.com/user-attachments/assets/b3827389-459e-477b-a6bc-15cf6d7053d0" />
 
 > [!TIP]
+> Localized Partner Workshops: Korean: [hve-innovation-kr](https://github.com/jeongaelee/hve-innovation-kr)
+
+> [!TIP]
 > If you find this guide and repository helpful, please **star (favorite) this repository on GitHub**! Starring helps us grow the community, stay connected, and deliver continuous updates to our tools, agents, and workshop materials.
 
 ## How HVE Accelerates Innovation

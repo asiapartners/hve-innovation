@@ -3,7 +3,7 @@ title: Partner Workshop Publishing Follow-Up
 description: Frame publication readiness and product pricing for Microsoft Marketplace and Microsoft 365 Copilot Agent Store
 sidebar_position: 11
 author: Microsoft
-ms.date: 2026-10-25
+ms.date: 2026-11-15
 ms.topic: how-to
 keywords:
   - Azure Applications
@@ -231,12 +231,57 @@ Here are reference guides that would support your Marketplace FastTrack Coaching
 5. Obtain approval from security, privacy, accessibility, legal, support, and business owners.
 6. Make the offer live once certification is complete.
 
+### Phase 5: Enable Azure IP Co-sell
+
+1. Confirm the live Managed Application offer is transactable through Microsoft
+   Marketplace and that the solution is eligible for the Azure IP Co-sell route.
+2. In Partner Center, open **Marketplace offers**, select the live Azure
+   Application offer, and open the **Co-sell with Microsoft** area in the offer
+   navigation.
+3. Choose **Enroll** and complete the Co-sell Solutions profile.
+4. Add industries served, business lines, geographic markets, customer segments,
+   sales contacts, and the business profile.
+5. Add the solution one-pager and pitch deck.
+6. Add architecture evidence and other required technical or sales materials
+   for the offer.
+7. Verify customer references and revenue evidence against the current Azure IP
+   Co-sell requirements.
+8. Submit the Co-sell profile for review and track any requested changes.
+9. Keep unresolved qualification requirements as open follow-up items until
+   Partner Center confirms the Co-sell status.
+10. Recheck eligibility, benefits, fees, incentives, and MACC implications with
+    current Microsoft guidance before making customer or sales commitments.
+
+> [!IMPORTANT]
+> A live Marketplace offer or Azure integration does not by itself establish
+> Azure IP Co-sell eligibility. Confirm the offer type, transactability,
+> solution qualification, required evidence, and account-specific status in
+> Partner Center.
+
 ## Microsoft 365 Copilot Agent path
 
 ### Phase 1: Offer commercialization
 
 1. Choose **Microsoft 365 Agents Toolkit** for a packaged declarative or custom engine agent that can target Microsoft Marketplace.
-2. Reconcile the shared monetization worksheet with the Marketplace track, including paid backend access, separate license prerequisites, and public or private purchase paths.
+2. Identify the existing transactable Azure offer that the agent will use:
+   * **Transactable SaaS:** Verify that the SaaS offer purchase applies to
+     agent access and maps to tenant or seat entitlement.
+   * **Transactable Managed Application:** Use the Managed Application as the
+     Azure-backed bundle when the agent fronts a customer-deployed
+     application. Billing remains with the Azure offer, and the agent acts as
+     the discovery and usage surface.
+3. Do not assume that every Managed Application listing qualifies for a
+   Copilot Agent bundle or linked-SaaS route. Verify the current
+   [Microsoft 365 Copilot publishing guidance](https://learn.microsoft.com/microsoft-365-copilot/extensibility/publish)
+   and
+   [linked-SaaS monetization guidance](https://learn.microsoft.com/partner-center/marketplace-offers/monetize-addins-through-microsoft-commercial-marketplace)
+   before selecting the path.
+4. Reconcile separate Microsoft 365 licenses, agent requirements, public or
+   private prices, and any Azure or third-party charges with the shared
+   monetization plan.
+5. Test purchase, deployment or activation, plan change, renewal, cancellation,
+   revoked entitlement, and agent access without creating a duplicate purchase
+   or usage charge.
 
 > [!NOTE]
 > Verify the current [Microsoft 365 Copilot publishing matrix](https://learn.microsoft.com/microsoft-365-copilot/extensibility/publish) before implementation because support varies by agent type and route.
@@ -266,6 +311,85 @@ Here are reference guides that would support your Marketplace FastTrack Coaching
 7. In Partner Center, create the offer type **Apps and agents for Microsoft 365 and Copilot**.
 8. Upload the validated Microsoft 365 app package.
 9. Submit the offer for validation and resolve certification findings.
+
+## Azure SaaS path
+
+Use this path for a cloud-hosted SaaS application that will sell through
+Microsoft Marketplace and pursue Azure IP Co-sell eligibility.
+
+### Phase 1: Confirm publisher and transaction readiness
+
+1. Verify or create the publisher account in Partner Center.
+2. Complete Marketplace publisher verification and confirm the legal entity,
+   tax, payout, support, and Co-sell owners.
+3. Choose **Sell through Microsoft** for a transactable SaaS offer.
+4. Confirm the SaaS offer model, billing cadence, plans, markets, trial, and
+   whether metered billing is required.
+5. Reconcile public and private prices, costs, tax treatment, entitlements,
+   included usage, and approved commercial terms in the shared monetization
+   plan.
+6. Confirm the solution is primarily platformed on Azure and qualifies for
+   Azure IP Co-sell as an intellectual-property solution. Verify the current
+   revenue, Marketplace, and technical-validation requirements in Partner
+   Center rather than relying on legacy thresholds or benefit promises.
+
+### Phase 2: Implement SaaS fulfillment and lifecycle
+
+1. Evaluate the [Commercial-Marketplace-SaaS-Accelerator](https://github.com/Azure/Commercial-Marketplace-SaaS-Accelerator), a community-supported reference implementation for subscription activation, webhooks, administration, metering, and Marketplace lifecycle integration.
+
+   > **If adopted, skip items 2-6 below; the Accelerator covers the SaaS landing page, Fulfillment API activation, lifecycle webhooks, subscription-state checks, entitlement, tenant isolation, and secure reconciliation.**
+
+2. Build the SaaS landing page and resolve the Marketplace purchase token through the SaaS Fulfillment API.
+3. Activate the subscription and bind the customer, tenant, plan, quantity, and purchase context to the SaaS service.
+4. Implement subscription lifecycle webhooks for activation, change, suspension, reinstatement, cancellation, and renewal.
+5. Verify subscription state and enforce entitlement and tenant isolation before granting service access.
+6. Add secure webhook validation, idempotency, retry handling, audit logging, and reconciliation.
+7. **If applicable, customize or validate:** Configure usage dimensions, emit only approved billable events, and reconcile usage and invoices.
+8. Add customer support, health, telemetry, cancellation, deletion, and removal
+   workflows.
+
+### Phase 3: Create and validate the SaaS offer
+
+1. Sign in to [Partner Center](https://partner.microsoft.com/dashboard/home)
+   and open **Marketplace offers**.
+2. Create a new offer, choose **SaaS**, and enter a permanent unique offer ID.
+3. Complete setup, properties, categories, legal terms, privacy, support,
+   documentation, and customer-facing listing content.
+4. Create the offer plans and set billing type, monthly or annual pricing,
+   markets, availability, and trial behavior.
+5. Add the landing page URL and webhook connection settings.
+6. Configure metered dimensions when applicable.
+7. Add a controlled preview audience using test accounts.
+8. Submit the offer for preview and resolve listing or technical validation
+   findings.
+
+### Phase 4: Preview, go live, and enable Azure IP Co-sell
+
+1. Test purchase, activation, plan change, suspension, renewal, cancellation,
+   and removal in a clean tenant.
+2. Test private and public offer behavior, entitlement, metered usage,
+   telemetry, support, and reconciliation.
+3. Obtain security, privacy, accessibility, legal, finance, product, and
+   support approval.
+4. Resolve certification findings and make the transactable SaaS offer live.
+5. Open the live offer in Partner Center and complete **Co-sell with Microsoft**
+   for the Azure IP Co-sell route.
+6. Add industries, business lines, geographic markets, customer segment,
+   sales contacts, and the Microsoft partner business profile.
+7. Upload the current solution one-pager, pitch deck, architecture evidence,
+   and other required sales-enablement materials.
+8. Verify the offer's documented solution type, Azure platform usage, revenue
+   evidence, and technical readiness against the current Co-sell requirements.
+9. Submit or update the Co-sell profile and retain unresolved qualification
+   items as open findings until Partner Center confirms the status.
+10. Recheck MACC, benefit, fee, revenue-share, and marketplace implications
+    with the current Microsoft guidance before making customer commitments.
+
+> [!IMPORTANT]
+> A live Marketplace listing or Azure integration alone does not establish
+> Azure IP Co-sell eligibility. Transactability, solution qualification,
+> required sales materials, and account-specific evidence must be validated
+> independently.
 
 ## Next steps
 

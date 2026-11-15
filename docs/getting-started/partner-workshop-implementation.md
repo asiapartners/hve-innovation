@@ -112,6 +112,32 @@ implement deferred work or publication activities.
 
 The first implementation should produce a runnable, testable scope of work. It should not scaffold the entire future architecture.
 
+Use this prompt to implement a UX Prototype as first step for user validation
+
+```text
+/rpi-implement
+
+Create a UX prototype under .copilot-tracking/ux-test/ as the first step towards MVP. Use synthetic data and mock responses to validate the user
+flow. Do not finalize undecided technology or policy choices.
+
+Base the UX draft on the use case, user flow, and acceptance criteria recorded
+in the approved workshop context.
+  - Primary user actions and navigation
+  - Required input, validation, success, cancel, and error states
+  - Key data entry, lookup, review, and confirmation activities
+
+Do not validate against this prototype:
+  - Production authentication or authorization guarantees
+  - Production data, AI, performance, security, or regulatory guarantees
+  - Marketplace billing, activation, deployment, or publishing
+
+Use one first-pass flow derived from the approved workshop context. Present the
+completed UI in a stakeholder or SME review before building production
+integrations. Separate prototype UX acceptance criteria from integration
+acceptance criteria, and record implementation evidence under
+.copilot-tracking/changes/.
+```
+
 ## Step 1B: Continue in an Existing Project
 
 Use this path when the workshop adds a capability to an existing product.
