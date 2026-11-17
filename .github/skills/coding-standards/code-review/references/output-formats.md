@@ -1,12 +1,16 @@
 ---
 title: Code Review Output Formats
 description: Report structure, findings schema, and persistence rules for review orchestrators and skill-backed subagents.
-ms.date: 2026-10-13
+ms.date: 2026-10-30
 ---
 
 ## Output contract
 
 Review findings should be expressed as structured data first, then rendered into a merged markdown report. The structured data format enables deterministic merging without re-parsing the narrative report.
+
+Do not assign or propagate reviewer confidence or certainty ratings: numeric scores, percentages, qualitative labels, renamed fields, or prose badges. Use citations and specific evidence gaps instead.
+Apply this rule to inline and delegated work, resumed artifacts, JSON, Markdown, summaries, recovery output, and actual publication payloads. Preserve supported findings, severity, counts, verdicts, and attributed source excerpts or measured statistics.
+Remove prohibited metadata without dropping findings; if valid repair is unavailable, disclose the incomplete result and block publication. For human-edited drafts, request revision rather than silently rewriting the text.
 
 ```json
 {
@@ -174,7 +178,7 @@ Authoring rules:
 
 ## Disclaimer and human-review sign-off
 
-Every `review.md` ends with a Disclaimer and Human Review section, always rendered last and never omitted. It contains the verbatim `## Code-Review` `> [!CAUTION]` block from `disclaimer-language.instructions.md`, followed by an unchecked `- [ ] Reviewed and validated by a qualified human reviewer` checkbox. The agent never checks this box; only a human may convert `[ ]` to `[x]`. This section restores the human-review gate as a codified part of the output contract rather than an emergent behavior of path-attached instructions. When that instruction content is unavailable, the verbatim block cannot be reproduced: say so, do not paraphrase a substitute disclaimer, and stop before emitting the review. This site stops rather than degrades because the missing content is the deliverable itself, not wording that supports behavior specified elsewhere.
+Every `review.md` ends with a Disclaimer and Human Review section, always rendered last and never omitted. It contains the verbatim `## Code-Review` `> [!CAUTION]` block from the `disclaimer-language` skill, followed by an unchecked `- [ ] Reviewed and validated by a qualified human reviewer` checkbox. The agent never checks this box; only a human may convert `[ ]` to `[x]`. This section restores the human-review gate as a codified part of the output contract rather than an emergent behavior of path-attached instructions. When that skill content is unavailable, the verbatim block cannot be reproduced: say so, do not paraphrase a substitute disclaimer, and stop before emitting the review. This site stops rather than degrades because the missing content is the deliverable itself, not wording that supports behavior specified elsewhere.
 
 ## Narrative and board shapes
 

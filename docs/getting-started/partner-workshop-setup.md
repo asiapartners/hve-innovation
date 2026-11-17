@@ -3,7 +3,7 @@ title: Partner Workshop Setup
 description: Shared Codespaces and local VS Code setup instructions for the HVE partner workshop
 sidebar_position: 8
 author: Microsoft
-ms.date: 2026-10-25
+ms.date: 2026-11-15
 ms.topic: tutorial
 keywords:
   - GitHub Codespaces
@@ -63,7 +63,21 @@ Before you begin either option, complete these steps:
 6. Select **Open** when cloning finishes, and select **Trust** only when you recognize the repository and facilitator.
 7. Tech lead could create a branch for workshop activities before you start editing files. Use a name such as `workshop/<team-name>`.
 
-If you have Foundry local models available in your environment, you may select them for local inference. Otherwise, select `MAI-Code-1-Flash` in GitHub Copilot Chat for a more cost-effective option. How to setup local models using Microsoft Foundry Toolkit [https://devblogs.microsoft.com/foundry/ai-assisted-development-powered-by-local-models/](https://devblogs.microsoft.com/foundry/ai-assisted-development-powered-by-local-models/).
+In GitHub Copilot Chat, open the model picker and select **Copilot Fusion** for
+a balanced combination of task complexity and cost. For a lower-cost option,
+select **MAI-Code-2-Flash** if it is available. If neither model nor another
+suitable model is available:
+
+* Verify that you are signed in to VS Code with the GitHub account that has
+  Copilot access.
+* Update GitHub Copilot and GitHub Copilot Chat in the Extensions view.
+* Close and reopen the VS Code window to refresh updated configurations, then reopen Copilot Chat and the model picker.
+* Confirm with your organization or facilitator that model selection is
+  enabled and not restricted by policy.
+* If a Foundry local model is available and appropriate for your environment,
+  you may select it for local inference. Follow the Microsoft Foundry Toolkit
+  guidance for
+  [setting up local models](https://devblogs.microsoft.com/foundry/ai-assisted-development-powered-by-local-models/).
 
 On macOS, use the same menus and buttons. Keyboard shortcuts that use `Ctrl` on Windows often use `Command` on macOS, so this workshop favors menu navigation.
 
@@ -96,18 +110,17 @@ If the expected agents are missing:
 
 Ask the technical lead to complete these manual steps:
 
-* Confirm that the team is working on its workshop branch.
-* Prepare the team member roles, known facts, constraints, and approved source material for the first role exercise.
-* Before any later agent acts, provide the session-context artifact path and ask the agent to read the topic from it. Do not repeat or redefine the topic in downstream prompts.
-* For workshop case, place synthetic or public source material in a manually managed `.copilot-tracking/research/workshop-input/` folder. Keep policies, SOPs, diagrams, and supporting files there by file type.
-* For an actual production case, keep sensitive evidence in its approved source system or secure evidence workspace. Use a trusted path or controlled link for research instead of copying files into the repository.
-* Set the session topic, then create a session-context artifact under `.copilot-tracking/research/` before selecting an agent. Treat that artifact as the source of truth for the topic, evidence location, and production output roots.
+* Confirm that the team is working on its workshop branch or repository.
+* Prepare team roles, known facts, constraints, and approved source material for the first role exercise.
+* Place synthetic or public workshop evidence in `.copilot-tracking/research/workshop-input/`, organized by evidence type.
 
-Use this prompt to create the shared session context:
+> [!IMPORTANT]
+> For production cases, keep sensitive evidence in its approved source system or secure evidence workspace. Reference it through a trusted path or controlled link rather than copying or committing it to the repository. Include credentials, personal data, customer secrets, or production content in prompts or files only when the approved environment permits it and access controls are confirmed.
+
+Start a new Copilot Chat session, select **RPI Agent**, and use this prompt to create the shared context before starting the role exercises:
 
 ```text
-Select the /RPI Agent. Create a session-context artifact before starting
-research or drafting requirements.
+Create a session-context artifact only.
 
 Session name: [short name for this workshop]
 Topic: [topic or use case]
@@ -117,39 +130,38 @@ Date: [YYYY-MM-DD]
 Create the artifact at
 `.copilot-tracking/research/[YYYY-MM-DD]/[session-name]-session-context.md`.
 Record the session name, topic, evidence location, date, evidence boundary,
-and production output roots. Make this artifact the required context for
-every later agent. Mark it as draft for human review. Do not start research,
-create a BRD or PRD, create backlog items, or copy sensitive evidence into
-the repository.
+and production output roots. Mark it as draft for human review.
+Do not start research, draft requirements, create backlog items, or copy
+sensitive evidence into the repository.
 ```
 
-Example:
+Example values for the prompt, replace with your own use case.
 
 ```text
-Select the /RPI Agent. Create the session context only.
-
 Session name: relationship-manager-fsi
 Topic: Relationship Manager Intelligence Assistant for FSI
-Evidence location: ./copilot-tracking/research/workshop-input
-Date: 2026-09-09
+Evidence location: .copilot-tracking/research/workshop-input/
+Date: 2026-11-15
+
+Create the artifact at
+`.copilot-tracking/research/[YYYY-MM-DD]/[session-name]-session-context.md`.
+Record the session name, topic, evidence location, date, evidence boundary,
+and production output roots. Mark it as draft for human review.
+Do not start research, draft requirements, create backlog items, or copy
+sensitive evidence into the repository.
 ```
 
-* Prepare the team member roles, known facts, constraints, and approved source material for the first role exercise.
-* Before any later agent acts, provide the session-context artifact path and ask the agent to read the topic from it. Do not repeat or redefine the topic in downstream prompts.
-* For workshop-only evidence, place synthetic or public source material in a manually managed `workshop-input/` folder. Keep policies, SOPs, diagrams, and supporting files there by evidence type.
-* For an actual production case, keep sensitive evidence in its approved source system or secure evidence workspace. Use a trusted path or controlled link for research instead of copying files into the repository.
-* Keep credentials, personal data, customer secrets, and production content out of prompts and files unless the approved environment explicitly permits that evidence and its access controls are confirmed.
-* Commit only reviewed workshop outputs to the team branch.
+Before any later agent acts, provide the session-context artifact path or ask the agent to find the latest session context and confirm it if ambiguous. Ask it to read the topic, evidence location, and production output roots from that artifact. Do not repeat or redefine the topic in downstream prompts.
 
 > [!TIP]
-> The agents create workflow artifacts under `.copilot-tracking/` and `docs/planning/adrs/` when their workflows run. Keep generated content marked as draft until a responsible human reviews it.
+> Agents create workflow artifacts under `.copilot-tracking/` and `docs/planning/adrs/`. Keep generated content marked as draft until a responsible human reviews it, and commit only reviewed workshop outputs to the team branch.
 
 ## Learn The Interaction Pattern
 
 In the next step, we will use the same pattern in every role exercise:
 
 1. Select the named agent or invoke the named skill.
-2. Provide the scenario, known facts, constraints, and requested output path.
+2. Provide the session context or ask the agent to find it, along with role-specific facts, constraints, and the requested output.
 3. Ask for a first draft.
 4. Review and revise the result.
 5. Save the reviewed result to its production artifact directory.
