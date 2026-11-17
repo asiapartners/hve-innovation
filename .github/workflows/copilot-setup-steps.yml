@@ -47,8 +47,7 @@ jobs:
       - name: Install JavaScript dependencies
         continue-on-error: true
         run: |
-          npm ci
-          npm ci --prefix scripts/linting/workflow-validator --ignore-scripts
+          npm ci          
 
       - name: Set up Python
         uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
