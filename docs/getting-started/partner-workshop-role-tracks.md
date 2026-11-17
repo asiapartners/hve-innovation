@@ -421,24 +421,22 @@ Turn business context and user experience into requirements, priorities, and a b
    Address Microsoft Marketplace and Microsoft 365 Copilot Agent Store
    readiness. Keep publication claims provisional until current Microsoft
    guidance, Partner Center state, and tenant feasibility are verified.
-   Save the plan using the approved output roots and link its supporting
-   artifacts. Do not implement or publish anything.
+   Save the plan to '.copilot-tracking/plans/' using the approved output roots and link its supporting artifacts. Do not implement or publish anything.
    ```
-
-   This writes to `.copilot-tracking/plans/` and creates a durable record that links to your requirements and design context.
 
 3. Review the generated plan at `.copilot-tracking/plans/` and refine phase details as needed.
 4. Create a backlog outline only if it helps the team move from requirements to implementation. If needed, use a lightweight hierarchy such as epic, feature, story, and task for the first MVP.
 5. Prioritize the first MVP with simple labels such as P0, P1, and P2 only if the team needs a sequencing signal. Keep this lightweight and outcome-focused rather than turning it into a rigid Agile process.
 6. Prepare the requirements and backlog artifacts for publication readiness in Microsoft Marketplace and Microsoft 365 Copilot Agent Store.
-   Select **Functional Planner** to prepare backlog,
+
+Select **Functional Planner** to prepare backlog,
 
 ```text
-Find the latest workshop session context
-and its relevant research, requirements, experience draft, and implementation
-plan. If the session or relevant artifacts
-are missing or ambiguous, ask me for clarification. Read the use case,
-evidence boundary, and approved output roots from the session context.
+Find the latest workshop session context and its relevant research,
+requirements, experience draft, and implementation plan. If the session or
+relevant artifacts are missing or ambiguous, ask me for clarification. Read
+the use case, evidence boundary, and approved output roots from the session
+context.
 
 Create or refine a concise, implementation-ready MVP backlog plan with epics,
 features, stories, and tasks traceable to the supporting artifacts. Use P0,
@@ -446,8 +444,8 @@ P1, and P2 priorities only if they help sequence the work. Assess Microsoft
 Marketplace and Microsoft 365 Copilot Agent Store publication readiness;
 identify assumptions and unresolved questions rather than inventing facts.
 
-Save the plan using the approved output roots for human review. Do not create
-or update tracker items.
+Save the plan to '.copilot-tracking/plans/' using the approved output
+roots for human review. Do not create or update tracker items.
 ```
 
 1. (Optional) If you are targeting GitHub Issues, ask Backlog Manager to coordinate the workflow and have GitHub Backlog Executor create the first parent issue and child issues for the initial MVP. The **Backlog Manager** should also ensure the resulting issue links and summary are recorded under `.copilot-tracking/github-issues/` for traceability.
@@ -484,7 +482,7 @@ backlog plan and create the backlog in GitHub Issues."
 ### Deliverable
 
 1. **Implementation Plan** (`.copilot-tracking/plans/`): A phased implementation plan with objectives, deliverables, and acceptance criteria for each phase.
-2. **GitHub Backlog** (`.copilot-tracking/github-issues/`): A backlog of features, stories, or tasks for translating business outcome to trackable work items, linked to the implementation plan.
+2. (Optional) **GitHub Backlog** (`.copilot-tracking/github-issues/`): A backlog of features, stories, or tasks for translating business outcome to trackable work items, linked to the implementation plan.
 
 ## Technical track
 
@@ -500,41 +498,58 @@ Frame the solution approach, architecture, and publication considerations aligne
 
    * Note deployment, security, and operational considerations.
    * Review the draft for well-architected design and Cloud Adoption Framework guidance.
-   * Capture the publication requirements for Microsoft Marketplace and Microsoft 365 Copilot Agent Store readiness, including packaging, discoverability, supportability, and integration expectations.   
+   * Capture the publication requirements for Microsoft Marketplace and Microsoft 365 Copilot Agent Store readiness, including packaging, discoverability, supportability, and integration expectations.
 
    ```text
-   "Review the implementation plan at `.copilot-tracking/plans/`, the
-   requirements
-   under `.copilot-tracking/prd-sessions/`, and the experience draft under
-   `.copilot-tracking/dt/`. Create architecture notes under
-   `.copilot-tracking/details/` covering a simple solution approach for each
-   phase, major tradeoffs, cloud architecture, well-architected concerns,
-   publication requirements, Microsoft IQ, and a Mermaid architecture diagram.
-   Link the architecture notes back to the phases in the implementation plan."
-   ```
-   * Create a simple Mermaid architecture diagram by selecting **Arch Diagram Builder**.
+   Find the latest workshop session context and its related implementation
+   plan, requirements, and experience draft.
+   If the session or relevant artifacts are missing or ambiguous, ask me to
+   identify them. Read the use case, evidence boundary, and approved output
+   roots from the session context.
 
+   Create architecture notes aligned to the implementation plan. For each
+   phase, describe the solution approach, major tradeoffs, cloud architecture,
+   and relevant Well-Architected concerns. Address Microsoft Marketplace and
+   Microsoft 365 Copilot Agent Store publication needs, including packaging,
+   discoverability, supportability, and integration expectations. Assess
+   whether Microsoft IQ has relevant implications; state assumptions and open
+   questions rather than inventing requirements.
+
+   Save the architecture design plan at [.copilot-tracking/details/] using an
+   approved output root from the session context and link it from the 
+   architecture notes for human review.
+   ```
 4. Use **Security Planner** to review readiness and surface follow-up work aligned to each phase.
 
    ```text
    "Review this solution draft for security risks, deployment considerations,
-   and
-   follow-up actions needed for each phase in the implementation plan. Link any
+   and follow-up actions needed for each phase in the implementation plan. Link any
    security-related work back to the appropriate phase."
    ```
+5. Create a simple Mermaid architecture diagram by selecting **Arch Diagram Builder**,
 
-5. Review the mermaid diagram and use natural language to refine it.
-6. (Optional) Instead of GitHub Copilot, use **Microsoft 365 Copilot** to create an image. In M365 Copilot, attach the implementation plan, and create an architecture image from the mermaid diagram for this solution using Azure and Copilot-style icons to represent core services, data sources, user experience layers, and integrations for the first MVP.
+   ```text
+   Find the latest workshop session context and its related implementation plan,
+   requirements, experience draft, and architecture notes. If the context or source artifacts are missing or ambiguous, ask me to identify them.
+
+   Create a Mermaid architecture diagram from the confirmed design. Show the
+   users, components, data sources, integrations, and key data flows. Reflect
+   trust boundaries where they are documented. Do not invent components or
+   relationships; label unresolved details as assumptions.
+
+   Save the diagram at [.copilot-tracking/details/] using an approved output root from the session context and link it from the architecture notes for human review.
+   ```
+6. Review the mermaid diagram and use natural language to refine it.
+7. (Optional) Instead of GitHub Copilot, use **Microsoft 365 Copilot** to create an image. In M365 Copilot, attach the implementation plan, and create an architecture image from the mermaid diagram for this solution using Azure and Copilot-style icons to represent core services, data sources, user experience layers, and integrations for the first MVP.
 
    ```text
    "Create an architecture image from the Mermaid diagram for this solution
-   using
-   Azure and Copilot-style icons to represent core services, data sources, user
-   experience layers, and integrations for the first MVP. "
+   using Azure and Copilot-style icons to represent core services, data sources, user
+   experience layers, and integrations for the first MVP."
    ```
    Save or reference the reviewed image under `.copilot-tracking/details/`.
 
-7. Capture only the publication assumptions needed for the solution review in the architecture notes and link them to the implementation plan.
+8. Capture only the publication assumptions needed for the solution review in the architecture notes and link them to the implementation plan.
 
    * Select SaaS or Azure Managed Application as the preferred Marketplace model and the Microsoft 365 agent as a potential companion experience.
    * Managed Application: State what the components deploys, what the agent presents to users, and where each product boundary begins and ends.
@@ -542,29 +557,28 @@ Frame the solution approach, architecture, and publication considerations aligne
    * Record architecture constraints that affect solution, including data residency, tenant isolation, customer-controlled infrastructure, and least-privilege access.
    * List unresolved publication assumptions with an owner. Do not resolve commercial or submission details during the role exercise.
 
-   Select **RPI Agent**,
+   Select **RPI Agent** and use this prompt:
 
    ```text
-   "Review the implementation plan at `.copilot-tracking/plans/`, the
-   requirements
-   under `.copilot-tracking/prd-sessions/`, the experience draft under
-   `.copilot-tracking/dt/`, and the architecture notes under
-   `.copilot-tracking/details/`. Update the architecture notes with only the
-   publication assumptions needed for the solution review. Record preferred
-   Marketplace model and the Microsoft 365 agent as a potential companion
-   experience. Define the product boundaries and summarize the API, identity,
-   permission, and data contract between them. Capture only architecture
-   constraints, assumptions, unresolved decisions, and owners needed for
-   solution
-   integration. Link these inputs to the implementation plan. Defer the
-   Marketplace implementation plan, offer validation, pricing, monetization,
-   Partner Center configuration, package preparation, certification, and rollout
-   planning to the Partner Workshop Publishing Follow-Up."
+   Find the latest workshop session context and its related implementation
+   plan, requirements, experience draft, and architecture notes. If the session or relevant artifacts are missing or ambiguous, ask me to identify them. Read the use case, evidence boundary, and approved output roots from the session context.
+
+   Update the architecture notes with only the publication assumptions needed
+   for the solution review. Record a provisional Marketplace model and the
+   Microsoft 365 agent as a potential companion experience. Define product
+   boundaries and summarize the API, identity, permission, and data contracts.
+   Capture relevant architecture constraints, unresolved assumptions and
+   decisions, and owners. Link the notes to the implementation plan.
+
+   Defer detailed publication planning, offer validation, pricing,
+   monetization, Partner Center configuration, package preparation,
+   certification, and rollout to the Partner Workshop Publishing Follow-Up.
+   Save the updated notes [`.copilot-tracking/details/`] the approved output roots and mark them for human review.
    ```
 
    Complete the detailed readiness assessment during the [Partner Workshop Publishing Follow-Up](partner-workshop-publishing).
 
-8. Share the output with the rest of the team.
+9. Share the output with the rest of the team.
 
 ### Deliverable
 

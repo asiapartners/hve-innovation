@@ -2,7 +2,7 @@
 title: Implement and review workshop outcomes
 description: Move completed workshop artifacts into a working repository, implement the first approved slice, and review the result with HVE Core
 author: Microsoft
-ms.date: 2026-10-25
+ms.date: 2026-11-17
 ms.topic: tutorial
 keywords:
   - workshop
@@ -15,33 +15,37 @@ estimated_reading_time: 7
 sidebar_position: 5
 ---
 
-Use this guide to move the approved research and plan, and handoff into the implementation repository, deliver one incremental scope, and review
-the result against the original evidence.
+Use this guide to move approved research and plans into the implementation
+repository, deliver one incremental scope, and review the result against the
+original evidence.
 
 ## Workshop Agenda
 
-| Step | Activity                                                                                    | Time   |
-|------|---------------------------------------------------------------------------------------------|--------|
-| 1    | [Workshop Overview](partner-workshop.md)                                                    | 30 min |
-| 2    | [Set up Codespaces or local VS Code](partner-workshop-setup.md)                             | 30 min |
-| 3    | [Plan, Envision, Experience, Architecture Design, Backlog](partner-workshop-role-tracks.md) | 90 min |
-| 4    | [Validation & Solution](partner-workshop-solution.md)                                       | 30 min |
-| 5    | [Microsoft Marketplace and Copilot Agent Store readiness](partner-workshop-publishing.md)   | 60 min |
-| 6    | [**Handoff to Implementation & Commercialization**](partner-workshop-implementation.md)     | 30 min |
+| Step | Activity | Time |
+|------|----------|------|
+| 1 | [Workshop overview](partner-workshop.md) | 30 min |
+| 2 | [Codespaces or VS Code setup](partner-workshop-setup.md) | 30 min |
+| 3 | [Workshop role tracks](partner-workshop-role-tracks.md) | 90 min |
+| 4 | [Solution validation](partner-workshop-solution.md) | 30 min |
+| 5 | [Publishing readiness](partner-workshop-publishing.md) | 60 min |
+| 6 | [Implementation handoff](partner-workshop-implementation.md) | 30 min |
 
 ## From Workshop to Solution Implementation
 
-The simplest setup is to install the HVE Core VS Code extension for the target project repository for implementation. It manages the HVE agents.
-RPI Agent and the `/rpi`, `/rpi-research`, `/rpi-plan`, `/rpi-implement`, and
-`/rpi-review`. In addition copy .copilot-tracking to your target project repository to preserve context, and .github files from this repo for Microsoft Partner specific custom agents and skills.
+To implement in a target project, install the HVE Core VS Code extension in
+that repository. It provides HVE agents, including RPI Agent and the `/rpi`,
+`/rpi-research`, `/rpi-plan`, `/rpi-implement`, and `/rpi-review` commands.
+Copy `.copilot-tracking/` into the target repository to preserve context, and
+copy this repository's `.github/` files for Microsoft Partner-specific agents
+and skills.
 
 Follow [Installing HVE Core](install.md) to choose one of these options:
 
 | Situation | Recommended setup |
-|---|---|
+|-----------|--------------------|
 | Most teams using VS Code | Install the HVE Core VS Code extension |
 | Teams using Copilot CLI | Install the `hve-core` plugin |
-| Teams that must own and customize the artifacts | Use selective clone adoption |
+| Teams customizing artifacts | Use selective clone adoption |
 
 Do not copy the entire HVE repository into the product
 repository unless the team intends to maintain those files.
@@ -52,39 +56,72 @@ After installation:
 2. Open GitHub Copilot Chat.
 3. Select **RPI Agent**, or use the direct phase commands.
 
-Initial research and planning are already complete, use the /rpi-implement and /rpi-review in the next phase.
+Initial research and planning are complete. Continue with `/rpi-implement` and
+`/rpi-review` in the next phase.
 
 ## Step 1A: Start a New Project
 
 Use this path when the workshop output will become a new application or service.
 
 1. Create the repository and open its root in VS Code.
-2. Copy the Hypervelocity Innovation Github Agents and Skills: .github/* to your repository.
-3. Install or enable HVE Core (see [Installing HVE Core](install.md)). 
-4. Review, update and approve workshop outputs,
+2. Copy the Hypervelocity Innovation GitHub agents and skills from `.github/`
+   to your repository.
+3. Install or enable HVE Core (see [Installing HVE Core](install.md)).
+4. Review, update, and approve the workshop outputs:
 
    * Copy only the reviewed artifacts into the new repository under a matching
      `.copilot-tracking/` folder (preserve the same relative subpaths):
      * `.copilot-tracking/research/{{YYYY-MM-DD}}/*-research.md`
      * `.copilot-tracking/brd-sessions/*.md`
      * `.copilot-tracking/prd-sessions/*.md` and `*.state.json`
-     * `.copilot-tracking/dt/**/experience-draft.md`
+     * `.copilot-tracking/dt/*`
+     * `.copilot-tracking/ux-artifacts/*`
      * `.copilot-tracking/plans/{{YYYY-MM-DD}}/*-plan.md`
      * `.copilot-tracking/github-issues/prds/**/issues-plan.md` and `handoff.md`
      * `.copilot-tracking/details/{{YYYY-MM-DD}}/*-implementation-plan.md`
        (Marketplace and Agent Store readiness, if applicable)
      * `.copilot-tracking/details/{{YYYY-MM-DD}}/solution-monetization-plan.md`
-       (the shared commercial record, including pending decisions and approval status, if applicable)
+       (the shared commercial record, including pending decisions and
+       approval status, if applicable)
 
-   * Do not copy `.copilot-tracking/sandbox/`, `.copilot-tracking/challenges/`, or any
-     unreviewed working files; only reviewed, approved artifacts belong in the
-     handoff.
+   * Do not copy `.copilot-tracking/sandbox/`,
+     `.copilot-tracking/challenges/`, or unreviewed working files. Only
+     reviewed, approved artifacts belong in the handoff.
 
-5. Confirm research and plan readiness before implementation starts. Close any gap before continuing to the next step. Do not start `/rpi-implement` while the plan or
-   PRD records a `Blocked` or `Not ready` status.
-6. If the plan is still conceptual, run `/rpi-plan` once to adapt it to the new
+5. Confirm research and plan readiness before implementation. Resolve gaps
+   before continuing. Do not start `/rpi-implement` while the plan or PRD has a
+   `Blocked` or `Not ready` status.
+6. If the plan is conceptual, run `/rpi-plan` once to adapt it to the new
    repository. Do not repeat product discovery.
-7. Project Manager to facilitate approval of the first implementation task. 
+7. Create a UX prototype as the first step toward user validation.
+
+   ```text
+   /rpi-implement
+
+   Create a UX prototype under .copilot-tracking/ux-test/ as the first step
+   toward the MVP. Use synthetic data and mock responses to validate the user
+   flow. Do not finalize undecided technology or policy choices.
+
+   Base the UX draft on the use case, user flow, and acceptance criteria
+   recorded in the approved workshop context.
+   - Primary user actions and navigation
+   - Required input, validation, success, cancel, and error states
+   - Key data entry, lookup, review, and confirmation activities
+
+   Do not validate against this prototype:
+   - Production authentication or authorization guarantees
+   - Production data, AI, performance, security, or regulatory guarantees
+   - Marketplace billing, activation, deployment, or publishing
+
+   Use one first-pass flow from the approved workshop context. Review the
+   completed UI with stakeholders or an SME before building production
+   integrations. Separate prototype UX acceptance criteria from integration
+   criteria, and record implementation evidence under
+   .copilot-tracking/changes/.
+   ```
+
+8. Have the Project Manager facilitate approval of the first implementation
+   task.
    * A named accountable owner (product, tech lead, or delivery owner) reviews
      the plan's first P0 task against step 5's readiness checks.
    * The owner confirms in writing (a comment, a checked box in the plan, or a
@@ -95,74 +132,51 @@ Use this path when the workshop output will become a new application or service.
      must never check it on their behalf.
    * Do not treat "the plan looks complete" as approval. Approval requires an
      explicit human decision, even when every checklist row in step 5 is ready.
-8. Run `/rpi-implement`.
+9. Run `/rpi-implement` to start implementation.
 
-Use this prompt:
+   ```text
+   /rpi-implement Use the approved plan and implement only the first approved
+   P0 task in this new repository. Create the minimum project structure
+   required by the plan, follow repository instructions, and use the planned
+   acceptance criteria and validation commands. Respect approved commercial
+   decisions in the linked shared solution monetization plan; do not treat
+   proposed terms as approved rules. Record implementation evidence under
+   .copilot-tracking/changes/. Do not implement deferred work or publication
+   activities.
+   ```
 
-```text
-/rpi-implement Use the approved implementation plan and implement
-only the first approved P0 task in this new repository. Create the minimum
-project structure required by the plan, follow the repository instructions, and
-use the planned acceptance criteria and existing validation commands. Respect
-approved commercial decisions in the linked shared solution monetization plan
-where relevant to this task; do not implement proposed terms as approved rules.
-Record implementation evidence under .copilot-tracking/changes/. Do not
-implement deferred work or publication activities.
-```
-
-The first implementation should produce a runnable, testable scope of work. It should not scaffold the entire future architecture.
-
-Use this prompt to implement a UX Prototype as first step for user validation
-
-```text
-/rpi-implement
-
-Create a UX prototype under .copilot-tracking/ux-test/ as the first step towards MVP. Use synthetic data and mock responses to validate the user
-flow. Do not finalize undecided technology or policy choices.
-
-Base the UX draft on the use case, user flow, and acceptance criteria recorded
-in the approved workshop context.
-  - Primary user actions and navigation
-  - Required input, validation, success, cancel, and error states
-  - Key data entry, lookup, review, and confirmation activities
-
-Do not validate against this prototype:
-  - Production authentication or authorization guarantees
-  - Production data, AI, performance, security, or regulatory guarantees
-  - Marketplace billing, activation, deployment, or publishing
-
-Use one first-pass flow derived from the approved workshop context. Present the
-completed UI in a stakeholder or SME review before building production
-integrations. Separate prototype UX acceptance criteria from integration
-acceptance criteria, and record implementation evidence under
-.copilot-tracking/changes/.
-```
+The first implementation should deliver runnable, testable work without
+scaffolding the entire future architecture.
 
 ## Step 1B: Continue in an Existing Project
 
 Use this path when the workshop adds a capability to an existing product.
 
 1. Open the current repository in VS Code.
-2. Copy the Hypervelocity Innovation Github Agents and Skills: .github/* to your repository.
-3. Install or enable HVE Core (see [Installing HVE Core](install.md)). 
-4. Review, Update and approve workshop outputs.
+2. Copy the Hypervelocity Innovation GitHub agents and skills from `.github/`
+   to your repository.
+3. Install or enable HVE Core (see [Installing HVE Core](install.md)).
+4. Review, update, and approve the workshop outputs:
 
    * Copy only the reviewed artifacts into the new repository under a matching
      `.copilot-tracking/` folder (preserve the same relative subpaths):
      * `.copilot-tracking/research/{{YYYY-MM-DD}}/*-research.md`
      * `.copilot-tracking/brd-sessions/*.md`
      * `.copilot-tracking/prd-sessions/*.md` and `*.state.json`
-     * `.copilot-tracking/dt/**/experience-draft.md`
+     * `.copilot-tracking/dt/*`
+     * `.copilot-tracking/ux-artifacts/*`
      * `.copilot-tracking/plans/{{YYYY-MM-DD}}/*-plan.md`
      * `.copilot-tracking/github-issues/prds/**/issues-plan.md` and `handoff.md`
      * `.copilot-tracking/details/{{YYYY-MM-DD}}/*-implementation-plan.md`
        (Marketplace and Agent Store readiness, if applicable)
      * `.copilot-tracking/details/{{YYYY-MM-DD}}/solution-monetization-plan.md`
-       (the shared commercial record, including pending decisions and approval status, if applicable)
+       (the shared commercial record, including pending decisions and
+       approval status, if applicable)
 
-   * Do not copy `.copilot-tracking/sandbox/`, `.copilot-tracking/challenges/`, or any
-     unreviewed working files; only reviewed, approved artifacts belong in the
-     handoff.
+   * Do not copy `.copilot-tracking/sandbox/`,
+     `.copilot-tracking/challenges/`, or unreviewed working files. Only
+     reviewed, approved artifacts belong in the handoff.
+
 5. Compare the plan with the current repository:
    * reuse existing modules and patterns
    * preserve compatible behavior
@@ -170,26 +184,25 @@ Use this path when the workshop adds a capability to an existing product.
    * keep unrelated code out of scope
 6. If the plan does not map to the current code, run `/rpi-plan` to revise only
    that mapping.
-7. Confirm research and plan readiness before implementation starts. Close any gap before continuing to the next step. Do not start `/rpi-implement` while the plan or
-   PRD records a `Blocked` or `Not ready` status.
-9. Approve the first implementation task using the same approval process in
-   [Step 1A, item 7](#step-1a-start-a-new-project): a named accountable owner
+7. Confirm research and plan readiness before implementation. Resolve gaps
+   before continuing. Do not start `/rpi-implement` while the plan or PRD has a
+   `Blocked` or `Not ready` status.
+8. Approve the first implementation task : a named accountable owner
    confirms in writing, and any required human-review checkbox is checked by
    its named reviewer, not by an agent.
-10. Run `/rpi-implement`.
+9. Run `/rpi-implement`.
 
 Use this prompt:
 
 ```text
-/rpi-implement Use the approved implementation plan and implement
-only the first approved P0 task in this repository. Reuse existing components,
-follow current code and test conventions, and limit changes to the planned
-behavior. Respect approved commercial decisions in the linked shared solution
-monetization plan where relevant to this task; do not implement proposed terms
-as approved rules. Run the smallest existing validation commands that cover the
-change and record implementation evidence under
-.copilot-tracking/changes/.Do not implement deferred work or publication
-activities.
+/rpi-implement Use the approved implementation plan and implement only the
+first approved P0 task in this repository. Reuse existing components, follow
+current code and test conventions, and limit changes to the planned behavior.
+Respect approved commercial decisions in the linked shared solution
+monetization plan; do not implement proposed terms as approved rules. Run the
+smallest existing validation commands that cover the change and record
+implementation evidence under .copilot-tracking/changes/. Do not implement
+deferred work or publication activities.
 ```
 
 Do not replace working architecture merely because the workshop proposed a
@@ -309,14 +322,21 @@ for the publication workflow.
 
 ## Expected Outcome
 
-Upon completing the MVP implementation, testing, and readiness validation, the team achieves the following outcomes:
+Completing the MVP implementation, testing, and readiness validation should
+achieve the following outcomes:
 
 * The MVP is fully implemented, tested, and validated against PRD acceptance criteria.
-* Implementation changes and review evidence are documented to satisfy quality and governance gates.
-* Partner Center configuration and technical offer details are verified; the shared solution monetization plan records current costs, package and entitlement decisions, proposed or approved prices, and remaining commercial approval gaps.
-* The solution advances to submission only after commercial and publishing gates are approved; certification and publication remain subject to external review and approval.
+* Implementation and review evidence support the quality and governance gates.
+* Partner Center configuration and technical offer details are verified. The
+  shared solution monetization plan records current costs, package and
+  entitlement decisions, proposed or approved prices, and remaining commercial
+  approval gaps.
+* The solution advances to submission only after commercial and publishing
+  gates are approved. Certification and publication remain subject to external
+  review and approval.
 * Follow-up work items are identified for post-launch iterations and co-sell enablement.
 
-The workshop artifacts provide the initial evidence trail, while the implementation repository and Partner Center drive ongoing engineering and commercialization.
+Workshop artifacts provide the initial evidence trail. The implementation
+repository and Partner Center support ongoing engineering and commercialization.
 
-### Congratulations on your Solution Launch!
+### Congratulations on your Solution Launch
