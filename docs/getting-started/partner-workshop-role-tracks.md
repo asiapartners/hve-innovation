@@ -3,13 +3,14 @@ title: Partner Workshop Role Guide
 description: Structured role-based guide for the HVE partner workshop
 sidebar_position: 9
 author: Microsoft
-ms.date: 2026-11-15
+ms.date: 2026-11-18
 ms.topic: tutorial
 keywords:
   - Project Manager
   - Subject Matter Expert
   - UX Designer
   - Engineer
+  - Data Scientist
   - HVE roles
 estimated_reading_time: 10
 ---
@@ -584,6 +585,106 @@ Frame the solution approach, architecture, and publication considerations aligne
 
 1. **Architecture Notes** (`.copilot-tracking/details/`): Architecture design notes aligned to each phase of the implementation plan, including risks, tradeoffs, integration requirements, and the minimal publication assumptions needed by the solution review.
 2. Publication planning input: The provisional product split, integration boundary, architecture constraints, and open decisions recorded within the architecture notes for the publishing workshop.
+
+### Data Scientist Track
+
+#### Objective
+
+Create an initial synthetic dataset and data science notebook that map to the
+shared use case, business rules, and measurable outcome. Run this exercise
+alongside architecture design within the Technical track.
+
+Use the [Data Scientist Guide](../hve-guide/roles/data-scientist)
+as the pattern: confirm the catalog job first, then confirm the analysis job.
+Keep customer, regulated, confidential, and production data in its approved
+system. Synthetic workshop results do not demonstrate business value or
+production model performance.
+
+#### Steps
+
+1. Agree with the SME and PM on one outcome and the decision the analysis must
+   support. Use the latest session context, lean canvas, and requirements
+   rather than adopting the sales or API examples from the starter guide.
+2. Select **Data Science and Engineering Coach**, confirm the catalog job,
+   and use the first prompt. Review the proposed entities, relationships,
+   fields, business rules, and mapping to the use case before generating data.
+3. Confirm the transition to the analysis job and use the second prompt.
+   Approve the synthetic dataset size, assumptions, and output locations.
+   Create the dataset and notebook, then run the notebook when the required
+   environment is available.
+4. Review data quality checks, visualizations, and outcome metrics with the
+   SME. Confirm that normal, boundary, and failure cases reflect the scenario.
+   Distinguish deliberately generated patterns from evidence about real users.
+5. Share the outputs with the technical lead and PM. Record missing real-data
+   evidence, privacy and responsible AI concerns, owners, and follow-up work
+   for the architecture and implementation plan.
+
+Select **Data Science and Engineering Coach** and confirm the catalog job:
+
+```text
+Find the latest workshop session context, lean canvas, relevant requirements,
+and approved evidence. If the session or inputs are missing or ambiguous,
+ask me to identify them. Read the use case, evidence boundary, and output
+roots from that context. Confirm the project and deliverable locations.
+
+Catalog the data needed for one measurable outcome from this use case.
+Map each entity and field to a requirement, business rule, or outcome metric.
+Capture relationships, types, units, valid ranges, sensitivity, and quality
+rules. Identify any required labels or ground truth and their limitations.
+
+Propose an initial synthetic dataset with a small, configurable row count,
+normal cases, boundary cases, and deliberately invalid records for quality
+checks. Label unsupported rules and distributions as workshop assumptions.
+Do not copy or derive records from restricted source data.
+
+Save the catalog and dataset profile in the confirmed location for human
+review. Wait for my approval before changing jobs or generating the dataset.
+```
+
+Select **Data Science and Engineering Coach**, confirm the analysis job, and
+use the reviewed catalog from the previous step:
+
+```text
+Use the latest confirmed workshop context and reviewed catalog for this
+session. If either is missing or ambiguous, ask me to identify it.
+Confirm the synthetic dataset size, generation assumptions, and approved
+locations for the dataset, generation code, and analysis notebook.
+
+Create an initial synthetic CSV dataset that follows the catalog and maps to
+the selected use case. Use a fixed random seed and fictional identifiers.
+Include the approved normal, boundary, and invalid cases. Clearly label the
+data as synthetic and document how to regenerate it.
+
+Create a data analysis notebook using that dataset. Include the use-case
+question, requirement-to-field mapping, data loading, schema and quality
+checks, missing values, duplicates, and business-rule violations. Preserve
+the original dataset and show how invalid records are handled.
+
+Analyze the selected outcome with relevant summaries, segment comparisons,
+and visualizations. Calculate the agreed metrics and include a simple
+baseline where appropriate. Explain which patterns were generated by design.
+Do not treat synthetic labels or results as evidence of real-world accuracy,
+fairness, demand, or business impact.
+
+Run the notebook from start to finish when the approved environment is
+available. Report execution status and unresolved errors; do not claim
+unexecuted cells passed. Save outputs with reproduction instructions and
+limitations for human review. Identify the real data and validation needed
+next. Do not train models, deploy resources, or change jobs without approval.
+```
+
+#### Data scientist handoff
+
+Share the reviewed catalog and dataset profile, synthetic dataset, generation
+code, and analysis notebook with the technical lead and PM. Include their
+confirmed locations, execution status, outcome metrics, assumptions, and
+limitations. Link the outputs to the requirements and implementation plan.
+Record real-data validation tasks and owners before making feasibility or
+production-readiness claims.
+
+### More HVE Roles
+
+The technical track primarily supports full-stack engineering. For specialists roles like SRE, Security, refer to the [HVE Guide role guides](../hve-guide/roles/) for role-specific capabilities, starter prompts, and collaboration patterns.
 
 ## Working session reminder
 
