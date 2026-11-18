@@ -684,7 +684,7 @@ production-readiness claims.
 
 ### More HVE Roles
 
-The technical track primarily supports full-stack engineering. For specialists roles like SRE, Security, refer to the [HVE Guide role guides](../hve-guide/roles/) for role-specific capabilities, starter prompts, and collaboration patterns.
+The technical track primarily supports full-stack engineering. For specialist roles such as SRE and Security, refer to the [HVE Guide role guides](../hve-guide/roles/) for role-specific capabilities, starter prompts, and collaboration patterns.
 
 ## Working session reminder
 
