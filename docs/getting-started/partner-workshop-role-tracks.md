@@ -239,7 +239,7 @@ Select **RPI Agent** when you need to research business facts against your produ
 
    For production evidence, provide the approved source path or controlled link as context. Do not paste or copy sensitive source content into the repository unless the approved environment permits it.
 
-### Deliverable
+### Deliverables
 
 1. **Research Artifact** (`.copilot-tracking/research/`): Evidence-backed research findings with facts, assumptions, constraints, and open questions.
 2. **BRD Draft** (`.copilot-tracking/brd-sessions/`): Business requirements, stakeholders, outcomes, constraints, and acceptance intent.
